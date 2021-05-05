@@ -34,7 +34,7 @@ public class User extends AuditModel {
     private String description;
 
     @NotNull
-    private Subscription subscriptionActive;
+    //private Subscription subscriptionActive;
 
     @ManyToMany(fetch = FetchType.LAZY,
             cascade = {CascadeType.PERSIST, CascadeType.MERGE},
