@@ -1,7 +1,5 @@
 package com.example.ilenguageapi.domain.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -25,7 +23,7 @@ public class User extends AuditModel {
 
     @NotNull
     @Column(unique = true)
-    private String Email;
+    private String email;
 
     @NotNull
     private String password;
@@ -41,9 +39,23 @@ public class User extends AuditModel {
     private Subscription subscriptionActive;
 
     @ManyToMany(fetch = FetchType.LAZY,
-            cascade = {CascadeType.PERSIST,CascadeType.MERGE},
-    mappedBy = "users")
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE},
+            mappedBy = "users")
     private List<Subscription> subscriptions;
+
+    public User() {
+    }
+
+    public User(@NotNull String name, @NotNull String lastName, @NotNull String email, @NotNull String password, @NotNull String description) {
+        this.name = name;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = password;
+        this.description = description;
+    }
+    //TODO: How to implement list of interest
+    //private List<interest> interests;
+    //private List<lenguageInterest> lenguageInterests;
 
     //TODO:Implement Role
 /*
@@ -107,5 +119,13 @@ public class User extends AuditModel {
 
     public void setSubscriptions(List<Subscription> subscriptions) {
         this.subscriptions = subscriptions;
+    }
+
+    public Subscription getSubscriptionActive() {
+        return subscriptionActive;
+    }
+
+    public void setSubscriptionActive(Subscription subscriptionActive) {
+        this.subscriptionActive = subscriptionActive;
     }
 }
