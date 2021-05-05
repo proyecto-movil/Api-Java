@@ -33,8 +33,6 @@ public class User extends AuditModel {
     @Size(max = 245)
     private String description;
 
-
-    //TODO: delete contructor on subscription
     @NotNull
     private Subscription subscriptionActive;
 
@@ -55,7 +53,7 @@ public class User extends AuditModel {
     }
     //TODO: How to implement list of interest
     //private List<interest> interests;
-    //private List<lenguageInterest> lenguageInterests;
+    //private List<languageInterest> languageInterests;
 
     //TODO:Implement Role
 /*

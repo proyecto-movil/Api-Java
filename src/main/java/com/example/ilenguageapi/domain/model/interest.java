@@ -5,5 +5,5 @@ public enum interest {
     math,
     sports,
     webDevelop,
-    teacher,
+    teacher
 }
