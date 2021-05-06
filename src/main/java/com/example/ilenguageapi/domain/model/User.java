@@ -35,7 +35,7 @@ public class User extends AuditModel {
     private String description;
 
     @NotNull
-    //private Subscription subscriptionActive;
+    private String profilePhoto;
 
     @ManyToMany(fetch = FetchType.LAZY,
             cascade = {CascadeType.PERSIST, CascadeType.MERGE},
@@ -51,6 +51,9 @@ public class User extends AuditModel {
         this.email = email;
         this.password = password;
         this.description = description;
+    }
+    public boolean isUserWithRole(){
+        return true;
     }
     //TODO: How to implement list of interest
     //private List<interest> interests;
@@ -120,4 +123,11 @@ public class User extends AuditModel {
         this.subscriptions = subscriptions;
     }
 
+    public String getProfilePhoto() {
+        return profilePhoto;
+    }
+
+    public void setProfilePhoto(String profilePhoto) {
+        this.profilePhoto = profilePhoto;
+    }
 }
