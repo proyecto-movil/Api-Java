@@ -30,6 +30,7 @@ public class Role {
     @JsonIgnore
     private List<User> users;
 
+
     public Role( @NotNull String name) {
         this.name = name;
     }
