@@ -1,6 +1,7 @@
 package com.example.ilenguageapi.domain.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.NaturalId;
 
 import javax.persistence.*;
@@ -22,6 +23,12 @@ public class Role {
 
     public Role() {
     }
+
+
+    @OneToMany
+    @JoinColumn(name = "user_id",nullable = false)
+    @JsonIgnore
+    private User user;
 
     public Role( @NotNull String name) {
         this.name = name;
