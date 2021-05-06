@@ -21,8 +21,7 @@ public class Subscription {
     public float Price;
 
     @NotNull
-    @Min(value=1, message="Month duration shold not be less tah 1")
-    @Max(value=12, message="Month duration should no be grater than 12")
+    @Positive(message="Price must have a positive value")
     public int MonthDuration;
 
     @NotBlank(message ="Name is mandatory")
