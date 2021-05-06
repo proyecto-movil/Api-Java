@@ -13,4 +13,5 @@ public interface SubscriptionService {
     Subscription getBySubscriptionId(int subscriptionId);
     Subscription getByName(String name);
     Subscription getByDuration(int monthDuration);
+    Subscription getByPrice(float price);
 }
