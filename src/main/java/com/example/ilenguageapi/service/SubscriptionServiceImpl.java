@@ -60,6 +60,13 @@ public class SubscriptionServiceImpl  implements SubscriptionService {
 
     @Override
     public Subscription getByDuration(int monthDuration) {
-        return null;
+        return subscriptionRepository.findByMonthDuration(monthDuration)
+                .orElseThrow(()-> new ResourceNotFoundException("Subscription", "MonthDuration", monthDuration));
+    }
+
+    @Override
+    public Subscription getByPrice(float price) {
+        return subscriptionRepository.findByPrice(price)
+                .orElseThrow(()-> new ResourceNotFoundException("Subscription", "Price", price));
     }
 }
