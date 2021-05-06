@@ -3,10 +3,11 @@ package com.example.ilenguageapi.domain.model;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "Users")
+@Table(name = "users")
 public class User extends AuditModel {
 
     @Id
@@ -88,11 +89,11 @@ public class User extends AuditModel {
     }
 
     public String getEmail() {
-        return Email;
+        return email;
     }
 
     public void setEmail(String email) {
-        Email = email;
+        this.email = email;
     }
 
     public String getPassword() {
@@ -119,11 +120,4 @@ public class User extends AuditModel {
         this.subscriptions = subscriptions;
     }
 
-    public Subscription getSubscriptionActive() {
-        return subscriptionActive;
-    }
-
-    public void setSubscriptionActive(Subscription subscriptionActive) {
-        this.subscriptionActive = subscriptionActive;
-    }
 }
