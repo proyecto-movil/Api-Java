@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -49,5 +50,31 @@ public class SubscriptionsController {
     public SubscriptionResource updateSubscription(@PathVariable(name="id") int subscriptionId, @Valid @RequestBody SaveSubscriptionResource resource){
         return convertToResource(subscriptionService.updateSubscription(subscriptionId,convertToEntity(resource)));
     }
+
+    @DeleteMapping("subscriptions/{id}")
+    public ResponseEntity<?> deleteSubscriptions(@PathVariable(name="id") int subscriptionId){
+        return subscriptionService.deleteSubscription(subscriptionId);
+    }
+
+    @GetMapping("/subscriptions/{id}")
+    public SubscriptionResource getSubscriptionById(@PathVariable(name="id") int subscriptionId){
+        return convertToResource(subscriptionService.getBySubscriptionId(subscriptionId));
+    }
+
+    @GetMapping("/subscriptions/{name}")
+    public SubscriptionResource getSubscriptionByPrice(@PathVariable(name="name") String subscriptionName){
+        return convertToResource(subscriptionService.getByName(subscriptionName));
+    }
+
+    @GetMapping("/subscriptions/{price}")
+    public SubscriptionResource getSubscriptionByPrice(@PathVariable(name="price") float producedPrice){
+        return convertToResource(subscriptionService.getByPrice(producedPrice));
+    }
+
+    @GetMapping("/subscriptions/{monthDuration}")
+    public SubscriptionResource getSubscriptionByMonthDuration(@PathVariable(name="monthDuration") int subscriptionMonthDuration){
+    return convertToResource(subscriptionService.getByDuration(subscriptionMonthDuration));
+    }
+
 
 }
