@@ -28,7 +28,7 @@ public class Role {
     @OneToMany
     @JoinColumn(name = "user_id",nullable = false)
     @JsonIgnore
-    private User user;
+    private List<User> users;
 
     public Role( @NotNull String name) {
         this.name = name;
