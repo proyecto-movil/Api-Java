@@ -6,10 +6,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 
 public interface SubscriptionService {
-    Subscription getAllSubscriptions( );
+    Page<Subscription> getAllSubscriptions(Pageable pageable);
     Subscription createSubscription(Subscription subscription);
     Subscription updateSubscription(int subscriptionId, Subscription subscriptions);
     ResponseEntity<?> deleteSubscription(int subscriptionId);
     Subscription getBySubscriptionId(int subscriptionId);
     Subscription getByName(String name);
+    Subscription getByDuration(int monthDuration);
 }

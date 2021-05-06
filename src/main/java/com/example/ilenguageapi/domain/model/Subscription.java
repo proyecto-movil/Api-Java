@@ -17,15 +17,14 @@ public class Subscription {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Positive(message="Price must have a positive value")
+
+    @NotNull
     public float Price;
 
     @NotNull
-    @Positive(message="Price must have a positive value")
     public int MonthDuration;
 
     @NotBlank(message ="Name is mandatory")
-    @Size(min = 3, max = 20, message = "Name must be between 3 and 20 characters")
     public String Name;
 
 
