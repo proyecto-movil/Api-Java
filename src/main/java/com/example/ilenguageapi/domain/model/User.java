@@ -55,6 +55,21 @@ public class User extends AuditModel {
     public boolean isUserWithRole(){
         return true;
     }
+    public boolean isSubscribedWith(Subscription subscription){
+       return this.getSubscriptions().contains(subscription);
+    }
+
+    public User SubscribedWith(Subscription subscription){
+       if(!isSubscribedWith(subscription)){
+          this.getSubscriptions().add(subscription);
+       }
+       return this;
+    }
+    public Subscription getSubcriptionActive(){
+       int size = this.getSubscriptions().size();
+       return this.getSubscriptions().get(size - 1);
+    }
+
     //TODO: How to implement list of interest
     //private List<interest> interests;
     //private List<languageInterest> languageInterests;
