@@ -1,5 +1,7 @@
 package com.example.ilenguageapi.resource;
 
+import org.hibernate.validator.constraints.CreditCardNumber;
+
 import javax.validation.constraints.*;
 import javax.validation.constraints.Positive;
 
