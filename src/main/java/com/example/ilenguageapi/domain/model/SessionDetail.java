@@ -23,12 +23,10 @@ public class SessionDetail extends AuditModel {
     @JsonIgnore
     private Session session;
 
-    /*
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "user_id", nullable = false)
     @JsonIgnore
     private User user;
-    */
 
     public SessionDetail(@NotNull String state) {
         this.state = state;
@@ -36,5 +34,32 @@ public class SessionDetail extends AuditModel {
 
     public SessionDetail() {
 
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public SessionDetail setId(long id) {
+        this.id = id;
+        return this;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public SessionDetail setState(String state) {
+        this.state = state;
+        return this;
+    }
+
+    public Session getSession() {
+        return session;
+    }
+
+    public SessionDetail setSession(Session session) {
+        this.session = session;
+        return this;
     }
 }

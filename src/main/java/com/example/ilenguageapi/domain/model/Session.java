@@ -9,6 +9,22 @@ import javax.validation.constraints.NotNull;
 @Table(name="sessions")
 public class Session extends AuditModel {
 
+    public long getId() {
+        return id;
+    }
+
+    public String getStartAt() {
+        return startAt;
+    }
+
+    public String getEndAt() {
+        return endAt;
+    }
+
+    public String getLink() {
+        return link;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -22,14 +38,13 @@ public class Session extends AuditModel {
     @NotNull
     private String link;
 
-    /*
+
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "user_id", nullable = false)
     @JsonIgnore
     private User user;
-    */
 
-    public Session(String startAt, String endAt, String link) {
+    public Session(@NotNull String startAt, @NotNull String endAt, @NotNull String link) {
         this.startAt = startAt;
         this.endAt = endAt;
         this.link = link;
@@ -39,19 +54,23 @@ public class Session extends AuditModel {
 
     }
 
-    public void setId(long id) {
+    public Session setId(long id) {
         this.id = id;
+        return this;
     }
 
-    public void setStartAt(String startAt) {
+    public Session setStartAt(String startAt) {
         this.startAt = startAt;
+        return this;
     }
 
-    public void setEndAt(String endAt) {
+    public Session setEndAt(String endAt) {
         this.endAt = endAt;
+        return this;
     }
 
-    public void setLink(String link) {
+    public Session setLink(String link) {
         this.link = link;
+        return this;
     }
 }
