@@ -22,10 +22,12 @@ public class Session extends AuditModel {
     @NotNull
     private String link;
 
+    /*
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "user_id", nullable = false)
     @JsonIgnore
     private User user;
+    */
 
     public Session(String startAt, String endAt, String link) {
         this.startAt = startAt;
