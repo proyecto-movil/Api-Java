@@ -13,7 +13,7 @@ public class Schedule {
     }
 
     private String descriptionSchedule;
-s
+
     private Day day;
 
     public String getDescriptionSchedule() {
