@@ -51,5 +51,41 @@ public class SubscriptionServiceImplTest {
     }
 
 
+    @Test
+    @DisplayName("Get subscription by price with valid price then return true")
+    public void whenGetSubscriptionByPriceWithValidPriceThenReturnsSubscription(){
+        //Arrange
+        float price = 99.99f;
+        Subscription subscription = new Subscription();
+        subscription.setPrice(price);
+        subscription.setId(45);
+        when(_subscriptionRepository.findByPrice(price))
+                .thenReturn(Optional.of(subscription));
+        //Act
+        Subscription foundSubscription = _subscriptionService.getByPrice(price);
+
+        //Assert
+        assertThat(foundSubscription.getPrice()).isEqualTo(price);
+    }
+
+
+    @Test
+    @DisplayName("Get subscription by mothDuration with valid month then return true")
+    public void whenGetSubscriptionByMonthWithValidMonthThenReturnsSubscription(){
+        //Arrange
+        int month = 8;
+        Subscription subscription = new Subscription();
+        subscription.setMonthDuration(month);
+        subscription.setId(45);
+        when(_subscriptionRepository.findByMonthDuration(month))
+                .thenReturn(Optional.of(subscription));
+        //Act
+        Subscription foundSubscription = _subscriptionService.getByDuration(month);
+
+        //Assert
+        assertThat(foundSubscription.getMonthDuration()).isEqualTo(month);
+    }
+
+  
 
 }
