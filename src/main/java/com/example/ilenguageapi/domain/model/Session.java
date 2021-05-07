@@ -44,6 +44,20 @@ public class Session extends AuditModel {
     @JsonIgnore
     private User user;
 
+
+    public SessionDetail getSessionDetail() {
+        return sessionDetail;
+    }
+
+    public void setSessionDetail(SessionDetail sessionDetail) {
+        this.sessionDetail = sessionDetail;
+    }
+
+    @OneToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "session_Detail_id", nullable = false)
+    @JsonIgnore
+    private SessionDetail sessionDetail;
+
     public Session(@NotNull String startAt, @NotNull String endAt, @NotNull String link) {
         this.startAt = startAt;
         this.endAt = endAt;

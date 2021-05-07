@@ -6,5 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
 
 public interface SessionRepository extends JpaRepository<Session, Long> {
-    public Optional<Session> findByStartAt(String title);
+    public Optional<Session> findByStartAt(String startAt);
+    public Optional<Session> findByEndAt(String endAt);
 }

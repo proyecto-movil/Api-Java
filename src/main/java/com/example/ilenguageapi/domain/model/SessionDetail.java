@@ -18,7 +18,7 @@ public class SessionDetail extends AuditModel {
     @NotNull
     private String state;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @OneToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "session_id", nullable = false)
     @JsonIgnore
     private Session session;

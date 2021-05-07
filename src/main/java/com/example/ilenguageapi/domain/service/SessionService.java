@@ -13,4 +13,5 @@ public interface SessionService {
     ResponseEntity<?> deleteSession(Long sessionId);
     Page<Session> getAllSessionsByUserId(Long userId, Pageable pageable);
     Session getSessionByStartAt(String startAt);
+    Session getSessionByEndAt(String endAt);
 }

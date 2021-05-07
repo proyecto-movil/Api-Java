@@ -69,5 +69,10 @@ public class SessionServiceImpl implements SessionService {
         return sessionRepository.findByStartAt(startAt)
                 .orElseThrow(() -> new ResourceNotFoundException("Session", "StartAt", startAt));
     }
-    //TODO: add getSessionByEndAt
+
+    @Override
+    public Session getSessionByEndAt(String endAt) {
+        return sessionRepository.findByEndAt(endAt)
+                .orElseThrow(() -> new ResourceNotFoundException("Session", "EndAt", endAt));
+    }
 }
