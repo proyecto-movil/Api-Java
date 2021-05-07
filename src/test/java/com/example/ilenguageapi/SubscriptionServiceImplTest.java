@@ -3,6 +3,7 @@ package com.example.ilenguageapi;
 import com.example.ilenguageapi.domain.model.Subscription;
 import com.example.ilenguageapi.domain.repository.SubscriptionRepository;
 import com.example.ilenguageapi.domain.service.SubscriptionService;
+import com.example.ilenguageapi.exception.ResourceNotFoundException;
 import com.example.ilenguageapi.service.SubscriptionServiceImpl;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -18,6 +19,7 @@ import javax.swing.text.html.Option;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(SpringExtension.class)
@@ -86,6 +88,23 @@ public class SubscriptionServiceImplTest {
         assertThat(foundSubscription.getMonthDuration()).isEqualTo(month);
     }
 
-  
+    @Test
+    @DisplayName("Get subscription error message when name is not valid")
+    public void whenGetSubscriptionByNameWithInvalidNameReturnsResourceNotFoundExeption(){
+        String name ="Basic";
+        String template ="Resource @s not found for %s with value $s";
+        when(_subscriptionRepository.findByName(name))
+                .thenReturn(Optional.empty());
+        String expectedMessage = String.format(template, "Subscription", "name", name);
+        //Act
+        Throwable exception = catchThrowable(()->{
+                Subscription foundSubscription = _subscriptionService.getByName(name);
+        });
+        //Asert
+        assertThat(exception)
+                .isInstanceOf(ResourceNotFoundException.class)
+                .hasMessage(expectedMessage);
+    }
+
 
 }
