@@ -37,6 +37,10 @@ public class User extends AuditModel {
     @NotNull
     private String profilePhoto;
 
+    public Role getRole(){
+        return role;
+    }
+
     @ManyToMany(fetch = FetchType.LAZY,
             cascade = {CascadeType.PERSIST, CascadeType.MERGE},
             mappedBy = "users")
@@ -65,6 +69,13 @@ public class User extends AuditModel {
     @JoinColumn(name = "role_id",nullable = false)
     JsonIgnore
     private Role role;
+*/
+
+/* missing function in getRole()
+
+    public boolean isRoledWith(Role role){
+    return this.getRole()
+    }
 */
 
     public Long getId() {
