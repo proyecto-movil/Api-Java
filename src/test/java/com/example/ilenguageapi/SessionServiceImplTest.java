@@ -3,6 +3,7 @@ package com.example.ilenguageapi;
 import com.example.ilenguageapi.domain.model.Session;
 import com.example.ilenguageapi.domain.repository.SessionRepository;
 import com.example.ilenguageapi.domain.service.SessionService;
+import com.example.ilenguageapi.exception.ResourceNotFoundException;
 import com.example.ilenguageapi.service.SessionServiceImpl;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -16,6 +17,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Optional;
 
+import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(SpringExtension.class)
@@ -36,10 +38,10 @@ public class SessionServiceImplTest {
     }
 
     @Test
-    @DisplayName("When Get Session By Start At With Valid Start At Then Returns Session")
+    @DisplayName("When getSessionByStartAt With Valid startAt Then Returns Session")
     public void whenGetSessionByStartAtWithValidStartAtThenReturnsSession() {
         // Arrange
-        String startAt = "10";
+        String startAt = "10:10/24-05-2021";
         Session session = new Session().setId(1).setStartAt(startAt);
         when(sessionRepository.findByStartAt(startAt))
                 .thenReturn(Optional.of(session));
@@ -49,6 +51,65 @@ public class SessionServiceImplTest {
 
         // Assert
         assertThat(foundSession.getStartAt()).isEqualTo(startAt);
+    }
+
+    @Test
+    @DisplayName("When getSessionByStartAt With Invalid startAt Then Returns Session")
+    public void whenGetSessionByStartAtWithInvalidStartAtThenReturnsSession() {
+        // Arrange
+        String startAt = "10:10/24-05-2021";
+        String template = "Resource %s not found for %s with value %s";
+        when(sessionRepository.findByStartAt(startAt))
+                .thenReturn(Optional.empty());
+        String expectedMessage = String.format(template, "Session", "StartAt", startAt);
+
+        // Act
+        Throwable exception = catchThrowable(() -> {
+            Session foundSession = sessionService.getSessionByStartAt(startAt);
+        });
+
+        // Assert
+        assertThat(exception)
+                .isInstanceOf(ResourceNotFoundException.class)
+                .hasMessage(expectedMessage);
+    }
+
+
+    @Test
+    @DisplayName("When getSessionByEndAt With Valid endAt Then Returns Session")
+    public void whenGetSessionByEndAtWithValidStartAtThenReturnsSession() {
+        // Arrange
+        String endAt = "10:40/24-05-2021";
+        Session session = new Session().setId(1).setEndAt(endAt);
+        when(sessionRepository.findByEndAt(endAt))
+                .thenReturn(Optional.of(session));
+
+        // Act
+        Session foundSession = sessionService.getSessionByEndAt(endAt);
+
+        // Assert
+        assertThat(foundSession.getEndAt()).isEqualTo(endAt);
+    }
+
+    @Test
+    @DisplayName("When getSessionByEndAt With Invalid endAt Then Returns Session")
+    public void whenGetSessionByEndAtWithInvalidEndAtThenReturnsSession() {
+        // Arrange
+        String endAt = "10:40/24-05-2021";
+        String template = "Resource %s not found for %s with value %s";
+        when(sessionRepository.findByStartAt(endAt))
+                .thenReturn(Optional.empty());
+        String expectedMessage = String.format(template, "Session", "EndAt", endAt);
+
+        // Act
+        Throwable exception = catchThrowable(() -> {
+            Session foundSession = sessionService.getSessionByEndAt(endAt);
+        });
+
+        // Assert
+        assertThat(exception)
+                .isInstanceOf(ResourceNotFoundException.class)
+                .hasMessage(expectedMessage);
     }
 
 }
