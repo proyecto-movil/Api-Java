@@ -23,10 +23,10 @@ public class SessionDetail extends AuditModel {
     @JsonIgnore
     private Session session;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "user_id", nullable = false)
-    @JsonIgnore
-    private User user;
+    //@ManyToOne(fetch = FetchType.LAZY, optional = false)
+    //@JoinColumn(name = "user_id", nullable = false)
+    //@JsonIgnore
+    //private User user;
 
     public SessionDetail(@NotNull String state) {
         this.state = state;

@@ -32,7 +32,7 @@ public class SessionServiceImplTest {
     @TestConfiguration
     static class SessionServiceImplTestConfiguration {
         @Bean
-        public SessionService postService() {
+        public SessionService sessionServiceService() {
             return new SessionServiceImpl();
         }
     }
