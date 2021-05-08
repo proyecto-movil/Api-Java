@@ -33,10 +33,10 @@ public class ScheduleServiceImplTest {
     }
 
     @Test
-    @DisplayName("Get schedule by name with valid name then return true")
+    @DisplayName("Get schedule by name with valid name course then return true")
     public void whenGetSubscriptionByNameWithValidNameThenReturnsSubscription(){
         //Arrange
-        String name = "EnglishBasic2";
+        String name = "Verb to be";
         Schedule schedule = new Schedule();
 
         schedule.setName(name);
@@ -50,6 +50,25 @@ public class ScheduleServiceImplTest {
         assertThat(foundSchedule.getName()).isEqualTo(name);
     }
 
+    @Test
+    @DisplayName("Get schedule error message when name course is not valid")
+    public void whenGetScheduleByNameWithInvalidNameReturnsResourceNotFoundException(){
+        String name ="Programming Python";
+        String template ="Resource %s not found for %s with value %s";
+        when(_scheduleRepository.findByName(name))
+                .thenReturn(Optional.empty());
+        String expectedMessage = String.format(template, "Schedule", "Name", name);
+        //Act
+        Throwable exception = catchThrowable(()->{
+            Schedule foundSchedule = _scheduleService.getByName(name);
+        });
+
+        //Assert
+        assertThat(exception)
+                .isInstanceOf(ResourceNotFoundException.class)
+                .hasMessage(expectedMessage);
+    }
+    
 
 
 }
