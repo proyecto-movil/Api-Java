@@ -75,6 +75,7 @@
             <artifactId>postgresql</artifactId>
             <version>42.2.20</version>
         </dependency>
+
     </dependencies>
 
     <build>
