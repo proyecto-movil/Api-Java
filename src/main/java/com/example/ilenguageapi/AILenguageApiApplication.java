@@ -8,10 +8,10 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 @EnableJpaAuditing
 @SpringBootApplication
-public class ILenguageApiApplication {
+public class AILenguageApiApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(ILenguageApiApplication.class, args);
+        SpringApplication.run(AILenguageApiApplication.class, args);
     }
 
     @Bean
