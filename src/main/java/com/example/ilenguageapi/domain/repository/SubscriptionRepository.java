@@ -10,7 +10,7 @@ import java.util.Optional;
 @Repository
 public interface SubscriptionRepository extends JpaRepository<Subscription, Integer> {
     public Optional<Subscription> findByName(String name);
-    public Optional<Subscription> findByPrice(float price);
+    public Optional<Subscription> findByPrice(int price);
     public Optional<Subscription>findByMonthDuration(int monthDuration);
 
 }

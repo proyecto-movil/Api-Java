@@ -57,7 +57,7 @@ public class SubscriptionServiceImplTest {
     @DisplayName("Get subscription by price with valid price then return true")
     public void whenGetSubscriptionByPriceWithValidPriceThenReturnsSubscription(){
         //Arrange
-        float price = 99.99f;
+        int price = 99;
         Subscription subscription = new Subscription();
         subscription.setPrice(price);
         subscription.setId(45);

@@ -67,7 +67,7 @@ public class SubscriptionServiceImpl  implements SubscriptionService {
     }
 
     @Override
-    public Subscription getByPrice(float price) {
+    public Subscription getByPrice(int price) {
         return subscriptionRepository.findByPrice(price)
                 .orElseThrow(()-> new ResourceNotFoundException("Subscription", "Price", price));
     }

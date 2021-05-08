@@ -32,11 +32,11 @@ public class SessionDetailsController {
     @Autowired
     private ModelMapper mapper;
 
-    @Operation(summary = "Get Session Details", description = "Get All Session Details by Pages", tags = {"sessionDetails"})
+   /* @Operation(summary = "Get Session Details", description = "Get All Session Details by Pages", tags = {"sessionDetails"})
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "All Session Details returned", content = @Content(mediaType = "application/json"))
     })
-    @GetMapping("/sessions")
+  @GetMapping("/sessions")
     public Page<SessionDetailResource> getAllSessionDetails(Pageable pageable) {
         Page<SessionDetail> sessionDetailsPage = sessionDetailService.getAllSessionDetails(pageable);
         List<SessionDetailResource> resources = sessionDetailsPage.getContent()
@@ -45,7 +45,7 @@ public class SessionDetailsController {
                 .collect(Collectors.toList());
 
         return new PageImpl<>(resources, pageable, resources.size());
-    }
+    }*/
 
     @GetMapping("/session_details/{id}")
     public SessionDetailResource getSessionDetailById(@PathVariable(name = "id") Long sessionDetailId) {
