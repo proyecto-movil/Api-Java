@@ -10,6 +10,7 @@ public interface UserService {
     Page<User> getAllUsers(Pageable pageable);
     Page<User> getAllUsersByRoleId(Long roleId, Pageable pageable);
     Page<User> getAllUsersBySubscriptionId(Long subscriptionId, Pageable pageable);
+    User assignRoleById(User user, Long roleId);
     User getUserById(Long userId);
     User createUser(User user);
     User updateUser(Long userId, User userDetails);

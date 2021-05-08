@@ -1,6 +1,8 @@
 package com.example.ilenguageapi.service;
 
+import com.example.ilenguageapi.domain.model.Role;
 import com.example.ilenguageapi.domain.model.User;
+import com.example.ilenguageapi.domain.repository.RoleRepository;
 import com.example.ilenguageapi.domain.repository.UserRepository;
 import com.example.ilenguageapi.domain.service.UserService;
 import com.example.ilenguageapi.exception.ResourceNotFoundException;
@@ -15,6 +17,8 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private RoleRepository roleRepository;
 
     @Override
     public Page<User> getAllUsers(Pageable pageable) {
@@ -29,6 +33,13 @@ public class UserServiceImpl implements UserService {
     @Override
     public Page<User> getAllUsersBySubscriptionId(Long subscriptionId, Pageable pageable) {
         return null;
+    }
+
+    @Override
+    public User assignRoleById(User user, Long roleId) {
+        Role role = roleRepository.findById(roleId).orElseThrow(() -> new ResourceNotFoundException("Role", "id", roleId));
+        user.setRole(role);
+        return user;
     }
 
     @Override

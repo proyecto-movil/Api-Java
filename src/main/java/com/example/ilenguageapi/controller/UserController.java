@@ -64,10 +64,10 @@ public class UserController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "User created", content = @Content(mediaType = "application/json")),
     })
-    @PostMapping("/user")
-    public UserResource createUser(@Valid @RequestBody SaveUserResource resource) {
+    @PostMapping("/user/{roleId}")
+    public UserResource createUser(@Valid @RequestBody SaveUserResource resource, @PathVariable Long roleId) {
         User user = convertToEntity(resource);
-        return convertToResource(userService.createUser(user));
+        return convertToResource(userService.createUser(userService.assignRoleById(user,roleId)));
     }
 
     @Operation(summary = "Update User", description = "Update user by userId", tags = {"Users"})
