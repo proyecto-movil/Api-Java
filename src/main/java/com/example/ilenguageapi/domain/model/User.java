@@ -79,19 +79,27 @@ public class User extends AuditModel {
     //private List<languageInterest> languageInterests;
 
     //TODO:Implement Role
-/*
+
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "role_id",nullable = false)
     JsonIgnore
     private Role role;
-*/
 
-/* missing function in getRole()
 
-    public boolean isRoledWith(Role role){
-    return this.getRole()
+   public boolean isUserWithRole(Role role){
+        return this.getRole().equals(role);
     }
-*/
+    public Role getRole(){
+        return  this.role;
+    }
+    public User roleWith(Role role){
+        if (!isUserWithRole(role)){
+            this.getRole().setName(role.getName());
+            this.getRole().setId(role.getId());
+        }
+        return this;
+    }
+
 
     public Long getId() {
         return id;
