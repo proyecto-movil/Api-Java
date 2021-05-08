@@ -1,18 +1,16 @@
 package com.example.ilenguageapi.domain.model;
 
-import java.util.List;
-
 public class Schedule {
-    private  String Name;
+    private  String name;
     private int id;
-    public int HoursDuration;
+    public int hoursDuration;
     public Schedule(){
 
     }
     public Schedule( int id,int hoursDuration,String name) {
         this.id = id;
-        HoursDuration=hoursDuration;
-        Name = name;
+        this.hoursDuration =hoursDuration;
+        this.name = name;
     }
 
     private String descriptionSchedule;
@@ -45,19 +43,19 @@ public class Schedule {
     }
 
     public int getHoursDuration() {
-        return  HoursDuration;
+        return hoursDuration;
     }
 
     public void setHoursDuration(int hoursDuration) {
-        HoursDuration = hoursDuration;
+        this.hoursDuration = hoursDuration;
     }
 
     public String getName() {
-        return Name;
+        return name;
     }
 
     public void setName(String name) {
-        Name = name;
+        this.name = name;
     }
 
 
