@@ -44,24 +44,30 @@ public class User extends AuditModel {
             mappedBy = "users")
     private List<Subscription> subscriptions;
 
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn( name = "role_id", nullable = false)
+    @JsonIgnore
+    private Role role;
+
     public User() {
     }
 
-    public User(@NotNull String name, @NotNull String lastName, @NotNull String email, @NotNull String password, @NotNull String description) {
+    public User(@NotNull String name, @NotNull String lastName, @NotNull String email, @NotNull String password, @NotNull String description, @NotNull String profilePhoto) {
         this.name = name;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
         this.description = description;
+        this.profilePhoto = profilePhoto;
     }
-    public boolean isUserWithRole(){
-        return true;
+    public boolean isUserWithRole(String roleName){
+        return getRole().name.equals(roleName);
     }
     public boolean isSubscribedWith(Subscription subscription){
        return this.getSubscriptions().contains(subscription);
     }
 
-    public User SubscribedWith(Subscription subscription){
+    public User SubscribeWith(Subscription subscription){
        if(!isSubscribedWith(subscription)){
           this.getSubscriptions().add(subscription);
        }
@@ -88,55 +94,71 @@ public class User extends AuditModel {
         return name;
     }
 
-    public void setName(String name) {
+    public User setName(String name) {
         this.name = name;
+        return this;
     }
 
     public String getLastName() {
         return lastName;
     }
 
-    public void setLastName(String lastName) {
+    public User setLastName(String lastName) {
         this.lastName = lastName;
+        return this;
     }
 
     public String getEmail() {
         return email;
     }
 
-    public void setEmail(String email) {
+    public User setEmail(String email) {
         this.email = email;
+        return this;
     }
 
     public String getPassword() {
         return password;
     }
 
-    public void setPassword(String password) {
+    public User setPassword(String password) {
         this.password = password;
+        return this;
     }
 
     public String getDescription() {
         return description;
     }
 
-    public void setDescription(String description) {
+    public User setDescription(String description) {
         this.description = description;
+        return this;
     }
 
     public List<Subscription> getSubscriptions() {
         return subscriptions;
     }
 
-    public void setSubscriptions(List<Subscription> subscriptions) {
+    public User setSubscriptions(List<Subscription> subscriptions) {
         this.subscriptions = subscriptions;
+        return this;
     }
 
     public String getProfilePhoto() {
         return profilePhoto;
     }
 
-    public void setProfilePhoto(String profilePhoto) {
+    public User setProfilePhoto(String profilePhoto) {
         this.profilePhoto = profilePhoto;
+        return this;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public User setRole(Role role) {
+        this.role = role;
+        return this;
     }
 }
