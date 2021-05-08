@@ -25,55 +25,45 @@ public class ScheduleController {
     @Autowired
     private ModelMapper mapper;
 
-    private Subscription convertToEntity(SaveSubscriptionResource resource){
-        return mapper.map(resource, Subscription.class);
+    private Schedule convertToEntity(SaveScheduleResource resource){
+        return mapper.map(resource, Schedule.class);
     }
-    private SubscriptionResource convertToResource(Subscription entity){
-        return mapper.map(entity, SubscriptionResource.class);
+    private ScheduleResource convertToResource(Schedule entity){
+        return mapper.map(entity, ScheduleResource.class);
     }
 
-    @GetMapping("/subscriptions")
-    public Page<SubscriptionResource> getAllSubscriptions(Pageable pageable){
-        List<SubscriptionResource> subscriptions = subscriptionService.getAllSubscriptions(pageable)
+    @GetMapping("/schedule")
+    public Page<ScheduleResource> getAllSubscriptions(Pageable pageable){
+        List<ScheduleResource> schedule = scheduleService.getAllSchedule(pageable)
                 .getContent().stream().map(this::convertToResource)
                 .collect(Collectors.toList());
-        int subscriptionCount = subscriptions.size();
-        return new PageImpl<>(subscriptions, pageable, subscriptionCount);
+        return new PageImpl<>(schedule, pageable,  schedule.size());
     }
 
-    @PostMapping("/subscriptions")
-    public SubscriptionResource createSubscription(@Valid @RequestBody SaveSubscriptionResource resource){
-        return convertToResource(subscriptionService.createSubscription(convertToEntity(resource)));
+    @PostMapping("/schedule")
+    public ScheduleResource createSchedule(@Valid @RequestBody SaveScheduleResource resource){
+        return convertToResource(scheduleService.createSchedule(convertToEntity(resource)));
     }
 
-    @PutMapping ("subscriptions/{id}")
-    public SubscriptionResource updateSubscription(@PathVariable(name="id") int subscriptionId, @Valid @RequestBody SaveSubscriptionResource resource){
-        return convertToResource(subscriptionService.updateSubscription(subscriptionId,convertToEntity(resource)));
+    @PutMapping ("schedule/{id}")
+    public ScheduleResource updateSchedule(@PathVariable(name="id") int scheduleId, @Valid @RequestBody SaveScheduleResource resource){
+        return convertToResource(scheduleService.updateSchedule(scheduleId,convertToEntity(resource)));
     }
 
-    @DeleteMapping("subscriptions/{id}")
-    public ResponseEntity<?> deleteSubscriptions(@PathVariable(name="id") int subscriptionId){
-        return subscriptionService.deleteSubscription(subscriptionId);
+    @DeleteMapping("schedule/{id}")
+    public ResponseEntity<?> deleteSchedule(@PathVariable(name="id") int scheduleId){
+        return scheduleService.deleteSchedule(scheduleId);
     }
 
-    @GetMapping("/subscriptions/{id}")
-    public SubscriptionResource getSubscriptionById(@PathVariable(name="id") int subscriptionId){
-        return convertToResource(subscriptionService.getBySubscriptionId(subscriptionId));
+    @GetMapping("/schedule/{nameCourse}")
+    public ScheduleResource getScheduleByName(@PathVariable(name="nameCourse") String scheduleName){
+        return convertToResource(scheduleService.getByName(scheduleName));
     }
 
-    @GetMapping("/subscriptions/{name}")
-    public SubscriptionResource getSubscriptionByPrice(@PathVariable(name="name") String subscriptionName){
-        return convertToResource(subscriptionService.getByName(subscriptionName));
-    }
 
-    @GetMapping("/subscriptions/{price}")
-    public SubscriptionResource getSubscriptionByPrice(@PathVariable(name="price") float producedPrice){
-        return convertToResource(subscriptionService.getByPrice(producedPrice));
-    }
-
-    @GetMapping("/subscriptions/{monthDuration}")
-    public SubscriptionResource getSubscriptionByMonthDuration(@PathVariable(name="monthDuration") int subscriptionMonthDuration){
-    return convertToResource(subscriptionService.getByDuration(subscriptionMonthDuration));
+    @GetMapping("/schedule/{hoursDuration}")
+    public ScheduleResource getScheduleByHoursDuration(@PathVariable(name="hoursDuration") int scheduleHoursDuration){
+    return convertToResource(scheduleService.getByDuration(scheduleHoursDuration));
     }
 
 
