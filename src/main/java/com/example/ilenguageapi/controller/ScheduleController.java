@@ -33,7 +33,7 @@ public class ScheduleController {
     }
 
     @GetMapping("/schedule")
-    public Page<ScheduleResource> getAllSubscriptions(Pageable pageable){
+    public Page<ScheduleResource> getAllSchedule(Pageable pageable){
         List<ScheduleResource> schedule = scheduleService.getAllSchedule(pageable)
                 .getContent().stream().map(this::convertToResource)
                 .collect(Collectors.toList());
