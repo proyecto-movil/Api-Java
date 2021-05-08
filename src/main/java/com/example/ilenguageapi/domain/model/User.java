@@ -44,24 +44,30 @@ public class User extends AuditModel {
             mappedBy = "users")
     private List<Subscription> subscriptions;
 
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn( name = "role_id", nullable = false)
+    @JsonIgnore
+    private Role role;
+
     public User() {
     }
 
-    public User(@NotNull String name, @NotNull String lastName, @NotNull String email, @NotNull String password, @NotNull String description) {
+    public User(@NotNull String name, @NotNull String lastName, @NotNull String email, @NotNull String password, @NotNull String description, @NotNull String profilePhoto) {
         this.name = name;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
         this.description = description;
+        this.profilePhoto = profilePhoto;
     }
-    public boolean isUserWithRole(){
-        return true;
+    public boolean isUserWithRole(String roleName){
+        return getRole().name.equals(roleName);
     }
     public boolean isSubscribedWith(Subscription subscription){
        return this.getSubscriptions().contains(subscription);
     }
 
-    public User SubscribedWith(Subscription subscription){
+    public User SubscribeWith(Subscription subscription){
        if(!isSubscribedWith(subscription)){
           this.getSubscriptions().add(subscription);
        }
@@ -144,6 +150,15 @@ public class User extends AuditModel {
 
     public User setProfilePhoto(String profilePhoto) {
         this.profilePhoto = profilePhoto;
+        return this;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public User setRole(Role role) {
+        this.role = role;
         return this;
     }
 }
