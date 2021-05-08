@@ -1,23 +1,36 @@
 package com.example.ilenguageapi.domain.model;
 
-import java.util.List;
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
-public class Schedule {
-    private  String Name;
+@Entity
+@Table(name = "schedules")
+public class Schedule extends AuditModel {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    public int HoursDuration;
-    public Schedule(){
-
-    }
-    public Schedule( int id,int hoursDuration,String name) {
-        this.id = id;
-        HoursDuration=hoursDuration;
-        Name = name;
-    }
-
+    @NotNull
+    private  String name;
+    @NotNull
+    public int hoursDuration;
+    @NotNull
     private String descriptionSchedule;
 
     private Day day;
+
+    public Schedule(){
+
+    }
+    public Schedule( int id,int hoursDuration,String name, String descriptionSchedule, Day day) {
+        this.id = id;
+        this.hoursDuration =hoursDuration;
+        this.name = name;
+        this.descriptionSchedule = descriptionSchedule;
+        this.day = day;
+    }
+
+
 
     public String getDescriptionSchedule() {
         return descriptionSchedule;
@@ -45,19 +58,19 @@ public class Schedule {
     }
 
     public int getHoursDuration() {
-        return  HoursDuration;
+        return hoursDuration;
     }
 
     public void setHoursDuration(int hoursDuration) {
-        HoursDuration = hoursDuration;
+        this.hoursDuration = hoursDuration;
     }
 
     public String getName() {
-        return Name;
+        return name;
     }
 
     public void setName(String name) {
-        Name = name;
+        this.name = name;
     }
 
 
