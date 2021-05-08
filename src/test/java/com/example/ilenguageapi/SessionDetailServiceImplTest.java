@@ -32,7 +32,7 @@ public class SessionDetailServiceImplTest {
     @TestConfiguration
     static class SessionDetailServiceImplTestConfiguration {
         @Bean
-        public SessionDetailService sessionDetailServiceService() {
+        public SessionDetailService sessionDetailService() {
             return new SessionDetailServiceImpl();
         }
     }
