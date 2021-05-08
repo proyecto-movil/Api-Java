@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 
 
 @Service
-public class ScheduleServicelmpl  implements ScheduleService {
+public class ScheduleServiceImpl implements ScheduleService {
 
     @Autowired
     private ScheduleRepository scheduleRepository;
