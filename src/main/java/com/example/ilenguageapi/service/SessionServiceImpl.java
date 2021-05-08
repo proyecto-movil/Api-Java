@@ -11,15 +11,14 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 
 @Service
 public class SessionServiceImpl implements SessionService {
 
     @Autowired
     private SessionRepository sessionRepository;
-    @Autowired
-    private UserRepository userRepository;
+    //@Autowired
+    //private UserRepository userRepository;
 
     @Override
     public Page<Session> getAllSessions(Pageable pageable) {
