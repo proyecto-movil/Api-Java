@@ -19,13 +19,13 @@ public class Subscription {
 
 
     @NotNull
-    public float Price;
+    public int price;
 
     @NotNull
-    public int MonthDuration;
+    public int monthDuration;
 
     @NotBlank(message ="Name is mandatory")
-    public String Name;
+    public String name;
 
 
     @ManyToMany(fetch = FetchType.LAZY,
@@ -40,11 +40,11 @@ public class Subscription {
     public Subscription() {
     }
 
-    public Subscription(int id, float price, int monthDuration, String name, List<User> users) {
+    public Subscription(int id, int price, int monthDuration, String name, List<User> users) {
         this.id = id;
-        Price = price;
-        MonthDuration = monthDuration;
-        Name = name;
+        price = price;
+        monthDuration = monthDuration;
+        name = name;
         this.users = users;
     }
 
@@ -65,28 +65,28 @@ public class Subscription {
         this.id = id;
     }
 
-    public float getPrice() {
-        return Price;
+    public int getPrice() {
+        return price;
     }
 
-    public void setPrice(float price) {
-        Price = price;
+    public void setPrice(int price) {
+        price = price;
     }
 
     public int getMonthDuration() {
-        return MonthDuration;
+        return monthDuration;
     }
 
     public void setMonthDuration(int monthDuration) {
-        MonthDuration = monthDuration;
+        monthDuration = monthDuration;
     }
 
     public String getName() {
-        return Name;
+        return name;
     }
 
     public void setName(String name) {
-        Name = name;
+        name = name;
     }
 
 

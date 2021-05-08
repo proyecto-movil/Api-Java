@@ -97,7 +97,7 @@ public class SubscriptionsController {
 
     })
     @GetMapping("/subscriptions/{price}")
-    public SubscriptionResource getSubscriptionByPrice(@PathVariable(name="price") float producedPrice){
+    public SubscriptionResource getSubscriptionByPrice(@PathVariable(name="price") int producedPrice){
         return convertToResource(subscriptionService.getByPrice(producedPrice));
     }
 

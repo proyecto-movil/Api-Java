@@ -36,7 +36,7 @@ public class SessionDetailsController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "All Session Details returned", content = @Content(mediaType = "application/json"))
     })
-    @GetMapping("/sessions")
+  @GetMapping("/sessions_details")
     public Page<SessionDetailResource> getAllSessionDetails(Pageable pageable) {
         Page<SessionDetail> sessionDetailsPage = sessionDetailService.getAllSessionDetails(pageable);
         List<SessionDetailResource> resources = sessionDetailsPage.getContent()
