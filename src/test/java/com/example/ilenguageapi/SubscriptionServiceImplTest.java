@@ -92,10 +92,10 @@ public class SubscriptionServiceImplTest {
     @DisplayName("Get subscription error message when name is not valid")
     public void whenGetSubscriptionByNameWithInvalidNameReturnsResourceNotFoundExeption(){
         String name ="Basic";
-        String template ="Resource @s not found for %s with value $s";
+        String template ="Resource %s not found for %s with value %s";
         when(_subscriptionRepository.findByName(name))
                 .thenReturn(Optional.empty());
-        String expectedMessage = String.format(template, "Subscription", "name", name);
+        String expectedMessage = String.format(template, "Subscription", "Name", name);
         //Act
         Throwable exception = catchThrowable(()->{
                 Subscription foundSubscription = _subscriptionService.getByName(name);
