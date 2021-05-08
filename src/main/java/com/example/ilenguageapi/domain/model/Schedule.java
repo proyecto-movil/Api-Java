@@ -3,11 +3,11 @@ package com.example.ilenguageapi.domain.model;
 import java.util.List;
 
 public class Schedule {
-
+    private int id;
     public String NameCourse;
     public int HoursDuration;
-    public Schedule( int hoursDuration,String nameCourse) {
-
+    public Schedule( int id,int hoursDuration,String nameCourse) {
+        this.id = id;
         HoursDuration=hoursDuration;
         NameCourse = nameCourse;
     }
@@ -24,7 +24,13 @@ public class Schedule {
         this.descriptionSchedule = descriptionSchedule;
     }
 
+    public int getId() {
+        return id;
+    }
 
+    public void setId(int id) {
+        this.id = id;
+    }
     public Day day() {
         return day;
     }

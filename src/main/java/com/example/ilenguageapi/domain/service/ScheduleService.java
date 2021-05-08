@@ -8,8 +8,9 @@ import org.springframework.http.ResponseEntity;
 public interface ScheduleService {
     Page<Schedule> getAllSchedule(Pageable pageable);
     Schedule createSchedule(Schedule schedule);
-    Schedule updateSchedule( Schedule schedule);
-    Schedule saveSchedule ( Schedule schedule);
+    Schedule updateSchedule(int scheduleId ,Schedule schedule);
+
+    ResponseEntity<?> deleteSchedule(int scheduleId);
     Schedule getByName(String nameCourse);
     Schedule getByDuration(int hoursDuration);
 
