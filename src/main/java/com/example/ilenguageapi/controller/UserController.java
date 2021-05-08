@@ -79,7 +79,7 @@ public class UserController {
         User user = convertToEntity(resource);
         return convertToResource(userService.updateUser(userId, user));
     }
-    @Operation(summary = "Delete User", description = "Delte user by userId", tags = {"Users"})
+    @Operation(summary = "Delete User", description = "Deleted user by userId", tags = {"Users"})
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "User deleted", content = @Content(mediaType = "application/json")),
     })

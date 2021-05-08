@@ -1,6 +1,7 @@
 package com.example.ilenguageapi;
 
 import com.example.ilenguageapi.domain.model.User;
+import com.example.ilenguageapi.domain.repository.RoleRepository;
 import com.example.ilenguageapi.domain.repository.UserRepository;
 import com.example.ilenguageapi.domain.service.UserService;
 import com.example.ilenguageapi.exception.ResourceNotFoundException;
@@ -30,6 +31,9 @@ public class UserServiceImplTest {
 
     @MockBean
     private UserRepository userRepository;
+
+    @MockBean
+    private RoleRepository roleRepository;
 
     @Autowired
     private UserService userService;
