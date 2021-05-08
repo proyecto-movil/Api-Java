@@ -68,7 +68,7 @@ public class ScheduleServiceImplTest {
                 .isInstanceOf(ResourceNotFoundException.class)
                 .hasMessage(expectedMessage);
     }
-    
+
 
 
 }
