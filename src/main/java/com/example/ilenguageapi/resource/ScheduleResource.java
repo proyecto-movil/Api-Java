@@ -2,28 +2,29 @@ package com.example.ilenguageapi.resource;
 
 public class ScheduleResource {
     private int id;
-    private String nameCourse;
+    private String name;
     private int hoursDuration;
 
     public int getId() {
         return id;
     }
 
-    public String getNameCourse() {
-        return nameCourse;
+    public String getName() {
+        return name;
     }
 
     public int getHoursDuration() {
         return hoursDuration;
     }
 
+
     public ScheduleResource setId(int id) {
         this.id = id;
         return this;
     }
 
-    public ScheduleResource setNameCourse(String nameCourse) {
-        this.nameCourse = nameCourse;
+    public ScheduleResource setName(String name) {
+        this.name = name;
         return this;
     }
 

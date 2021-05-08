@@ -55,8 +55,8 @@ public class ScheduleController {
         return scheduleService.deleteSchedule(scheduleId);
     }
 
-    @GetMapping("/schedule/{nameCourse}")
-    public ScheduleResource getScheduleByName(@PathVariable(name="nameCourse") String scheduleName){
+    @GetMapping("/schedule/{name}")
+    public ScheduleResource getScheduleByName(@PathVariable(name="name") String scheduleName){
         return convertToResource(scheduleService.getByName(scheduleName));
     }
 

@@ -10,7 +10,7 @@ import java.util.Optional;
 @Repository
 public interface ScheduleRepository extends JpaRepository<Schedule, Integer> {
 
-    public Optional<Schedule> findByNameCourse(String nameCourse);
+    public Optional<Schedule> findByName(String name);
     public Optional<Schedule> findByHoursDuration(int hoursDuration);
 
 }

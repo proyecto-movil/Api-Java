@@ -3,13 +3,16 @@ package com.example.ilenguageapi.domain.model;
 import java.util.List;
 
 public class Schedule {
+    private  String Name;
     private int id;
-    public String NameCourse;
     public int HoursDuration;
-    public Schedule( int id,int hoursDuration,String nameCourse) {
+    public Schedule(){
+
+    }
+    public Schedule( int id,int hoursDuration,String name) {
         this.id = id;
         HoursDuration=hoursDuration;
-        NameCourse = nameCourse;
+        Name = name;
     }
 
     private String descriptionSchedule;
@@ -29,8 +32,10 @@ public class Schedule {
     }
 
     public void setId(int id) {
+
         this.id = id;
     }
+
     public Day day() {
         return day;
     }
@@ -47,11 +52,13 @@ public class Schedule {
         HoursDuration = hoursDuration;
     }
 
-    public String getNameCourse() {
-        return NameCourse;
+    public String getName() {
+        return Name;
     }
 
-    public void setNameCourse(String nameCourse) {
-        NameCourse = nameCourse;
+    public void setName(String name) {
+        Name = name;
     }
+
+
 }

@@ -11,7 +11,7 @@ public interface ScheduleService {
     Schedule updateSchedule(int scheduleId ,Schedule schedule);
 
     ResponseEntity<?> deleteSchedule(int scheduleId);
-    Schedule getByName(String nameCourse);
+    Schedule getByName(String name);
     Schedule getByDuration(int hoursDuration);
 
 }
