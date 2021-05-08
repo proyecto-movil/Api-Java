@@ -36,7 +36,7 @@ public class RoleServiceImplTest {
         }
     }
 
-  /*  @Test
+    @Test
     @DisplayName("when GetRoleByUserid With Valid Id Then Returns Role")
     public  void whenGetRoleByUseridWithValidIdThenReturnsRole(){
         //Arrange
@@ -70,7 +70,6 @@ public class RoleServiceImplTest {
                 .isInstanceOf(ResourceNotFoundException.class)
                 .hasMessage(expectedMessage);
     }
-*/
     //CORRECT
     @Test
     @DisplayName("when GetRoleById With Valid Id Then ReturnsRole")
@@ -86,7 +85,6 @@ public class RoleServiceImplTest {
         //Assert
         assertThat(foundRole.getId()).isEqualTo(id);
     }
-/*
     @Test
     @DisplayName("when GetRoleById With Invalid Id Then Returns ResourceNotFoundException")
     public  void whenGetRoleByIdWithInvalidIdThenReturnsResourceNotFoundException(){
@@ -106,6 +104,5 @@ public class RoleServiceImplTest {
                 .isInstanceOf(ResourceNotFoundException.class)
                 .hasMessage(expectedMessage);
     }
-*/
 
 }

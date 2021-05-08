@@ -1,5 +1,7 @@
 package com.example.ilenguageapi.domain.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -37,10 +39,6 @@ public class User extends AuditModel {
     @NotNull
     private String profilePhoto;
 
-    /*public Role getRole(){
-        return role;
-    }*/
-
     @ManyToMany(fetch = FetchType.LAZY,
             cascade = {CascadeType.PERSIST, CascadeType.MERGE},
             mappedBy = "users")
@@ -77,29 +75,6 @@ public class User extends AuditModel {
     //TODO: How to implement list of interest
     //private List<interest> interests;
     //private List<languageInterest> languageInterests;
-
-    //TODO:Implement Role
-
-    //@ManyToOne(fetch = FetchType.LAZY, optional = false)
-    //@JoinColumn(name = "role_id",nullable = false)
-    //JsonIgnore
-    //private Role role;
-
-    /*
-   public boolean isUserWithRole(Role role){
-        return this.getRole().equals(role);
-    }
-    public Role getRole(){
-        return  this.role;
-    }
-    public User roleWith(Role role){
-        if (!isUserWithRole(role)){
-            this.getRole().setName(role.getName());
-            this.getRole().setId(role.getId());
-        }
-        return this;
-    }
-    */
 
     public Long getId() {
         return id;
