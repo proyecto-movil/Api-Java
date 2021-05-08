@@ -36,40 +36,6 @@ public class RoleServiceImplTest {
         }
     }
 
-    @Test
-    @DisplayName("when GetRoleByUserid With Valid Id Then Returns Role")
-    public  void whenGetRoleByUseridWithValidIdThenReturnsRole(){
-        //Arrange
-        Long id = 1L;
-        Role role=new Role();
-        User user=new User();
-        user.setId(1L);
-        when(roleRepository.findByUserId(id))
-                .thenReturn(Optional.of(role));
-        //Act
-        Role foundRole=roleService.getRoleByUserId(id);
-        //Assert
-        assertThat(foundRole.getId()).isEqualTo(id);
-    }
-    @Test
-    @DisplayName("when GetRoleByUserid With Invalid Id Then Returns ResourceNotFoundException")
-    public  void whenGetRoleByUseridWithInvalidIdThenReturnsResourceNotFoundException(){
-        //Arrange
-        Long id = 1L;
-        String template="Resource %s not found for %s with value %s";
-        when(roleRepository.findByUserId(id))
-                .thenReturn(Optional.empty());
-        String expectedMessage=String.format(template,"Role","User",id);
-
-        //Act
-        Throwable exception=catchThrowable(()->{
-            Role foundRole=roleService.getRoleByUserId(id);
-        });
-        //Assert
-        assertThat(exception)
-                .isInstanceOf(ResourceNotFoundException.class)
-                .hasMessage(expectedMessage);
-    }
     //CORRECT
     @Test
     @DisplayName("when GetRoleById With Valid Id Then ReturnsRole")
@@ -85,6 +51,7 @@ public class RoleServiceImplTest {
         //Assert
         assertThat(foundRole.getId()).isEqualTo(id);
     }
+
     @Test
     @DisplayName("when GetRoleById With Invalid Id Then Returns ResourceNotFoundException")
     public  void whenGetRoleByIdWithInvalidIdThenReturnsResourceNotFoundException(){
@@ -93,7 +60,7 @@ public class RoleServiceImplTest {
         String template="Resource %s not found for %s with value %s";
         when(roleRepository.findById(id))
                 .thenReturn(Optional.empty());
-        String expectedMessage=String.format(template,"Role","Id",id);
+        String expectedMessage=String.format(template,"Role","id",id);
 
         //Act
         Throwable exception=catchThrowable(()->{
@@ -104,5 +71,7 @@ public class RoleServiceImplTest {
                 .isInstanceOf(ResourceNotFoundException.class)
                 .hasMessage(expectedMessage);
     }
+
+
 
 }

@@ -23,10 +23,7 @@ public class Role {
 
     public Role() {
     }
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "user_id", nullable = false)
-    @JsonIgnore
-    private User user;
+
 
     public Role( @NotNull String name) {
         this.name = name;
@@ -48,13 +45,8 @@ public class Role {
         this.name = name;
     }
 
-    public User getUser() {
-        return user;
-    }
 
-    public void setUser(User user) {
-        this.user = user;
-    }
+
 
     private class List<T> {
     }

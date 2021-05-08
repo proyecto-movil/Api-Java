@@ -25,40 +25,24 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public Role getRoleById(Long roleId) {
         return roleRepository.findById(roleId)
-                .orElseThrow(()-> new ResourceNotFoundException("Role","Id",roleId));
+                .orElseThrow(() -> new ResourceNotFoundException("Role", "Id", roleId));
     }
 
     @Override
     public Role updateRole(Long roleId, Role roleRequest) {
-        Role role=roleRepository.findById(roleId)
-                .orElseThrow(()-> new ResourceNotFoundException("Role","Id",roleId));
+        Role role = roleRepository.findById(roleId)
+                .orElseThrow(() -> new ResourceNotFoundException("Role", "Id", roleId));
         role.setName(roleRequest.getName());
         return roleRepository.save(role);
     }
 
     @Override
     public ResponseEntity<?> deleteRole(Long roleId) {
-        Role role=roleRepository.findById(roleId)
-                .orElseThrow(()-> new ResourceNotFoundException("Role","Id",roleId));
+        Role role = roleRepository.findById(roleId)
+                .orElseThrow(() -> new ResourceNotFoundException("Role", "Id", roleId));
         roleRepository.delete(role);
         return ResponseEntity.ok().build();
     }
 
-    @Override
-    public Role getRoleByUserId(Long userId) {
-        return roleRepository.findByUserId(userId)
-                .orElseThrow(() -> new ResourceNotFoundException("Role", "User", userId));
-    }
 
-    @Override
-    public Role assignRoleUser(Long roleId, Long userId) {
-        //TODO: ADD userRepository
-        // User user=userRepository.findById(userId)
-        // .orElseThrow(()-> new ResourceNotFoundException("User", "Id", userId));
-        // return roleRepository.findById(roleId).map( role-> roleRepository. save(role,roleWith(role)))
-        //                 .orElseThrow(() -> new ResourceNotFoundException("Role", "Id", roleId));
-
-        //delete null when the implementation is ready
-        return null;
-    }
 }

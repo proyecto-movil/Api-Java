@@ -47,10 +47,7 @@ public class RolesController {
         return roleService.deleteRole(roleId);
     }
 
-    @GetMapping("/users/{userId}/roles")
-    public RoleResource getRoleByUserId(@PathVariable Long userId) {
-        return convertToResource(roleService.getRoleByUserId(userId));
-    }
+
 
     @GetMapping("/roles/{roleId}")
     public RoleResource getRoleById(@PathVariable Long roleId){
