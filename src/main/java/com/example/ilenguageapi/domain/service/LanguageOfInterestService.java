@@ -3,8 +3,7 @@ package com.example.ilenguageapi.domain.service;
 import com.example.ilenguageapi.domain.model.LanguageOfInterest;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
-
-import java.awt.print.Pageable;
+import org.springframework.data.domain.Pageable;
 
 public interface LanguageOfInterestService {
     Page<LanguageOfInterest> getAllTopics(Pageable pageable);

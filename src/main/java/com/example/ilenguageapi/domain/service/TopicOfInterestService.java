@@ -3,8 +3,8 @@ package com.example.ilenguageapi.domain.service;
 import com.example.ilenguageapi.domain.model.TopicOfInterest;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.data.domain.Pageable;
 
-import java.awt.print.Pageable;
 
 public interface TopicOfInterestService {
     Page<TopicOfInterest> getAllTopics(Pageable pageable);
