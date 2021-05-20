@@ -6,7 +6,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "language-of-interests")
-public class LanguageOfInterest {
+public class LanguageOfInterest extends AuditModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

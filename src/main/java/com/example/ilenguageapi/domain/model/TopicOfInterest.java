@@ -8,7 +8,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "topic_of_interest")
-public class TopicOfInterest {
+public class TopicOfInterest extends AuditModel{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
