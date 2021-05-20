@@ -79,9 +79,19 @@ public class User extends AuditModel {
     }
 
     //TODO: How to implement list of interest
-    //private List<interest> interests;
-    //private List<languageInterest> languageInterests;
+    @ManyToMany(fetch = FetchType.LAZY
+    ,cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(name = "user_topics",
+            joinColumns = {@JoinColumn(name = "user_id")},
+            inverseJoinColumns = {@JoinColumn(name = "topic_id")})
+    List<TopicOfInterest> topicOfInterests;
 
+    @ManyToMany(fetch = FetchType.LAZY
+            ,cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(name = "user_languages",
+            joinColumns = {@JoinColumn(name = "user_id")},
+            inverseJoinColumns = {@JoinColumn(name = "language_id")})
+    List<LanguageOfInterest> languageOfInterests;
     public Long getId() {
         return id;
     }
