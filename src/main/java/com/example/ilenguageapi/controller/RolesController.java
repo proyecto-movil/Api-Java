@@ -47,16 +47,16 @@ public class RolesController {
         return roleService.deleteRole(roleId);
     }
 
-
-
     @GetMapping("/roles/{roleId}")
     public RoleResource getRoleById(@PathVariable Long roleId){
         return convertToResource(roleService.getRoleById(roleId));
     }
 
+    @GetMapping("/roles/{name}")
+    public RoleResource getRoleByName(@PathVariable String name){
+        return convertToResource(roleService.getRoleByName(name));
+    }
 
     private Role convertToEntity(SaveRoleResource resource){return mapper.map(resource,Role.class);}
     private RoleResource convertToResource(Role entity){return mapper.map(entity,RoleResource.class);}
-
-
 }
