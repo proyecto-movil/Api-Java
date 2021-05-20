@@ -48,4 +48,8 @@ public class RoleServiceImpl implements RoleService {
                 .orElseThrow(()->new ResourceNotFoundException("Role","name",name));
     }
 
+    @Override
+    public Role createRole(Role role) {
+        return roleRepository.save(role);
+    }
 }

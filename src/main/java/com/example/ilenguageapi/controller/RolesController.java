@@ -1,10 +1,13 @@
 package com.example.ilenguageapi.controller;
 
 import com.example.ilenguageapi.domain.model.Role;
+import com.example.ilenguageapi.domain.model.User;
 import com.example.ilenguageapi.domain.repository.RoleRepository;
 import com.example.ilenguageapi.domain.service.RoleService;
 import com.example.ilenguageapi.resource.RoleResource;
 import com.example.ilenguageapi.resource.SaveRoleResource;
+import com.example.ilenguageapi.resource.SaveUserResource;
+import com.example.ilenguageapi.resource.UserResource;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -55,6 +58,11 @@ public class RolesController {
     @GetMapping("/roles/{name}")
     public RoleResource getRoleByName(@PathVariable String name){
         return convertToResource(roleService.getRoleByName(name));
+    }
+
+    @PostMapping("/role")
+    public RoleResource createRole(@Valid @RequestBody SaveRoleResource resource){
+        return convertToResource(roleService.createRole(convertToEntity(resource)));
     }
 
     private Role convertToEntity(SaveRoleResource resource){return mapper.map(resource,Role.class);}
