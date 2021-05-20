@@ -39,15 +39,7 @@ public class User extends AuditModel {
     @NotNull
     private String profilePhoto;
 
-    @ManyToMany(fetch = FetchType.LAZY,
-            cascade = {CascadeType.PERSIST, CascadeType.MERGE},
-            mappedBy = "users")
-    private List<Subscription> subscriptions;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn( name = "role_id", nullable = false)
-    @JsonIgnore
-    private Role role;
 
     public User() {
     }
@@ -60,9 +52,21 @@ public class User extends AuditModel {
         this.description = description;
         this.profilePhoto = profilePhoto;
     }
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn( name = "role_id", nullable = false)
+    @JsonIgnore
+    private Role role;
+
     public boolean isUserWithRole(String roleName){
         return getRole().name.equals(roleName);
     }
+
+    @ManyToMany(fetch = FetchType.LAZY,
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE},
+            mappedBy = "users")
+    private List<Subscription> subscriptions;
+
     public boolean isSubscribedWith(Subscription subscription){
        return this.getSubscriptions().contains(subscription);
     }
@@ -78,9 +82,50 @@ public class User extends AuditModel {
        return this.getSubscriptions().get(size - 1);
     }
 
-    //TODO: How to implement list of interest
-    //private List<interest> interests;
-    //private List<languageInterest> languageInterests;
+    @ManyToMany(fetch = FetchType.LAZY
+    ,cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(name = "user_topics",
+            joinColumns = {@JoinColumn(name = "user_id")},
+            inverseJoinColumns = {@JoinColumn(name = "topic_id")})
+    List<TopicOfInterest> topicOfInterests;
+
+    public boolean hasTheTopicOf(TopicOfInterest topicOfInterest){
+        return this.getTopicOfInterests().contains(topicOfInterest);
+    }
+    public User addTopicOfInterest(TopicOfInterest topicOfInterest){
+        if(!this.hasTheTopicOf(topicOfInterest)){
+           this.getTopicOfInterests().add(topicOfInterest);
+        }
+        return this;
+    }
+    public User removeTopicOfInterest(TopicOfInterest topicOfInterest){
+       if(this.hasTheTopicOf(topicOfInterest)){
+          this.getTopicOfInterests().remove(topicOfInterest);
+       }
+       return this;
+    }
+    @ManyToMany(fetch = FetchType.LAZY
+            ,cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(name = "user_languages",
+            joinColumns = {@JoinColumn(name = "user_id")},
+            inverseJoinColumns = {@JoinColumn(name = "language_id")})
+    List<LanguageOfInterest> languageOfInterests;
+
+    public boolean hasTheLenguageOf(LanguageOfInterest languageOfInterest){
+        return this.getLanguageOfInterests().contains(languageOfInterest);
+    }
+    public User addLanguageOfInterest(LanguageOfInterest languageOfInterest){
+        if(!this.hasTheLenguageOf(languageOfInterest)){
+            this.getLanguageOfInterests().add(languageOfInterest);
+        }
+        return this;
+    }
+    public User removeLanguageOfInterest(LanguageOfInterest languageOfInterest){
+        if(this.hasTheLenguageOf(languageOfInterest)){
+            this.getLanguageOfInterests().remove(languageOfInterest);
+        }
+        return this;
+    }
 
     public Long getId() {
         return id;
@@ -160,6 +205,24 @@ public class User extends AuditModel {
 
     public User setRole(Role role) {
         this.role = role;
+        return this;
+    }
+
+    public List<TopicOfInterest> getTopicOfInterests() {
+        return topicOfInterests;
+    }
+
+    public User setTopicOfInterests(List<TopicOfInterest> topicOfInterests) {
+        this.topicOfInterests = topicOfInterests;
+        return this;
+    }
+
+    public List<LanguageOfInterest> getLanguageOfInterests() {
+        return languageOfInterests;
+    }
+
+    public User setLanguageOfInterests(List<LanguageOfInterest> languageOfInterests) {
+        this.languageOfInterests = languageOfInterests;
         return this;
     }
 }
