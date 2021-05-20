@@ -62,7 +62,7 @@ public class UserTopicsController {
             @ApiResponse(responseCode = "200", description = "ALl topics returned", content = @Content(mediaType = "application/json")),
             @ApiResponse(responseCode = "404", description = "User not found")
     })
-    @GetMapping("/uset/{userId}/topics")
+    @GetMapping("/user/{userId}/topics")
     public Page<TopicOfInterestResource> getAllTopicByUserId(
             @PathVariable Long userId,
             Pageable pageable) {
