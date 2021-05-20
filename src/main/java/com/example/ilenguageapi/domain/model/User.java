@@ -93,12 +93,17 @@ public class User extends AuditModel {
         return this.getTopicOfInterests().contains(topicOfInterest);
     }
     public User addTopicOfInterest(TopicOfInterest topicOfInterest){
-        if(!hasTheTopicOf(topicOfInterest)){
+        if(!this.hasTheTopicOf(topicOfInterest)){
            this.getTopicOfInterests().add(topicOfInterest);
         }
         return this;
     }
-
+    public User removeTopicOfInterest(TopicOfInterest topicOfInterest){
+       if(this.hasTheTopicOf(topicOfInterest)){
+          this.getTopicOfInterests().remove(topicOfInterest);
+       }
+       return this;
+    }
     @ManyToMany(fetch = FetchType.LAZY
             ,cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name = "user_languages",
@@ -110,8 +115,14 @@ public class User extends AuditModel {
         return this.getLanguageOfInterests().contains(languageOfInterest);
     }
     public User addLanguageOfInterest(LanguageOfInterest languageOfInterest){
-        if(!hasTheLenguageOf(languageOfInterest)){
+        if(!this.hasTheLenguageOf(languageOfInterest)){
             this.getLanguageOfInterests().add(languageOfInterest);
+        }
+        return this;
+    }
+    public User removeLanguageOfInterest(LanguageOfInterest languageOfInterest){
+        if(this.hasTheLenguageOf(languageOfInterest)){
+            this.getLanguageOfInterests().remove(languageOfInterest);
         }
         return this;
     }

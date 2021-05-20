@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 
 public interface LanguageOfInterestService {
     Page<LanguageOfInterest> getAllTopics(Pageable pageable);
+    Page<LanguageOfInterest> getAllLanguageByUserId(Long userId, Pageable pageable);
     LanguageOfInterest getLanguaeById(Long languageId);
     LanguageOfInterest createLanguage(LanguageOfInterest Language);
     LanguageOfInterest updateLanguage(Long languegeId, LanguageOfInterest languageDetails);

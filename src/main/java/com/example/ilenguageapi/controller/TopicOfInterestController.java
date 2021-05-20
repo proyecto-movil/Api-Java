@@ -40,7 +40,7 @@ public class TopicOfInterestController {
 
     @Operation(summary = "Add topic", description = "Create new topic", tags = {"topics"})
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Topic created", content = @Content(mediaType = "application/jsong"))
+            @ApiResponse(responseCode = "200", description = "Topic created", content = @Content(mediaType = "application/json"))
     })
     @PostMapping("/topic")
     public TopicOfInterestResource createTopic(@Valid @RequestBody SaveTopicOfInterestResource resource) {

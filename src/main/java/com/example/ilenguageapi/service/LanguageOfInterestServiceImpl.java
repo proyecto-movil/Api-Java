@@ -2,22 +2,38 @@ package com.example.ilenguageapi.service;
 
 import com.example.ilenguageapi.domain.model.LanguageOfInterest;
 import com.example.ilenguageapi.domain.repository.LanguageOfInterestRespository;
+import com.example.ilenguageapi.domain.repository.UserRepository;
 import com.example.ilenguageapi.domain.service.LanguageOfInterestService;
 import com.example.ilenguageapi.exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class LanguageOfInterestServiceImpl implements LanguageOfInterestService {
     @Autowired
     private LanguageOfInterestRespository languageOfInterestRespository;
 
+    @Autowired
+    private UserRepository userRepository;
+
     @Override
     public Page<LanguageOfInterest> getAllTopics(Pageable pageable) {
         return languageOfInterestRespository.findAll(pageable);
+    }
+
+    @Override
+    public Page<LanguageOfInterest> getAllLanguageByUserId(Long userId, Pageable pageable) {
+        return userRepository.findById(userId).map(user -> {
+            List<LanguageOfInterest> languages = user.getLanguageOfInterests();
+            int languageCount = languages.size();
+            return new PageImpl<>(languages, pageable, languageCount);
+        }).orElseThrow(() -> new ResourceNotFoundException("User", "Id", userId));
     }
 
     @Override

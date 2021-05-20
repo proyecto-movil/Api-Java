@@ -5,7 +5,7 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Entity
-@Table(name = "language-of-interests")
+@Table(name = "language_of_interests")
 public class LanguageOfInterest extends AuditModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

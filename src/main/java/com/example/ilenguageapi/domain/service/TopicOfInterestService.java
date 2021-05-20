@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 
 public interface TopicOfInterestService {
     Page<TopicOfInterest> getAllTopics(Pageable pageable);
+    Page<TopicOfInterest> getAllTopicsByUserId(Long userId, Pageable pageable);
     TopicOfInterest getTopicById(Long topicId);
     TopicOfInterest createTopic(TopicOfInterest Topic);
     TopicOfInterest updateTopic(Long topicId, TopicOfInterest topicDetails);
