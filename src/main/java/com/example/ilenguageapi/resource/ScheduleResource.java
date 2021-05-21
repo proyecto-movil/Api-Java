@@ -3,6 +3,7 @@ package com.example.ilenguageapi.resource;
 public class ScheduleResource {
     private int id;
     private String name;
+    private String day;
     private int hoursDuration;
 
     public int getId() {
@@ -12,7 +13,9 @@ public class ScheduleResource {
     public String getName() {
         return name;
     }
-
+    public String getDay() {
+        return day;
+    }
     public int getHoursDuration() {
         return hoursDuration;
     }
@@ -27,7 +30,10 @@ public class ScheduleResource {
         this.name = name;
         return this;
     }
-
+    public ScheduleResource setDay(String day) {
+        this.day = day;
+        return this;
+    }
     public ScheduleResource setHoursDuration(int hoursDuration) {
         this.hoursDuration = hoursDuration;
         return this;

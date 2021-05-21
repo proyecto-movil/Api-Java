@@ -12,5 +12,6 @@ public interface ScheduleRepository extends JpaRepository<Schedule, Integer> {
 
     public Optional<Schedule> findByName(String name);
     public Optional<Schedule> findByHoursDuration(int hoursDuration);
+    public Optional<Schedule> findByDay(String day);
 
 }

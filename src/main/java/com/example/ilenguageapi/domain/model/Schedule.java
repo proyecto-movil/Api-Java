@@ -14,6 +14,9 @@ public class Schedule extends AuditModel {
     @NotNull
     private  String name;
     @NotNull
+    private  String day;
+
+    @NotNull
     public int hoursDuration;
 
 
@@ -27,11 +30,11 @@ public class Schedule extends AuditModel {
     public Schedule(){
 
     }
-    public Schedule( int id,int hoursDuration,String name, List<User> users) {
+    public Schedule( int id,int hoursDuration,String name,String day, List<User> users) {
         this.id = id;
         this.hoursDuration =hoursDuration;
         this.name = name;
-
+        this.day = day;
         this.users = users;
     }
 
@@ -54,7 +57,13 @@ public class Schedule extends AuditModel {
         this.id = id;
     }
 
+    public String getDay() {
+        return day;
+    }
 
+    public void setDay(String day) {
+        this.day = day;
+    }
 
     public int getHoursDuration() {
         return hoursDuration;
