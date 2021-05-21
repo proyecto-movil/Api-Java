@@ -17,17 +17,17 @@ public class Schedule extends AuditModel {
     @NotNull
     private String descriptionSchedule;
 
-    private Day day;
+
 
     public Schedule(){
 
     }
-    public Schedule( int id,int hoursDuration,String name, String descriptionSchedule, Day day) {
+    public Schedule( int id,int hoursDuration,String name, String descriptionSchedule) {
         this.id = id;
         this.hoursDuration =hoursDuration;
         this.name = name;
         this.descriptionSchedule = descriptionSchedule;
-        this.day = day;
+
     }
 
 
@@ -49,13 +49,7 @@ public class Schedule extends AuditModel {
         this.id = id;
     }
 
-    public Day day() {
-        return day;
-    }
 
-    public void setDay(Day day) {
-        this.day = day;
-    }
 
     public int getHoursDuration() {
         return hoursDuration;
