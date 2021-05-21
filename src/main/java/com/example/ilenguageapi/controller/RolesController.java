@@ -54,8 +54,7 @@ public class RolesController {
     public RoleResource getRoleById(@PathVariable Long roleId){
         return convertToResource(roleService.getRoleById(roleId));
     }
-
-    @GetMapping("/roles/{name}")
+    @GetMapping("/roles/name/{name}")
     public RoleResource getRoleByName(@PathVariable String name){
         return convertToResource(roleService.getRoleByName(name));
     }
