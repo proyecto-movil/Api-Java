@@ -2,7 +2,6 @@ package com.example.ilenguageapi.service;
 
 import com.example.ilenguageapi.domain.model.Session;
 import com.example.ilenguageapi.domain.repository.SessionRepository;
-import com.example.ilenguageapi.domain.repository.UserRepository;
 import com.example.ilenguageapi.domain.service.SessionService;
 import com.example.ilenguageapi.exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +16,6 @@ public class SessionServiceImpl implements SessionService {
 
     @Autowired
     private SessionRepository sessionRepository;
-    //@Autowired
-    //private UserRepository userRepository;
 
     @Override
     public Page<Session> getAllSessions(Pageable pageable) {
@@ -54,15 +51,6 @@ public class SessionServiceImpl implements SessionService {
 
         sessionRepository.delete(session);
         return ResponseEntity.ok().build();
-    }
-
-    @Override
-    public Page<Session> getAllSessionsByUserId(Long userId, Pageable pageable) {
-        /*return userRepository.findById(userId).map(user -> {
-            List<Session> sessions = user.getSession
-        });*/
-        //TODO: add a function to user model to get sessions
-        return null;
     }
 
     @Override
