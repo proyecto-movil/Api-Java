@@ -2,6 +2,7 @@ package com.example.ilenguageapi.domain.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @Entity
 @Table(name = "schedules")
@@ -17,20 +18,31 @@ public class Schedule extends AuditModel {
     @NotNull
     private String descriptionSchedule;
 
-
+    @ManyToMany(fetch = FetchType.LAZY,
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(name = "user_schedule",
+            joinColumns = {@JoinColumn(name="schedule_id")},
+            inverseJoinColumns = {@JoinColumn(name="user_id")})
+    private List<User> users;
 
     public Schedule(){
 
     }
-    public Schedule( int id,int hoursDuration,String name, String descriptionSchedule) {
+    public Schedule( int id,int hoursDuration,String name, String descriptionSchedule, List<User> users) {
         this.id = id;
         this.hoursDuration =hoursDuration;
         this.name = name;
         this.descriptionSchedule = descriptionSchedule;
-
+        this.users = users;
     }
 
+    public List<User> getUsers() {
+        return users;
+    }
 
+    public void setUsers(List<User> users) {
+        this.users = users;
+    }
 
     public String getDescriptionSchedule() {
         return descriptionSchedule;

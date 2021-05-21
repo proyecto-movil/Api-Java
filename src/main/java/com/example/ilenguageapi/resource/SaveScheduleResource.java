@@ -10,11 +10,25 @@ public class SaveScheduleResource {
 
     @NotBlank
     @Size(min = 3, max = 20, message="NameCourse must have between 3 and 20 characters")
-    private String nameCourse;
+    private String name;
 
     @NotNull
     @Positive(message ="Hours must have a positive value")
-    private String hoursDuration;
+    private int hoursDuration;
 
+    public int getHoursDuration() {
+        return hoursDuration;
+    }
+    public String getName() {
+        return name;
+    }
+    public SaveScheduleResource setHoursDuration(int hoursDuration) {
+        this.hoursDuration = hoursDuration;
+        return this;
+    }
 
+    public SaveScheduleResource setName(String name) {
+        this.name = name;
+        return this;
+    }
 }
