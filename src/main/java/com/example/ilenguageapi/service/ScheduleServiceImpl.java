@@ -29,13 +29,25 @@ public class ScheduleServiceImpl implements ScheduleService {
         return scheduleRepository.save(schedule);
     }
     @Override
-    public Schedule updateSchedule(int scheduleId, Schedule schedule) {
-        return null;
+    public Schedule updateSchedule(int scheduleId, Schedule schedules) {
+        Schedule schedule= scheduleRepository.findById(scheduleId)
+                .orElseThrow(()->new ResourceNotFoundException("Schedule", "Id", scheduleId));
+        schedule.setDay(schedules.getDay());
+        schedule.setName(schedules.getName());
+        schedule.setHoursDuration(schedules.getHoursDuration());
+        return scheduleRepository.save(schedule);
+
+
     }
 
     @Override
     public ResponseEntity<?> deleteSchedule(int scheduleId) {
-        return null;
+        Schedule schedule = scheduleRepository.findById(scheduleId)
+                .orElseThrow(()-> new ResourceNotFoundException("Schedule", "Id", scheduleId));
+        scheduleRepository.delete(schedule);
+        return ResponseEntity.ok().build();
+
+
     }
 
     @Override

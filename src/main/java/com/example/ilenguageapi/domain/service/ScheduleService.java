@@ -1,7 +1,7 @@
 package com.example.ilenguageapi.domain.service;
 
 import com.example.ilenguageapi.domain.model.Schedule;
-import com.example.ilenguageapi.domain.model.Subscription;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
