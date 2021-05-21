@@ -15,8 +15,7 @@ public class Schedule extends AuditModel {
     private  String name;
     @NotNull
     public int hoursDuration;
-    @NotNull
-    private String descriptionSchedule;
+
 
     @ManyToMany(fetch = FetchType.LAZY,
             cascade = {CascadeType.PERSIST, CascadeType.MERGE})
@@ -28,11 +27,11 @@ public class Schedule extends AuditModel {
     public Schedule(){
 
     }
-    public Schedule( int id,int hoursDuration,String name, String descriptionSchedule, List<User> users) {
+    public Schedule( int id,int hoursDuration,String name, List<User> users) {
         this.id = id;
         this.hoursDuration =hoursDuration;
         this.name = name;
-        this.descriptionSchedule = descriptionSchedule;
+
         this.users = users;
     }
 
@@ -44,13 +43,7 @@ public class Schedule extends AuditModel {
         this.users = users;
     }
 
-    public String getDescriptionSchedule() {
-        return descriptionSchedule;
-    }
 
-    public void setDescriptionSchedule(String descriptionSchedule) {
-        this.descriptionSchedule = descriptionSchedule;
-    }
 
     public int getId() {
         return id;
