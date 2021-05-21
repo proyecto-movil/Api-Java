@@ -1,6 +1,7 @@
 package com.example.ilenguageapi.service;
 
 import com.example.ilenguageapi.domain.model.Schedule;
+import com.example.ilenguageapi.domain.model.Subscription;
 import com.example.ilenguageapi.domain.repository.ScheduleRepository;
 import com.example.ilenguageapi.domain.service.ScheduleService;
 import com.example.ilenguageapi.exception.ResourceNotFoundException;
@@ -37,6 +38,11 @@ public class ScheduleServiceImpl implements ScheduleService {
         return null;
     }
 
+    @Override
+    public Schedule getByScheduleId(int scheduleId) {
+        return scheduleRepository.findById(scheduleId)
+                .orElseThrow(()->new ResourceNotFoundException("Schedule", "Id", scheduleId));
+    }
     @Override
     public Schedule getByName(String name) {
         return scheduleRepository.findByName(name)
