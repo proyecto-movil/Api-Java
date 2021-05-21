@@ -57,6 +57,7 @@ public class Schedule extends AuditModel {
         this.id = id;
     }
 
+
     public String getDay() {
         return day;
     }

@@ -50,7 +50,7 @@ public class ScheduleServiceImpl implements ScheduleService {
     }
     @Override
     public Schedule getByDay(String day) {
-        return scheduleRepository.findByName(day)
+        return scheduleRepository.findByDay(day)
                 .orElseThrow(()-> new ResourceNotFoundException("Schedule", "Day", day));
     }
     @Override

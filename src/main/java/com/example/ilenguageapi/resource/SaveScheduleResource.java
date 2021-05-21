@@ -29,6 +29,7 @@ public class SaveScheduleResource {
     public String getDay() {
         return day;
     }
+
     public SaveScheduleResource setHoursDuration(int hoursDuration) {
         this.hoursDuration = hoursDuration;
         return this;

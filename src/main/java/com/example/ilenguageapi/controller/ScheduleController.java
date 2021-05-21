@@ -93,7 +93,7 @@ public class ScheduleController {
     })
     @GetMapping("/schedule/day/{day}")
     public ScheduleResource getScheduleByDay(@PathVariable(name="day") String scheduleDay){
-        return convertToResource(scheduleService.getByName(scheduleDay));
+        return convertToResource(scheduleService.getByDay(scheduleDay));
     }
 
 
