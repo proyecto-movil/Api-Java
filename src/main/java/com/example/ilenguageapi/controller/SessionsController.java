@@ -10,7 +10,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -31,14 +30,14 @@ public class SessionsController {
     @Autowired
     private ModelMapper mapper;
 
-    @Operation(summary = "Get Sessions", description = "Get All Sessions by Pages", tags = {"sessions"})
+    @Operation(summary = "Get Sessions", description = "Get All Sessions by Pages", tags = {"Sessions"})
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "All Sessions returned", content = @Content(mediaType = "application/json"))
     })
     @GetMapping("/sessions")
     public Page<SessionResource> getAllSessions(Pageable pageable) {
-        Page<Session> sessionsPage = sessionService.getAllSessions(pageable);
-        List<SessionResource> resources = sessionsPage.getContent()
+        Page<Session> sessionPage = sessionService.getAllSessions(pageable);
+        List<SessionResource> resources = sessionPage.getContent()
                 .stream()
                 .map(this::convertToResource)
                 .collect(Collectors.toList());
@@ -46,23 +45,40 @@ public class SessionsController {
         return new PageImpl<>(resources, pageable, resources.size());
     }
 
-    @GetMapping("/sessions/{id}")
-    public SessionResource getSessionById(@PathVariable(name = "id") Long sessionId) {
+    @Operation(summary = "Get Session", description = "Get Session by sessionId", tags = {"Sessions"})
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Session returned", content = @Content(mediaType = "application/json")),
+            @ApiResponse(responseCode = "404", description = "Session not found")
+    })
+    @GetMapping("/sessions/{sessionId}")
+    public SessionResource getSessionById(@PathVariable Long sessionId) {
         return convertToResource(sessionService.getSessionById(sessionId));
     }
 
+    @Operation(summary = "Add Session", description = "Create new session", tags = {"Sessions"})
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Session created", content = @Content(mediaType = "application/json")),
+    })
     @PostMapping("/sessions")
     public SessionResource createSession(@Valid @RequestBody SaveSessionResource resource) {
         Session session = convertToEntity(resource);
         return convertToResource(sessionService.createSession(session));
     }
 
+    @Operation(summary = "Update Session", description = "Update session by sessionId", tags = {"Sessions"})
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Session Updated", content = @Content(mediaType = "application/json")),
+    })
     @PutMapping("/sessions/{sessionId}")
     public SessionResource updateSession(@PathVariable Long sessionId, @Valid @RequestBody SaveSessionResource resource) {
         Session session = convertToEntity(resource);
         return convertToResource(sessionService.updateSession(sessionId, session));
     }
 
+    @Operation(summary = "Delete Session", description = "Deleted session by sessionId", tags = {"Sessions"})
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "User deleted", content = @Content(mediaType = "application/json")),
+    })
     @DeleteMapping("/sessions/{sessionId}")
     public ResponseEntity<?> deleteSession(@PathVariable Long sessionId) {
         return sessionService.deleteSession(sessionId);

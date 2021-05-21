@@ -39,7 +39,7 @@ public class SessionDetailServiceImplTest {
 
     @Test
     @DisplayName("When getSessionDetailByState With Valid state Then Returns SessionDetail")
-    public void whenGetSessionByStateWithValidStateThenReturnsState() {
+    public void whenGetSessionDetailByStateWithValidStateThenReturnsSessionDetail() {
         // Arrange
         String state = "active";
         SessionDetail sessionDetail = new SessionDetail().setId(1).setState(state);

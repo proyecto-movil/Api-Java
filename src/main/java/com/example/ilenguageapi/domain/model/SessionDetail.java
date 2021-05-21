@@ -8,7 +8,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "session_detais")
+@Table(name = "session_details")
 public class SessionDetail extends AuditModel {
 
     @Id
@@ -18,15 +18,11 @@ public class SessionDetail extends AuditModel {
     @NotNull
     private String state;
 
-    @OneToOne(fetch = FetchType.LAZY, optional = false)
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "session_id", nullable = false)
     @JsonIgnore
     private Session session;
-
-    //@ManyToOne(fetch = FetchType.LAZY, optional = false)
-    //@JoinColumn(name = "user_id", nullable = false)
-    //@JsonIgnore
-    //private User user;
 
     public SessionDetail(@NotNull String state) {
         this.state = state;

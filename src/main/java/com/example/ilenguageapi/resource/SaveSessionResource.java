@@ -8,15 +8,15 @@ public class SaveSessionResource {
 
     @NotNull
     @NotBlank
-    @Size(max = 50)
+    @Size(max = 100)
     private String startAt;
     @NotNull
     @NotBlank
-    @Size(max = 50)
+    @Size(max = 100)
     private String endAt;
     @NotNull
     @NotBlank
-    @Size(max = 100)
+    @Size(max = 250)
     private String link;
 
     public String getStartAt() {
