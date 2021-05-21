@@ -24,6 +24,7 @@ public class Subscription {
     @NotNull
     public int monthDuration;
 
+    @NotNull
     @NotBlank(message ="Name is mandatory")
     public String name;
 
@@ -42,9 +43,9 @@ public class Subscription {
 
     public Subscription(int id, int price, int monthDuration, String name, List<User> users) {
         this.id = id;
-        price = price;
-        monthDuration = monthDuration;
-        name = name;
+        this.price = price;
+        this.monthDuration = monthDuration;
+        this.name = name;
         this.users = users;
     }
 
@@ -70,7 +71,7 @@ public class Subscription {
     }
 
     public void setPrice(int price) {
-        price = price;
+        this.price = price;
     }
 
     public int getMonthDuration() {
@@ -78,7 +79,7 @@ public class Subscription {
     }
 
     public void setMonthDuration(int monthDuration) {
-        monthDuration = monthDuration;
+        this.monthDuration = monthDuration;
     }
 
     public String getName() {
@@ -86,7 +87,7 @@ public class Subscription {
     }
 
     public void setName(String name) {
-        name = name;
+        this.name = name;
     }
 
 
