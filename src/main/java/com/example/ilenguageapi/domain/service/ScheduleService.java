@@ -14,5 +14,5 @@ public interface ScheduleService {
     Schedule getByScheduleId(int scheduleId);
     Schedule getByName(String name);
     Schedule getByDuration(int hoursDuration);
-
+    Schedule getByDay(String day);
 }

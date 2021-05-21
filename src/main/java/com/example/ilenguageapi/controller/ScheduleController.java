@@ -79,10 +79,23 @@ public class ScheduleController {
             @ApiResponse(responseCode = "404", description="Schedule Not Found", content = @Content(mediaType = "application/json"))
 
     })
-    @GetMapping("/schedule/{name}")
+    @GetMapping("/schedule/name/{name}")
     public ScheduleResource getScheduleByName(@PathVariable(name="name") String scheduleName){
         return convertToResource(scheduleService.getByName(scheduleName));
     }
+
+
+    @Operation(summary="Get by Day", description="Get the schedule giving a day", tags = {"schedule"} )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description="All schedule returned", content = @Content(mediaType = "application/json")),
+            @ApiResponse(responseCode = "404", description="Schedule Not Found", content = @Content(mediaType = "application/json"))
+
+    })
+    @GetMapping("/schedule/day/{day}")
+    public ScheduleResource getScheduleByDay(@PathVariable(name="day") String scheduleDay){
+        return convertToResource(scheduleService.getByDay(scheduleDay));
+    }
+
 
     @Operation(summary="Get by hours duration", description="Get the schedule giving the hours duration ", tags = {"schedule"} )
     @ApiResponses(value = {
@@ -90,7 +103,7 @@ public class ScheduleController {
             @ApiResponse(responseCode = "404", description="Schedule Not Found", content = @Content(mediaType = "application/json"))
 
     })
-    @GetMapping("/schedule/{hoursDuration}")
+    @GetMapping("/schedule/hoursDuration/{hoursDuration}")
     public ScheduleResource getScheduleByHoursDuration(@PathVariable(name="hoursDuration") int scheduleHoursDuration){
     return convertToResource(scheduleService.getByDuration(scheduleHoursDuration));
     }
