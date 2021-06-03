@@ -13,4 +13,6 @@ public interface SessionService {
     ResponseEntity<?> deleteSession(Long sessionId);
     Session getSessionByStartAt(String startAt);
     Session getSessionByEndAt(String endAt);
+    Session getSessionByState(String state);
+    Session getSessionByTopic(String topic);
 }

@@ -10,4 +10,6 @@ import java.util.Optional;
 public interface SessionRepository extends JpaRepository<Session, Long> {
     public Optional<Session> findByStartAt(String startAt);
     public Optional<Session> findByEndAt(String endAt);
+    public Optional<Session> findByState(String state);
+    public Optional<Session> findByTopic(String topic);
 }

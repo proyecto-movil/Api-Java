@@ -64,4 +64,16 @@ public class SessionServiceImpl implements SessionService {
         return sessionRepository.findByEndAt(endAt)
                 .orElseThrow(() -> new ResourceNotFoundException("Session", "EndAt", endAt));
     }
+
+    @Override
+    public Session getSessionByState(String state) {
+        return sessionRepository.findByState(state)
+                .orElseThrow(() -> new ResourceNotFoundException("Session", "State", state));
+    }
+
+    @Override
+    public Session getSessionByTopic(String topic) {
+        return sessionRepository.findByTopic(topic)
+                .orElseThrow(() -> new ResourceNotFoundException("Session", "Topic", topic));
+    }
 }

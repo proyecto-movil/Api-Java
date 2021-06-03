@@ -7,6 +7,36 @@ public class SessionResource extends AuditModel {
     private String startAt;
     private String endAt;
     private String link;
+    private String state;
+    private String topic;
+    private String information;
+
+    public String getState() {
+        return state;
+    }
+
+    public SessionResource setState(String state) {
+        this.state = state;
+        return this;
+    }
+
+    public String getTopic() {
+        return topic;
+    }
+
+    public SessionResource setTopic(String topic) {
+        this.topic = topic;
+        return this;
+    }
+
+    public String getInformation() {
+        return information;
+    }
+
+    public SessionResource setInformation(String information) {
+        this.information = information;
+        return this;
+    }
 
     public long getId() {
         return id;
