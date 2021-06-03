@@ -34,6 +34,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public Page<User> getAllUsersByTopicIdAndRoleId(int topicId, int languageId, Pageable pageable) {
+        return null;
+    }
+
+    @Override
     public Page<User> getAllUsersByRoleId(Long roleId, Pageable pageable) {
         return null;
     }
