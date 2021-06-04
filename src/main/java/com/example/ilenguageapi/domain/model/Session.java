@@ -1,5 +1,7 @@
 package com.example.ilenguageapi.domain.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
@@ -12,7 +14,7 @@ public class Session extends AuditModel {
     private long id;
 
     @NotNull
-    private String startAt;
+    private DateTime startAt;
 
     @NotNull
     private String endAt;
@@ -28,6 +30,13 @@ public class Session extends AuditModel {
 
     @NotNull
     private String information;
+
+
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = true)
+    @JoinColumn(name = "schedule_id", nullable = true)   //
+    @JsonIgnore
+    private Schedule schedule;
 
     public Session(@NotNull String startAt, @NotNull String endAt, @NotNull String link, @NotNull String state, @NotNull String topic, @NotNull String information) {
         this.startAt = startAt;
@@ -62,6 +71,10 @@ public class Session extends AuditModel {
 
     public String getInformation() { return information; }
 
+    public Schedule getSchedule() {
+        return schedule;
+    }
+
     public Session setId(long id) {
         this.id = id;
         return this;
@@ -94,6 +107,11 @@ public class Session extends AuditModel {
 
     public Session setInformation(String information) {
         this.information = information;
+        return this;
+    }
+
+    public Session setSchedule(Schedule schedule) {
+        this.schedule = schedule;
         return this;
     }
 }

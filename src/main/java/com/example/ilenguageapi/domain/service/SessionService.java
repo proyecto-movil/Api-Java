@@ -15,4 +15,7 @@ public interface SessionService {
     Session getSessionByEndAt(String endAt);
     Session getSessionByState(String state);
     Session getSessionByTopic(String topic);
+    Page<Session> getAllSessionsByScheduleId(int scheduleId, Pageable pageable);
+    Session getSessionByIdAndScheduleId(int scheduleId, Long sessionId);
+   // ResponseEntity<?> deleteSession(int scheduleId, Long sessionId);
 }

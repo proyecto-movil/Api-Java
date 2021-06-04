@@ -83,6 +83,30 @@ public class SessionsController {
     public ResponseEntity<?> deleteSession(@PathVariable Long sessionId) {
         return sessionService.deleteSession(sessionId);
     }
+    /*
+    @Operation(summary = "List Sessions by scheduleId", description = "List Sessions by scheduleId", tags = {"Sessions"})
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Sessions returned", content = @Content(mediaType = "application/json")),
+            @ApiResponse(responseCode = "404", description = "Sessions not found")
+    })
+    @GetMapping("/schedules/{scheduleId}/sessions")
+    public Page<SessionResource> getAllSessionsByScheduleId(@PathVariable int scheduleId, Pageable pageable) {
+        Page<Session> sessionPage = sessionService.getAllSessionsByScheduleId(scheduleId, pageable);
+        List<SessionResource> resources = sessionPage.getContent().stream().map(
+                this::convertToResource).collect(Collectors.toList());
+        return new PageImpl<>(resources, pageable, resources.size());
+    }
+
+    @Operation(summary = "Get Session by Id and ScheduleId", description = "Get Session by Id and ScheduleId", tags = {"Sessions"})
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Session returned", content = @Content(mediaType = "application/json")),
+            @ApiResponse(responseCode = "404", description = "Session not found")
+    })
+    @GetMapping("/schedules/{scheduleId}/sessions/{sessionId}")
+    public SessionResource getSessionByIdAndScheduleId(@PathVariable int scheduleId, @PathVariable Long sessionId) {
+        return convertToResource(sessionService.getSessionByIdAndScheduleId(scheduleId, sessionId));
+    }
+    */
 
 
     private Session convertToEntity(SaveSessionResource resource) {
