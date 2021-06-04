@@ -15,6 +15,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.Calendar;
 import java.util.Optional;
 
 import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
@@ -38,21 +39,22 @@ public class SessionServiceImplTest {
     }
 
     @Test
-    @DisplayName("When getSessionByStartAt With Valid startAt Then Returns Session")
-    public void whenGetSessionByStartAtWithValidStartAtThenReturnsSession() {
+    @DisplayName("When getSessionByTopic With Valid topic Then Returns Session")
+    public void whenGetSessionByTopicAtWithValidTopicAtThenReturnsSession() {
         // Arrange
-        String startAt = "10:10/24-05-2021";
-        Session session = new Session().setId(1).setStartAt(startAt);
-        when(sessionRepository.findByStartAt(startAt))
+        String topic = "active";
+        Session session = new Session().setId(1).setTopic(topic);
+        when(sessionRepository.findByTopic(topic))
                 .thenReturn(Optional.of(session));
 
         // Act
-        Session foundSession = sessionService.getSessionByStartAt(startAt);
+        Session foundSession = sessionService.getSessionByTopic(topic);
 
         // Assert
-        assertThat(foundSession.getStartAt()).isEqualTo(startAt);
+        assertThat(foundSession.getTopic()).isEqualTo(topic);
     }
 
+     /*
     @Test
     @DisplayName("When getSessionByStartAt With Invalid startAt Then Returns Session")
     public void whenGetSessionByStartAtWithInvalidStartAtThenReturnsSession() {
@@ -111,5 +113,5 @@ public class SessionServiceImplTest {
                 .isInstanceOf(ResourceNotFoundException.class)
                 .hasMessage(expectedMessage);
     }
-
+    */
 }

@@ -11,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 
 @Service
 public class SessionServiceImpl implements SessionService {
@@ -18,8 +19,8 @@ public class SessionServiceImpl implements SessionService {
     @Autowired
     private SessionRepository sessionRepository;
 
-    @Autowired
-    private ScheduleRepository scheduleRepository;
+    //@Autowired
+    // private ScheduleRepository scheduleRepository;
 
     @Override
     public Page<Session> getAllSessions(Pageable pageable) {
@@ -58,13 +59,13 @@ public class SessionServiceImpl implements SessionService {
     }
 
     @Override
-    public Session getSessionByStartAt(String startAt) {
+    public Session getSessionByStartAt(LocalDate startAt) {
         return sessionRepository.findByStartAt(startAt)
                 .orElseThrow(() -> new ResourceNotFoundException("Session", "StartAt", startAt));
     }
 
     @Override
-    public Session getSessionByEndAt(String endAt) {
+    public Session getSessionByEndAt(LocalDate endAt) {
         return sessionRepository.findByEndAt(endAt)
                 .orElseThrow(() -> new ResourceNotFoundException("Session", "EndAt", endAt));
     }

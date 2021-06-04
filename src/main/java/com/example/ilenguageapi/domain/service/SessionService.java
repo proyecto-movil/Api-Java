@@ -5,14 +5,16 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 
+import java.time.LocalDate;
+
 public interface SessionService {
     Page<Session> getAllSessions(Pageable pageable);
     Session getSessionById(Long sessionId);
     Session createSession(Session session);
     Session updateSession(Long sessionId, Session sessionRequest);
     ResponseEntity<?> deleteSession(Long sessionId);
-    Session getSessionByStartAt(String startAt);
-    Session getSessionByEndAt(String endAt);
+    Session getSessionByStartAt(LocalDate startAt);
+    Session getSessionByEndAt(LocalDate endAt);
     Session getSessionByState(String state);
     Session getSessionByTopic(String topic);
     Page<Session> getAllSessionsByScheduleId(int scheduleId, Pageable pageable);

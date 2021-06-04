@@ -2,10 +2,12 @@ package com.example.ilenguageapi.resource;
 
 import com.example.ilenguageapi.domain.model.AuditModel;
 
+import java.time.LocalDate;
+
 public class SessionResource extends AuditModel {
     private long id;
-    private String startAt;
-    private String endAt;
+    private LocalDate startAt;
+    private LocalDate endAt;
     private String link;
     private String state;
     private String topic;
@@ -47,20 +49,20 @@ public class SessionResource extends AuditModel {
         return this;
     }
 
-    public String getStartAt() {
+    public LocalDate getStartAt() {
         return startAt;
     }
 
-    public SessionResource setStartAt(String startAt) {
+    public SessionResource setStartAt(LocalDate startAt) {
         this.startAt = startAt;
         return this;
     }
 
-    public String getEndAt() {
+    public LocalDate getEndAt() {
         return endAt;
     }
 
-    public SessionResource setEndAt(String endAt) {
+    public SessionResource setEndAt(LocalDate endAt) {
         this.endAt = endAt;
         return this;
     }
