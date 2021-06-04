@@ -18,10 +18,10 @@ public interface UserSubscriptionRepository extends JpaRepository<UserSubscripti
     //@Query(value = "SELECT us FROM UserSubscription us WHERE us.userId IN :userId")
     //public List<UserSubscription>listByUserId(@Param("userId") Collection<Integer> userId);
 
-    @Query( "SELECT us FROM UserSubscription us WHERE us.subscriptionId = ?1")
+    @Query( "SELECT us FROM UserSubscription us WHERE us.user.id = ?1")
     public List<UserSubscription>listBySubscriptionId(int subscriptionId);
 
-    @Query("SELECT us FROM UserSubscription us WHERE us.userId=?1 and us.subscriptionId = ?2")
+    @Query("SELECT us FROM UserSubscription us WHERE us.user.id=?1 and us.subscription.id = ?2")
     public Optional<UserSubscription>findByUserIdAndSubscriptionId(int userId, int subscriptionId);
 
     @Query(value = "select * from user_subscriptions us where us.user_id = ?1 order by us.final_date desc limit 1", nativeQuery = true)

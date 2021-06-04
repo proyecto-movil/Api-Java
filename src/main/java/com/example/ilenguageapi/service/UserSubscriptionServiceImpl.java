@@ -1,8 +1,10 @@
 package com.example.ilenguageapi.service;
 
 import com.example.ilenguageapi.domain.model.Subscription;
+import com.example.ilenguageapi.domain.model.User;
 import com.example.ilenguageapi.domain.model.UserSubscription;
 import com.example.ilenguageapi.domain.repository.SubscriptionRepository;
+import com.example.ilenguageapi.domain.repository.UserRepository;
 import com.example.ilenguageapi.domain.repository.UserSubscriptionRepository;
 import com.example.ilenguageapi.domain.service.UserSubscriptionService;
 import com.example.ilenguageapi.exception.ResourceNotFoundException;
@@ -22,6 +24,8 @@ public class UserSubscriptionServiceImpl implements UserSubscriptionService {
     private UserSubscriptionRepository userSubscriptionRepository;
     @Autowired
     private SubscriptionRepository subscriptionRepository;
+    @Autowired
+    private UserRepository userRepository;
 
     @Override
     public Page<UserSubscription> getAllUserSubscriptions(Pageable pageable) {
@@ -44,13 +48,14 @@ public class UserSubscriptionServiceImpl implements UserSubscriptionService {
             }
         }
 
-        Subscription chosenSubscription = subscriptionRepository.findById(subscriptionId)
-                .orElseThrow(()-> new ResourceNotFoundException("There is not a subscription with the given Id"));
+        User chosenUser = userRepository.findById((long) userId)
+                .orElseThrow(()->new ResourceNotFoundException("User not found"));
+        Subscription chosenSubscription = subscriptionRepository.findAll().get(subscriptionId);
         var userSubscription = new UserSubscription();
         userSubscription.setInitialDate(LocalDateTime.now());
         userSubscription.setFinalDate(LocalDateTime.now().plusMonths(chosenSubscription.getMonthDuration()));
-        userSubscription.setUserId(userId);
-        userSubscription.setSubscriptionId(subscriptionId);
+        userSubscription.setUser(chosenUser);
+        userSubscription.setSubscription(chosenSubscription);
         return userSubscriptionRepository.save(userSubscription);
     }
 
