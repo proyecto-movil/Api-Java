@@ -3,18 +3,15 @@ package com.example.ilenguageapi.resource;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.time.LocalDate;
 
 public class SaveSessionResource {
 
     @NotNull
-    @NotBlank
-    @Size(max = 100)
-    private String startAt;
+    private LocalDate startAt;
 
     @NotNull
-    @NotBlank
-    @Size(max = 100)
-    private String endAt;
+    private LocalDate endAt;
 
     @NotNull
     @NotBlank
@@ -36,20 +33,20 @@ public class SaveSessionResource {
     @Size(max = 250)
     private String information;
 
-    public String getStartAt() {
+    public LocalDate getStartAt() {
         return startAt;
     }
 
-    public SaveSessionResource setStartAt(String startAt) {
+    public SaveSessionResource setStartAt(LocalDate startAt) {
         this.startAt = startAt;
         return this;
     }
 
-    public String getEndAt() {
+    public LocalDate getEndAt() {
         return endAt;
     }
 
-    public SaveSessionResource setEndAt(String endAt) {
+    public SaveSessionResource setEndAt(LocalDate endAt) {
         this.endAt = endAt;
         return this;
     }
