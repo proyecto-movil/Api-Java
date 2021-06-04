@@ -38,7 +38,7 @@ public class UserLanguagesController {
             @ApiResponse(responseCode = "200", description = "assigned language", content = @Content(mediaType = "application/json")),
             @ApiResponse(responseCode = "404", description = "language not found or User not found")
     })
-    @PostMapping("/user/{userId}/language/{languageId}")
+    @PostMapping("/users/{userId}/languages/{languageId}")
     public UserResource assignLanguageUser(
             @PathVariable Long userId,
             @PathVariable Long languageId) {
@@ -50,7 +50,7 @@ public class UserLanguagesController {
             @ApiResponse(responseCode = "200", description = "unassigned language", content = @Content(mediaType = "application/json")),
             @ApiResponse(responseCode = "404", description = "language not found or User not found")
     })
-    @DeleteMapping("/user/{userId}/language/{languageId}")
+    @DeleteMapping("/users/{userId}/languages/{languageId}")
     public UserResource unassignLanguageUser(
             @PathVariable Long userId,
             @PathVariable Long languageId) {
@@ -62,7 +62,7 @@ public class UserLanguagesController {
             @ApiResponse(responseCode = "200", description = "All languages resturned", content = @Content(mediaType = "application/json")),
             @ApiResponse(responseCode = "404", description = "User not found")
     })
-    @GetMapping("/user/{userId}/languages")
+    @GetMapping("/users/{userId}/languages")
     public Page<LanguageOfInterestResource> getAllLanguageByUserId(
             @PathVariable Long userId,
             Pageable pageable) {

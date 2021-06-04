@@ -38,7 +38,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Page<User> getAllUsersByTopicIdAndRoleId(Long topicId, Long languageId, Pageable pageable) {
+    public Page<User> getAllUsersByTopicIdAndLanguageId(Long topicId, Long languageId, Pageable pageable) {
 
         TopicOfInterest topic = topicOfInterestRepository.findById(topicId)
                 .orElseThrow(() -> new ResourceNotFoundException("TopicOfInterest", "Id", topicId));
@@ -51,6 +51,21 @@ public class UserServiceImpl implements UserService {
                 .filter(user -> user.hasTheTopicOf(topic) && user.hasTheLenguageOf(language))
                 .collect(Collectors.toList());
        return new PageImpl<>(usersFilter,pageable,usersFilter.size());
+    }
+
+    @Override
+    public Page<User> getAllTuthorsByTopicIdAndLanguageId(Long topicId, Long languageId, Pageable pageable) {
+        TopicOfInterest topic = topicOfInterestRepository.findById(topicId)
+                .orElseThrow(() -> new ResourceNotFoundException("TopicOfInterest", "Id", topicId));
+
+        LanguageOfInterest language = languageOfInterestRespository.findById(languageId)
+                .orElseThrow(() -> new ResourceNotFoundException("LanguageOfInterest", "Id", languageId));
+
+        List<User> usersFilter = userRepository.findAll(pageable)
+                .stream()
+                .filter(user -> user.hasTheTopicOf(topic) && user.hasTheLenguageOf(language) && user.isUserWithRole("Tuthor"))
+                .collect(Collectors.toList());
+        return new PageImpl<>(usersFilter,pageable,usersFilter.size());
     }
 
     @Override

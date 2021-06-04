@@ -8,7 +8,8 @@ import org.springframework.http.ResponseEntity;
 
 public interface UserService {
     Page<User> getAllUsers(Pageable pageable);
-    Page<User> getAllUsersByTopicIdAndRoleId(Long topicId, Long languageId,Pageable pageable);
+    Page<User> getAllUsersByTopicIdAndLanguageId(Long topicId, Long languageId,Pageable pageable);
+    Page<User> getAllTuthorsByTopicIdAndLanguageId(Long topicId, Long languageId,Pageable pageable);
     Page<User> getAllUsersByRoleId(Long roleId, Pageable pageable);
     Page<User> getAllUsersBySubscriptionId(Long subscriptionId, Pageable pageable);
     User assignRoleById(User user, Long roleId);

@@ -87,4 +87,13 @@ public class UserController {
     public ResponseEntity<?> deleteUser(@PathVariable Long userId){
         return userService.deleteUser(userId);
     }
+    @GetMapping("/languages/{languageId}/topics/{topicsId}/tuthors")
+    public Page<UserResource> getAllTuthorsByLanguageIdAndTopicId(@PathVariable Long languageId, @PathVariable Long topicId, Pageable pageable){
+        Page<User> userPage = userService.getAllTuthorsByTopicIdAndLanguageId(topicId,languageId,pageable);
+        List<UserResource> resources = userPage.getContent()
+                .stream()
+                .map(this::convertToResource)
+                .collect(Collectors.toList());
+        return new PageImpl<>(resources, pageable, resources.size());
+    }
 }
