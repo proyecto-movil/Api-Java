@@ -1,6 +1,9 @@
 package com.example.ilenguageapi.domain.repository;
 
 import com.example.ilenguageapi.domain.model.UserSubscription;
+import com.stripe.model.PaymentIntent;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -12,8 +15,8 @@ import java.util.List;
 import java.util.Optional;
 
 public interface UserSubscriptionRepository extends JpaRepository<UserSubscription, Integer> {
-    @Query(value = "SELECT us FROM UserSubscription us WHERE us.userId IN :userId")
-    public List<UserSubscription>listByUserId(@Param("userId") Collection<Integer> userId);
+    //@Query(value = "SELECT us FROM UserSubscription us WHERE us.userId IN :userId")
+    //public List<UserSubscription>listByUserId(@Param("userId") Collection<Integer> userId);
 
     @Query( "SELECT us FROM UserSubscription us WHERE us.subscriptionId = ?1")
     public List<UserSubscription>listBySubscriptionId(int subscriptionId);
@@ -27,5 +30,8 @@ public interface UserSubscriptionRepository extends JpaRepository<UserSubscripti
     @Modifying
     @Query(value= "update user_subscriptions us set us.final_date = ?1 where us.user_subscription_id = ?2", nativeQuery = true)
     public void unassingUserSubscription(LocalDateTime currentDate, int userSubscriptionId);
+    
+    @Query(value = "select * from user_subscriptions us where us.user_id = ?1", nativeQuery = true)
+    public Page<UserSubscription> listByUserId(int userId, Pageable pageable);
     
 }

@@ -28,11 +28,9 @@ public class UserSubscriptionServiceImpl implements UserSubscriptionService {
         return userSubscriptionRepository.findAll(pageable);
     }
 
-
-
     @Override
     public Page<UserSubscription> getByUSerId(Pageable pageable, int userId) {
-        return null;
+        return (Page<UserSubscription>) userSubscriptionRepository.listByUserId(userId, pageable);
     }
 
     @Override
