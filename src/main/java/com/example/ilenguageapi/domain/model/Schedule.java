@@ -10,49 +10,33 @@ public class Schedule extends AuditModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-    @NotNull
-    private  String name;
+    private long id;
+
     @NotNull
     private  String day;
 
-    @NotNull
-    public int hoursDuration;
 
 
-    @ManyToMany(fetch = FetchType.LAZY,
-            cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinTable(name = "user_schedule",
-            joinColumns = {@JoinColumn(name="schedule_id")},
-            inverseJoinColumns = {@JoinColumn(name="user_id")})
-    private List<User> users;
+
+
 
     public Schedule(){
 
     }
-    public Schedule( int id,int hoursDuration,String name,String day, List<User> users) {
+    public Schedule( long id,String day) {
         this.id = id;
-        this.hoursDuration =hoursDuration;
-        this.name = name;
+
+
         this.day = day;
-        this.users = users;
-    }
 
-    public List<User> getUsers() {
-        return users;
-    }
-
-    public void setUsers(List<User> users) {
-        this.users = users;
     }
 
 
-
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
 
         this.id = id;
     }
@@ -66,21 +50,7 @@ public class Schedule extends AuditModel {
         this.day = day;
     }
 
-    public int getHoursDuration() {
-        return hoursDuration;
-    }
 
-    public void setHoursDuration(int hoursDuration) {
-        this.hoursDuration = hoursDuration;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 
 
 }
