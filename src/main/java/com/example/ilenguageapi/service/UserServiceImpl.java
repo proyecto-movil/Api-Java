@@ -34,7 +34,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Page<User> getAllUsers(Pageable pageable) {
-        return userRepository.findAll(pageable);
+        Page<User> users = userRepository.findAll(pageable);
+        return users;
     }
 
     @Override
@@ -81,8 +82,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public User assignRoleById(User user, Long roleId) {
         Role role = roleRepository.findById(roleId).orElseThrow(() -> new ResourceNotFoundException("Role", "id", roleId));
-        user.setRole(role);
-        return user;
+        User userWithRole = user.setRole(role).setName("alguien mas");
+        return userWithRole;
     }
 
     @Override

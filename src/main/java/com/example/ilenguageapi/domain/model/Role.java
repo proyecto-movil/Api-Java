@@ -7,6 +7,7 @@ import org.hibernate.annotations.NaturalId;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.List;
 
 @Entity
 @Table(name="Roles")
@@ -20,6 +21,9 @@ public class Role {
     @Size(max=20)
     @NaturalId
     public String name;
+
+    @OneToMany(mappedBy = "role",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<User> users;
 
     public Role() {
     }
@@ -47,9 +51,4 @@ public class Role {
         return this;
     }
 
-
-
-
-    private class List<T> {
-    }
 }

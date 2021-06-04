@@ -67,7 +67,8 @@ public class UserController {
     @PostMapping("/user/{roleId}")
     public UserResource createUser(@Valid @RequestBody SaveUserResource resource, @PathVariable Long roleId) {
         User user = convertToEntity(resource);
-        return convertToResource(userService.createUser(userService.assignRoleById(user,roleId)));
+        User UserWithRole = userService.createUser(userService.assignRoleById(user,roleId));
+        return convertToResource(UserWithRole);
     }
 
     @Operation(summary = "Update User", description = "Update user by userId", tags = {"Users"})
@@ -87,7 +88,7 @@ public class UserController {
     public ResponseEntity<?> deleteUser(@PathVariable Long userId){
         return userService.deleteUser(userId);
     }
-    @GetMapping("/languages/{languageId}/topics/{topicsId}/tuthors")
+    @GetMapping("/languages/{languageId}/topics/{topicId}/tuthors")
     public Page<UserResource> getAllTuthorsByLanguageIdAndTopicId(@PathVariable Long languageId, @PathVariable Long topicId, Pageable pageable){
         Page<User> userPage = userService.getAllTuthorsByTopicIdAndLanguageId(topicId,languageId,pageable);
         List<UserResource> resources = userPage.getContent()

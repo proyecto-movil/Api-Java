@@ -55,7 +55,6 @@ public class User extends AuditModel {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn( name = "role_id", nullable = false)
-    @JsonIgnore
     private Role role;
 
     public boolean isUserWithRole(String roleName){
