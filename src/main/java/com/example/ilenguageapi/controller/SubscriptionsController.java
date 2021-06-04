@@ -74,7 +74,7 @@ public class SubscriptionsController {
             @ApiResponse(responseCode = "404", description="Subscription Not Found", content = @Content(mediaType = "application/json"))
 
     })
-    @GetMapping("/subscriptions/{id}")
+    @RequestMapping( value ="subscriptions/{id}", method = RequestMethod.GET)
     public SubscriptionResource getSubscriptionById(@PathVariable(name="id") int subscriptionId){
         return convertToResource(subscriptionService.getBySubscriptionId(subscriptionId));
     }
@@ -85,8 +85,8 @@ public class SubscriptionsController {
             @ApiResponse(responseCode = "404", description="Subscription Not Found", content = @Content(mediaType = "application/json"))
 
     })
-    @GetMapping("/subscriptions/{name}")
-    public SubscriptionResource getSubscriptionByPrice(@PathVariable(name="name") String subscriptionName){
+    @RequestMapping( value = "/subscriptions/name", method = RequestMethod.GET)
+    public SubscriptionResource getSubscriptionByName(@RequestParam(name="name") String subscriptionName){
         return convertToResource(subscriptionService.getByName(subscriptionName));
     }
 
@@ -96,8 +96,8 @@ public class SubscriptionsController {
             @ApiResponse(responseCode = "404", description="Subscription Not Found", content = @Content(mediaType = "application/json"))
 
     })
-    @GetMapping("/subscriptions/{price}")
-    public SubscriptionResource getSubscriptionByPrice(@PathVariable(name="price") int producedPrice){
+    @RequestMapping( value ="/subscriptions/price", method = RequestMethod.GET)
+    public SubscriptionResource getSubscriptionByPrice(@RequestParam(name="price") int producedPrice){
         return convertToResource(subscriptionService.getByPrice(producedPrice));
     }
 
@@ -107,8 +107,8 @@ public class SubscriptionsController {
             @ApiResponse(responseCode = "404", description="Subscription Not Found", content = @Content(mediaType = "application/json"))
 
     })
-    @GetMapping("/subscriptions/{monthDuration}")
-    public SubscriptionResource getSubscriptionByMonthDuration(@PathVariable(name="monthDuration") int subscriptionMonthDuration){
+    @RequestMapping( value = "/subscriptions/monthduration", method = RequestMethod.GET)
+    public SubscriptionResource getSubscriptionByMonthDuration(@RequestParam(name="monthDuration") int subscriptionMonthDuration){
     return convertToResource(subscriptionService.getByDuration(subscriptionMonthDuration));
     }
 

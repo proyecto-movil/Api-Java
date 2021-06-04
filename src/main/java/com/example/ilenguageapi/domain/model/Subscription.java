@@ -29,19 +29,15 @@ public class Subscription {
     public String name;
 
 
-    @ManyToMany(fetch = FetchType.LAZY,
-            cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinTable(name = "user_subscriptions",
-            joinColumns = {@JoinColumn(name="subscription_id")},
-            inverseJoinColumns = {@JoinColumn(name="user_id")})
-    private List<User> users;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy ="subscription")
+    private List<UserSubscription> users;
 
 
 
     public Subscription() {
     }
 
-    public Subscription(int id, int price, int monthDuration, String name, List<User> users) {
+    public Subscription(int id, int price, int monthDuration, String name, List<UserSubscription> users) {
         this.id = id;
         this.price = price;
         this.monthDuration = monthDuration;
@@ -50,11 +46,11 @@ public class Subscription {
     }
 
 
-    public List<User> getUsers() {
+    public List<UserSubscription> getUsers() {
         return users;
     }
 
-    public void setUsers(List<User> users) {
+    public void setUsers(List<UserSubscription> users) {
         this.users = users;
     }
 

@@ -62,22 +62,20 @@ public class User extends AuditModel {
         return getRole().name.equals(roleName);
     }
 
-    @ManyToMany(fetch = FetchType.LAZY,
-            cascade = {CascadeType.PERSIST, CascadeType.MERGE},
-            mappedBy = "users")
-    private List<Subscription> subscriptions;
+    @OneToMany(fetch = FetchType.LAZY,mappedBy="user")
+    private List<UserSubscription> subscriptions;
 
     public boolean isSubscribedWith(Subscription subscription){
        return this.getSubscriptions().contains(subscription);
     }
 
-    public User SubscribeWith(Subscription subscription){
+   /* public User SubscribeWith(UserSubscription subscription){
        if(!isSubscribedWith(subscription)){
           this.getSubscriptions().add(subscription);
        }
        return this;
-    }
-    public Subscription getSubcriptionActive(){
+    }*/
+    public UserSubscription getSubcriptionActive(){
        int size = this.getSubscriptions().size();
        return this.getSubscriptions().get(size - 1);
     }
@@ -181,11 +179,11 @@ public class User extends AuditModel {
         return this;
     }
 
-    public List<Subscription> getSubscriptions() {
+    public List<UserSubscription> getSubscriptions() {
         return subscriptions;
     }
 
-    public User setSubscriptions(List<Subscription> subscriptions) {
+    public User setSubscriptions(List<UserSubscription> subscriptions) {
         this.subscriptions = subscriptions;
         return this;
     }
