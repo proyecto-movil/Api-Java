@@ -6,7 +6,6 @@ import org.springframework.data.domain.Pageable;
 
 public interface UserSubscriptionService {
     Page <UserSubscription> getAllUserSubscriptions(Pageable pageable);
-    UserSubscription createUserSubscription(UserSubscription userSubscription);
     Page<UserSubscription> getByUSerId(Pageable pageable, int userId);
     UserSubscription assignUserSubscription(int userId, int subscriptionId);
     UserSubscription unassingUserSubscription(int userId);

@@ -30,4 +30,12 @@ public class UserSubscriptionsController {
         return userSubscriptionService.assignUserSubscription(userId,subscriptionId);
     }
 
+    @Operation(summary="Unassing user to suscription", description="Unassing user to  suscription", tags = {"userSubscriptions"})
+    @RequestMapping(value = "/users/{userId}/subscriptions", method = RequestMethod.PUT)
+    public UserSubscription unassingUserSubscription(@RequestParam(name="userId") int userId){
+        return userSubscriptionService.unassingUserSubscription(userId);
+    }
+
+
+
 }

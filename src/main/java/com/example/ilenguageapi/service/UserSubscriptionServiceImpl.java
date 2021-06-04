@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
@@ -27,10 +28,7 @@ public class UserSubscriptionServiceImpl implements UserSubscriptionService {
         return userSubscriptionRepository.findAll(pageable);
     }
 
-    @Override
-    public UserSubscription createUserSubscription(UserSubscription userSubscription) {
-        return null;
-    }
+
 
     @Override
     public Page<UserSubscription> getByUSerId(Pageable pageable, int userId) {
@@ -39,7 +37,7 @@ public class UserSubscriptionServiceImpl implements UserSubscriptionService {
 
     @Override
     public UserSubscription assignUserSubscription(int userId, int subscriptionId) {
-        Optional<UserSubscription> existingUserSubscription = userSubscriptionRepository.findByUserIdAndSubscriptionId(userId, subscriptionId);
+        Optional<UserSubscription> existingUserSubscription = userSubscriptionRepository.findLastUSerSubscriptionByUserId(userId);
         if(existingUserSubscription.isPresent()){
             LocalDateTime foundDateTime = existingUserSubscription.get().getFinalDate();
             int compareValue = foundDateTime.compareTo(LocalDateTime.now());
@@ -58,8 +56,21 @@ public class UserSubscriptionServiceImpl implements UserSubscriptionService {
         return userSubscriptionRepository.save(userSubscription);
     }
 
+    @Transactional
     @Override
     public UserSubscription unassingUserSubscription(int userId) {
-        return null;
+        Optional<UserSubscription> existingUserSubscription = userSubscriptionRepository.findLastUSerSubscriptionByUserId(userId);
+        if(existingUserSubscription.isEmpty()){
+            throw new ResourceNotFoundException("The user has never had a subscription");
+        }
+        int compareDates = existingUserSubscription.get().getFinalDate().compareTo(LocalDateTime.now());
+        if(compareDates< 0){
+            throw new ResourceNotFoundException("The user has not an active subscription");
+        }
+        //existingUserSubscription.get().setFinalDate(LocalDateTime.now());
+        //return userSubscriptionRepository.save(existingUserSubscription.get());
+         userSubscriptionRepository.unassingUserSubscription(LocalDateTime.now(),existingUserSubscription.get().getUserSubscriptionId());
+        return existingUserSubscription.get();
+
     }
 }

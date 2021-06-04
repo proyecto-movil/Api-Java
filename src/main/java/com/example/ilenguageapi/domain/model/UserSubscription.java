@@ -1,5 +1,7 @@
 package com.example.ilenguageapi.domain.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
@@ -17,12 +19,14 @@ public class UserSubscription {
     private LocalDateTime initialDate;
     private LocalDateTime finalDate;
 
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "subscriptionId", nullable = false, insertable = false, updatable = false)
     private Subscription subscription;
 
+    @JsonBackReference
     @ManyToOne
-    @JoinColumn(name ="userSubscriptionId", nullable = false , insertable = false, updatable = false)
+    @JoinColumn(name ="userId", nullable = false , insertable = false, updatable = false)
     private User user;
 
     public UserSubscription(int userSubscriptionId, int subscriptionId, int userId, LocalDateTime initialDate, LocalDateTime finalDate, Subscription subscription, User user) {
