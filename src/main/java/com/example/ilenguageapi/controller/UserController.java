@@ -88,6 +88,10 @@ public class UserController {
         return convertToResource(UserWithRole);
     }
 
+    @Operation(summary = "Assign Role to User", description = "Assign role to user with role id and user id", tags = {"Users"})
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Assigned Role to User", content = @Content(mediaType = "application/json")),
+    })
     @PostMapping("/user/{userId}/role/{roleId}")
     public UserResource assignRoleToUser(@PathVariable Long userId, @PathVariable Long roleId){
        return convertToResource(userService.assignRoleByIdAndUserId(userId,roleId));
@@ -110,6 +114,11 @@ public class UserController {
     public ResponseEntity<?> deleteUser(@PathVariable Long userId){
         return userService.deleteUser(userId);
     }
+
+    @Operation(summary = "List tuthors", description = "List tuthors by language id and topic id", tags = {"Users"})
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Returned all tuthors", content = @Content(mediaType = "application/json")),
+    })
     @GetMapping("/languages/{languageId}/topics/{topicId}/tuthors")
     public Page<UserResource> getAllTuthorsByLanguageIdAndTopicId(@PathVariable Long languageId, @PathVariable Long topicId, Pageable pageable){
         Page<User> userPage = userService.getAllTuthorsByTopicIdAndLanguageId(topicId,languageId,pageable);
