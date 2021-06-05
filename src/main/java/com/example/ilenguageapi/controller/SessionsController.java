@@ -85,9 +85,9 @@ public class SessionsController {
         return sessionService.deleteSession(sessionId);
     }
     @Operation(summary="assing Session to schedule", description="Assing session to  schedule", tags = {"Sessions"})
-    @PostMapping("/schedules/{scheduleId}/sessions/sessionId")
-    public Session assignSessionSchedule(@RequestParam(name = "scheduleId") Long scheduleId, @RequestParam(name = "sessionId") Long sessionId){
-        return sessionService.assignSessionSchedule(scheduleId,sessionId);
+    @PostMapping("/sessions/{sessionId}/schedules/scheduleId")
+    public Session assignSessionSchedule(@PathVariable(name = "sessionId") Long sessionId, @RequestParam(name = "scheduleId") Long scheduleId){
+        return sessionService.assignSessionSchedule(sessionId,scheduleId);
     }
     /*
     @Operation(summary = "List Sessions by scheduleId", description = "List Sessions by scheduleId", tags = {"Sessions"})
