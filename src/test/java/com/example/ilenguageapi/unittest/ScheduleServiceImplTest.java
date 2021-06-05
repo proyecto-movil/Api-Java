@@ -1,4 +1,4 @@
-package com.example.ilenguageapi;
+package com.example.ilenguageapi.unittest;
 import com.example.ilenguageapi.domain.model.Schedule;
 import com.example.ilenguageapi.domain.repository.ScheduleRepository;
 import com.example.ilenguageapi.domain.service.ScheduleService;
