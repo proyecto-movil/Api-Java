@@ -1,6 +1,6 @@
 package com.example.ilenguageapi.service;
 
-import com.example.ilenguageapi.domain.model.Session;
+import com.example.ilenguageapi.domain.model.*;
 import com.example.ilenguageapi.domain.repository.ScheduleRepository;
 import com.example.ilenguageapi.domain.repository.SessionRepository;
 import com.example.ilenguageapi.domain.service.SessionService;
@@ -12,6 +12,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Optional;
 
 @Service
 public class SessionServiceImpl implements SessionService {
@@ -94,6 +96,18 @@ public class SessionServiceImpl implements SessionService {
                         "Session not found with Id" + sessionId +
                                 " and ScheduleId " + scheduleId));
     }
+    /*
+    @Override
+    public Session assignSessionSchedule(Long sessionId, Long scheduleId) {
+        Schedule schedule= scheduleRepository.findById(scheduleId)
+                .orElseThrow(() -> new ResourceNotFoundException("Schedule", "Id", scheduleId));
+        return sessionRepository.findById(sessionId).map(
+                session -> sessionRepository.save(session.setSchedule(schedule)))
+                .orElseThrow(() -> new ResourceNotFoundException("Session", "Id", sessionId));
+
+    }*/
+
+
     /*
     @Override
     public ResponseEntity<?> deleteSession(int scheduleId, Long sessionId) {

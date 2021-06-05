@@ -25,14 +25,12 @@ public class Schedule extends AuditModel {
     }
     public Schedule( Long id,String day) {
         this.id = id;
-
-
         this.day = day;
 
     }
 
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
