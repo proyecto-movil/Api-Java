@@ -1,5 +1,7 @@
 package com.example.ilenguageapi.domain.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
@@ -10,25 +12,23 @@ public class UserSubscription {
     @GeneratedValue(strategy =GenerationType.IDENTITY)
     private int userSubscriptionId;
 
-    private int subscriptionId;
 
-    private int userId;
 
     private LocalDateTime initialDate;
     private LocalDateTime finalDate;
 
+    @JsonBackReference
     @ManyToOne
-    @JoinColumn(name = "subscriptionId", nullable = false, insertable = false, updatable = false)
+    @JoinColumn(name = "subscription_id", nullable = false, insertable = false, updatable = false)
     private Subscription subscription;
 
+    @JsonBackReference
     @ManyToOne
-    @JoinColumn(name ="userSubscriptionId", nullable = false , insertable = false, updatable = false)
+    @JoinColumn(name ="user_id", nullable = false , insertable = false, updatable = false)
     private User user;
 
-    public UserSubscription(int userSubscriptionId, int subscriptionId, int userId, LocalDateTime initialDate, LocalDateTime finalDate, Subscription subscription, User user) {
+    public UserSubscription(int userSubscriptionId, LocalDateTime initialDate, LocalDateTime finalDate, Subscription subscription, User user) {
         this.userSubscriptionId = userSubscriptionId;
-        this.subscriptionId = subscriptionId;
-        this.userId = userId;
         this.initialDate = initialDate;
         this.finalDate = finalDate;
         this.subscription = subscription;
@@ -42,13 +42,7 @@ public class UserSubscription {
         return userSubscriptionId;
     }
 
-    public int getSubscriptionId() {
-        return subscriptionId;
-    }
 
-    public int getUserId() {
-        return userId;
-    }
 
     public LocalDateTime getInitialDate() {
         return initialDate;
@@ -68,14 +62,6 @@ public class UserSubscription {
 
     public void setUserSubscriptionId(int userSubscriptionId) {
         this.userSubscriptionId = userSubscriptionId;
-    }
-
-    public void setSubscriptionId(int subscriptionId) {
-        this.subscriptionId = subscriptionId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
     }
 
     public void setInitialDate(LocalDateTime initialDate) {

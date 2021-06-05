@@ -1,5 +1,6 @@
 package com.example.ilenguageapi.domain.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.validator.constraints.CreditCardNumber;
 
 import javax.persistence.*;
@@ -29,6 +30,7 @@ public class Subscription {
     public String name;
 
 
+    @JsonManagedReference
     @OneToMany(fetch = FetchType.LAZY, mappedBy ="subscription")
     private List<UserSubscription> users;
 
