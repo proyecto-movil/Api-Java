@@ -51,7 +51,7 @@ public class UserController {
         return new PageImpl<>(resources, pageable, resources.size());
     }
 
-    @Operation(summary = "Get Users", description = "Get All User by RoleId", tags = {"Users"})
+    @Operation(summary = "Get Users by Role Id", description = "Get All User by RoleId", tags = {"Users"})
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "All Users returned", content = @Content(mediaType = "application/json")),
             @ApiResponse(responseCode = "404", description = "Users not found")
