@@ -111,7 +111,8 @@ public class SessionServiceImpl implements SessionService {
 
     @Override
     public ResponseEntity<?> deleteSession(int scheduleId, Long sessionId) {
-        if(!scheduleRepository.existsById(scheduleId))
+        Optional<Schedule> foundSchedule = scheduleRepository.findById((long) scheduleId);
+        if(foundSchedule.isEmpty())
             throw new ResourceNotFoundException("Schedule", "Id", scheduleId);
 
         return sessionRepository.findById(sessionId).map(session -> {
