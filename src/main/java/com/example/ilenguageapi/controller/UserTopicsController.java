@@ -38,7 +38,7 @@ public class UserTopicsController {
             @ApiResponse(responseCode = "200", description = "Assigned topic", content = @Content(mediaType = "application/json")),
             @ApiResponse(responseCode = "404", description = "Topic not found or User not found")
     })
-    @PostMapping("/user/{userId}/topic/{topicId}")
+    @PostMapping("/users/{userId}/topics/{topicId}")
     public UserResource assignTopicUser(
             @PathVariable Long userId,
             @PathVariable Long topicId) {
@@ -50,7 +50,7 @@ public class UserTopicsController {
             @ApiResponse(responseCode = "200", description = "unassigned topic", content = @Content(mediaType = "application/json")),
             @ApiResponse(responseCode = "404", description = "Topic not found or User not found")
     })
-    @DeleteMapping("/user/{userId}/topic/{topicId}")
+    @DeleteMapping("/users/{userId}/topics/{topicId}")
     public UserResource unassignTopicUser(
             @PathVariable Long userId,
             @PathVariable Long topicId) {
@@ -62,7 +62,7 @@ public class UserTopicsController {
             @ApiResponse(responseCode = "200", description = "ALl topics returned", content = @Content(mediaType = "application/json")),
             @ApiResponse(responseCode = "404", description = "User not found")
     })
-    @GetMapping("/user/{userId}/topics")
+    @GetMapping("/users/{userId}/topics")
     public Page<TopicOfInterestResource> getAllTopicByUserId(
             @PathVariable Long userId,
             Pageable pageable) {

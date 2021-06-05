@@ -12,9 +12,13 @@ import com.example.ilenguageapi.domain.service.UserService;
 import com.example.ilenguageapi.exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -30,17 +34,45 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Page<User> getAllUsers(Pageable pageable) {
-        return userRepository.findAll(pageable);
+        Page<User> users = userRepository.findAll(pageable);
+        return users;
     }
 
     @Override
-    public Page<User> getAllUsersByTopicIdAndRoleId(int topicId, int languageId, Pageable pageable) {
-        return null;
+    public Page<User> getAllUsersByTopicIdAndLanguageId(Long topicId, Long languageId, Pageable pageable) {
+
+        TopicOfInterest topic = topicOfInterestRepository.findById(topicId)
+                .orElseThrow(() -> new ResourceNotFoundException("TopicOfInterest", "Id", topicId));
+
+        LanguageOfInterest language = languageOfInterestRespository.findById(languageId)
+                .orElseThrow(() -> new ResourceNotFoundException("LanguageOfInterest", "Id", languageId));
+
+        List<User> usersFilter = userRepository.findAll(pageable)
+                .stream()
+                .filter(user -> user.hasTheTopicOf(topic) && user.hasTheLenguageOf(language))
+                .collect(Collectors.toList());
+       return new PageImpl<>(usersFilter,pageable,usersFilter.size());
+    }
+
+    @Override
+    public Page<User> getAllTuthorsByTopicIdAndLanguageId(Long topicId, Long languageId, Pageable pageable) {
+        TopicOfInterest topic = topicOfInterestRepository.findById(topicId)
+                .orElseThrow(() -> new ResourceNotFoundException("TopicOfInterest", "Id", topicId));
+
+        LanguageOfInterest language = languageOfInterestRespository.findById(languageId)
+                .orElseThrow(() -> new ResourceNotFoundException("LanguageOfInterest", "Id", languageId));
+        Role role = roleRepository.findByName("Tuthor").orElseThrow(() -> new ResourceNotFoundException("Role","Name","Tuthor"));
+        List<User> usersFilter = userRepository.findAllByRole(role, pageable)
+                .stream()
+                .filter(user -> user.hasTheTopicOf(topic) && user.hasTheLenguageOf(language) && user.isUserWithRole("Tuthor"))
+                .collect(Collectors.toList());
+        return new PageImpl<>(usersFilter,pageable,usersFilter.size());
     }
 
     @Override
     public Page<User> getAllUsersByRoleId(Long roleId, Pageable pageable) {
-        return null;
+        Role role = roleRepository.findById(roleId).orElseThrow(() -> new ResourceNotFoundException("Role","Id",roleId));
+        return userRepository.findAllByRole(role, pageable);
     }
 
     @Override
@@ -51,14 +83,24 @@ public class UserServiceImpl implements UserService {
     @Override
     public User assignRoleById(User user, Long roleId) {
         Role role = roleRepository.findById(roleId).orElseThrow(() -> new ResourceNotFoundException("Role", "id", roleId));
-        user.setRole(role);
+        User userWithRole = user.setRole(role);
+        //TODO: cambiado para que solo saque al usuario
         return user;
+    }
+
+    @Override
+    public User assignRoleByIdAndUserId(Long userId, Long roleId) {
+        Role role = roleRepository.findById(roleId)
+                .orElseThrow(() -> new ResourceNotFoundException("Role","Id",roleId));
+        return userRepository.findById(userId).map(
+               user -> userRepository.save(user.setRole(role.addUser(user))))
+                .orElseThrow(() -> new ResourceNotFoundException("User","Id", userId));
     }
 
     @Override
     public User assignTopicById(Long userId, Long topicId) {
         TopicOfInterest topic = topicOfInterestRepository.findById(topicId)
-                .orElseThrow(() -> new ResourceNotFoundException("TopicOfInterest","Id",topicId));
+                .orElseThrow(() -> new ResourceNotFoundException("TopicOfInterest", "Id", topicId));
         return userRepository.findById(userId).map(
                 user -> userRepository.save(user.addTopicOfInterest(topic)))
                 .orElseThrow(() -> new ResourceNotFoundException("User", "Id", userId));
@@ -67,7 +109,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User unassignTopicById(Long userId, Long topicId) {
         TopicOfInterest topic = topicOfInterestRepository.findById(topicId)
-                .orElseThrow(() -> new ResourceNotFoundException("TopicOfInterest","Id",topicId));
+                .orElseThrow(() -> new ResourceNotFoundException("TopicOfInterest", "Id", topicId));
         return userRepository.findById(userId).map(
                 user -> userRepository.save(user.removeTopicOfInterest(topic)))
                 .orElseThrow(() -> new ResourceNotFoundException("User", "Id", userId));
@@ -76,7 +118,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User assignLanguageById(Long userId, Long languageId) {
         LanguageOfInterest language = languageOfInterestRespository.findById(languageId)
-                .orElseThrow(() -> new ResourceNotFoundException("LanguageOfInterest","Id",languageId));
+                .orElseThrow(() -> new ResourceNotFoundException("LanguageOfInterest", "Id", languageId));
         return userRepository.findById(userId).map(
                 user -> userRepository.save(user.addLanguageOfInterest(language)))
                 .orElseThrow(() -> new ResourceNotFoundException("User", "Id", userId));
@@ -85,7 +127,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User unassignLanguageById(Long userId, Long languageId) {
         LanguageOfInterest language = languageOfInterestRespository.findById(languageId)
-                .orElseThrow(() -> new ResourceNotFoundException("LanguageOfInterest","Id",languageId));
+                .orElseThrow(() -> new ResourceNotFoundException("LanguageOfInterest", "Id", languageId));
         return userRepository.findById(userId).map(
                 user -> userRepository.save(user.removeLanguageOfInterest(language)))
                 .orElseThrow(() -> new ResourceNotFoundException("User", "Id", userId));
@@ -94,9 +136,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUserById(Long userId) {
         return userRepository.findById(userId)
-                .orElseThrow(() -> new ResourceNotFoundException("User","id", userId));
+                .orElseThrow(() -> new ResourceNotFoundException("User", "id", userId));
 
     }
+
     @Override
     public User createUser(User user) {
         return userRepository.save(user);

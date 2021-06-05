@@ -54,9 +54,8 @@ public class User extends AuditModel {
         this.profilePhoto = profilePhoto;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn( name = "role_id", nullable = false)
-    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY, optional = true)
+    @JoinColumn( name = "role_id",nullable = true)
     private Role role;
 
     public boolean isUserWithRole(String roleName){
@@ -200,7 +199,7 @@ public class User extends AuditModel {
     }
 
     public Role getRole() {
-        return role;
+        return this.role;
     }
 
     public User setRole(Role role) {
