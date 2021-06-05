@@ -30,7 +30,7 @@ public class ScheduleServiceImpl implements ScheduleService {
     }
 
     @Override
-    public Schedule updateSchedule(long scheduleId, Schedule schedules) {
+    public Schedule updateSchedule(Long scheduleId, Schedule schedules) {
         Schedule schedule= scheduleRepository.findById(scheduleId)
                 .orElseThrow(()->new ResourceNotFoundException("Schedule", "Id", scheduleId));
         schedule.setDay(schedules.getDay());
@@ -41,7 +41,7 @@ public class ScheduleServiceImpl implements ScheduleService {
     }
 
     @Override
-    public ResponseEntity<?> deleteSchedule(long scheduleId) {
+    public ResponseEntity<?> deleteSchedule(Long scheduleId) {
         Schedule schedule = scheduleRepository.findById(scheduleId)
                 .orElseThrow(()-> new ResourceNotFoundException("Schedule", "Id", scheduleId));
         scheduleRepository.delete(schedule);
@@ -51,7 +51,7 @@ public class ScheduleServiceImpl implements ScheduleService {
     }
 
     @Override
-    public Schedule getByScheduleId(long scheduleId) {
+    public Schedule getByScheduleId(Long scheduleId) {
         return scheduleRepository.findById(scheduleId)
                 .orElseThrow(()->new ResourceNotFoundException("Schedule", "Id", scheduleId));
     }

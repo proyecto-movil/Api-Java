@@ -83,12 +83,12 @@ public class SessionServiceImpl implements SessionService {
     }
 
     @Override
-    public Page<Session> getAllSessionsByScheduleId(int scheduleId, Pageable pageable) {
+    public Page<Session> getAllSessionsByScheduleId(Long scheduleId, Pageable pageable) {
         return sessionRepository.findByScheduleId(scheduleId, pageable);
     }
 
     @Override
-    public Session getSessionByIdAndScheduleId(int scheduleId, Long sessionId) {
+    public Session getSessionByIdAndScheduleId(Long scheduleId, Long sessionId) {
         return sessionRepository.findByIdAndScheduleId(sessionId, scheduleId)
                 .orElseThrow(() -> new ResourceNotFoundException(
                         "Session not found with Id" + sessionId +

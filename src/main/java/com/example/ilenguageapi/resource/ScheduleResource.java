@@ -1,7 +1,7 @@
 package com.example.ilenguageapi.resource;
 
 public class ScheduleResource {
-    private long id;
+    private Long id;
 
     private String day;
 
@@ -16,7 +16,7 @@ public class ScheduleResource {
 
 
 
-    public ScheduleResource setId(long id) {
+    public ScheduleResource setId(Long id) {
         this.id = id;
         return this;
     }

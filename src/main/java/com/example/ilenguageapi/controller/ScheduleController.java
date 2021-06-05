@@ -53,12 +53,12 @@ public class ScheduleController {
     }
     @Operation(summary="Update schedule", description="Update schedule", tags = {"schedules"} )
     @PutMapping ("schedules/{id}")
-    public ScheduleResource updateSchedule(@PathVariable(name="id") int scheduleId, @Valid @RequestBody SaveScheduleResource resource){
+    public ScheduleResource updateSchedule(@PathVariable(name="id") Long scheduleId, @Valid @RequestBody SaveScheduleResource resource){
         return convertToResource(scheduleService.updateSchedule(scheduleId,convertToEntity(resource)));
     }
     @Operation(summary="Delete schedule", description="Delete schedule", tags = {"schedules"} )
     @DeleteMapping("schedules/{id}")
-    public ResponseEntity<?> deleteSchedule(@PathVariable(name="id") int scheduleId){
+    public ResponseEntity<?> deleteSchedule(@PathVariable(name="id") Long scheduleId){
         return scheduleService.deleteSchedule(scheduleId);
     }
     @Operation(summary="Get by id", description="Get the schedules giving an id", tags = {"schedules"} )
@@ -68,7 +68,7 @@ public class ScheduleController {
 
     })
     @GetMapping("/schedules/{id}")
-    public ScheduleResource getScheduleById(@PathVariable(name="id") int scheduleId){
+    public ScheduleResource getScheduleById(@PathVariable(name="id") Long scheduleId){
         return convertToResource(scheduleService.getByScheduleId(scheduleId));
     }
 

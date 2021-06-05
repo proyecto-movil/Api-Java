@@ -10,7 +10,7 @@ public class Schedule extends AuditModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @NotNull
     private  String day;
@@ -23,7 +23,7 @@ public class Schedule extends AuditModel {
     public Schedule(){
 
     }
-    public Schedule( long id,String day) {
+    public Schedule( Long id,String day) {
         this.id = id;
 
 
@@ -36,7 +36,7 @@ public class Schedule extends AuditModel {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
 
         this.id = id;
     }
