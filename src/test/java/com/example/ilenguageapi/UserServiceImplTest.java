@@ -103,7 +103,6 @@ public class UserServiceImplTest {
 
         Pageable paginacion = PageRequest.of(0,2);
         Role role1 = new Role().setId(1L).setName("Tuthor");
-        Role role2 = new Role().setId(2L).setName("Student");
         TopicOfInterest topic1 = new TopicOfInterest().setId(1L);
         TopicOfInterest topic2 = new TopicOfInterest().setId(2L);
         LanguageOfInterest language1 = new LanguageOfInterest().setId(1L);
@@ -112,10 +111,10 @@ public class UserServiceImplTest {
         listOfUsers.add(new User().setTopicOfInterests(new ArrayList<>()).setLanguageOfInterests(new ArrayList<>()).addTopicOfInterest(topic1).addLanguageOfInterest(language1).setRole(role1));
         listOfUsers.add(new User().setTopicOfInterests(new ArrayList<>()).setLanguageOfInterests(new ArrayList<>()).addTopicOfInterest(topic2).addLanguageOfInterest(language2).setRole(role1));
         listOfUsers.add(new User().setTopicOfInterests(new ArrayList<>()).setLanguageOfInterests(new ArrayList<>()).addLanguageOfInterest(language1).addLanguageOfInterest(language2).setRole(role1));
-        listOfUsers.add(new User().setTopicOfInterests(new ArrayList<>()).setLanguageOfInterests(new ArrayList<>()).addTopicOfInterest(topic1).addLanguageOfInterest(language1).setRole(role2));
         when(topicOfInterestRepository.findById(1L)).thenReturn(Optional.of(topic1));
         when(languageOfInterestRespository.findById(1L)).thenReturn(Optional.of(language1));
-        when(userRepository.findAll(paginacion)).thenReturn(new PageImpl<>(listOfUsers,paginacion,listOfUsers.size()));
+        when(roleRepository.findByName("Tuthor")).thenReturn(Optional.of(role1));
+        when(userRepository.findAllByRole(role1,paginacion)).thenReturn(new PageImpl<>(listOfUsers,paginacion,listOfUsers.size()));
         Page<User> userPage = userService.getAllTuthorsByTopicIdAndLanguageId(1L,1L,paginacion);
         assertThat(userPage.getTotalElements()).isEqualTo(1L);
     }

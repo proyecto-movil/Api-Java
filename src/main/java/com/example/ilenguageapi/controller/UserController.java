@@ -50,6 +50,22 @@ public class UserController {
                 .collect(Collectors.toList());
         return new PageImpl<>(resources, pageable, resources.size());
     }
+
+    @Operation(summary = "Get Users", description = "Get All User by RoleId", tags = {"Users"})
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "All Users returned", content = @Content(mediaType = "application/json")),
+            @ApiResponse(responseCode = "404", description = "Users not found")
+    })
+    @GetMapping("/role/{roleId}/users")
+    public Page<UserResource> getAllUsersByRoleId(@PathVariable Long roleId,Pageable pageable){
+        Page<User> userPage = userService.getAllUsersByRoleId(roleId, pageable);
+        List<UserResource> resources = userPage.getContent()
+                .stream()
+                .map(this::convertToResource)
+                .collect(Collectors.toList());
+        return new PageImpl<>(resources, pageable, resources.size());
+    }
+
     @Operation(summary = "Get User", description = "Get User by userId", tags = {"Users"})
     @ApiResponses(value = {
            @ApiResponse(responseCode = "200", description = "User returned", content = @Content(mediaType = "application/json")),
@@ -64,11 +80,17 @@ public class UserController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "User created", content = @Content(mediaType = "application/json")),
     })
-    @PostMapping("/user/{roleId}")
-    public UserResource createUser(@Valid @RequestBody SaveUserResource resource, @PathVariable Long roleId) {
+    @PostMapping("/user")
+    public UserResource createUser(@Valid @RequestBody SaveUserResource resource) {
         User user = convertToEntity(resource);
-        User UserWithRole = userService.createUser(userService.assignRoleById(user,roleId));
+        //User UserWithRole = userService.createUser(userService.assignRoleById(user,roleId));
+        User UserWithRole = userService.createUser(user);
         return convertToResource(UserWithRole);
+    }
+
+    @PostMapping("/user/{userId}/role/{roleId}")
+    public UserResource assignRoleToUser(@PathVariable Long userId, @PathVariable Long roleId){
+       return convertToResource(userService.assignRoleByIdAndUserId(userId,roleId));
     }
 
     @Operation(summary = "Update User", description = "Update user by userId", tags = {"Users"})

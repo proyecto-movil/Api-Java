@@ -25,9 +25,13 @@ public class Role {
     @OneToMany(mappedBy = "role",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<User> users;
 
-    public Role() {
+    public Role addUser(User user){
+       getUsers().add(user);
+       return this;
     }
 
+    public Role() {
+    }
 
     public Role( @NotNull String name) {
         this.name = name;
@@ -51,4 +55,12 @@ public class Role {
         return this;
     }
 
+    public List<User> getUsers() {
+        return this.users;
+    }
+
+    public Role setUsers(List<User> users) {
+        this.users = users;
+        return this;
+    }
 }

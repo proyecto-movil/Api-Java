@@ -13,6 +13,7 @@ public interface UserService {
     Page<User> getAllUsersByRoleId(Long roleId, Pageable pageable);
     Page<User> getAllUsersBySubscriptionId(Long subscriptionId, Pageable pageable);
     User assignRoleById(User user, Long roleId);
+    User assignRoleByIdAndUserId(Long userId, Long roleId);
 
     User assignTopicById(Long userId, Long topicId);
     User unassignTopicById(Long userId, Long topicId);

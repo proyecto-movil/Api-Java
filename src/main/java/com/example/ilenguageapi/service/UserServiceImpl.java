@@ -61,8 +61,8 @@ public class UserServiceImpl implements UserService {
 
         LanguageOfInterest language = languageOfInterestRespository.findById(languageId)
                 .orElseThrow(() -> new ResourceNotFoundException("LanguageOfInterest", "Id", languageId));
-
-        List<User> usersFilter = userRepository.findAll(pageable)
+        Role role = roleRepository.findByName("Tuthor").orElseThrow(() -> new ResourceNotFoundException("Role","Name","Tuthor"));
+        List<User> usersFilter = userRepository.findAllByRole(role, pageable)
                 .stream()
                 .filter(user -> user.hasTheTopicOf(topic) && user.hasTheLenguageOf(language) && user.isUserWithRole("Tuthor"))
                 .collect(Collectors.toList());
@@ -71,7 +71,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Page<User> getAllUsersByRoleId(Long roleId, Pageable pageable) {
-        return null;
+        Role role = roleRepository.findById(roleId).orElseThrow(() -> new ResourceNotFoundException("Role","Id",roleId));
+        return userRepository.findAllByRole(role, pageable);
     }
 
     @Override
@@ -82,8 +83,18 @@ public class UserServiceImpl implements UserService {
     @Override
     public User assignRoleById(User user, Long roleId) {
         Role role = roleRepository.findById(roleId).orElseThrow(() -> new ResourceNotFoundException("Role", "id", roleId));
-        User userWithRole = user.setRole(role).setName("alguien mas");
-        return userWithRole;
+        User userWithRole = user.setRole(role);
+        //TODO: cambiado para que solo saque al usuario
+        return user;
+    }
+
+    @Override
+    public User assignRoleByIdAndUserId(Long userId, Long roleId) {
+        Role role = roleRepository.findById(roleId)
+                .orElseThrow(() -> new ResourceNotFoundException("Role","Id",roleId));
+        return userRepository.findById(userId).map(
+               user -> userRepository.save(user.setRole(role.addUser(user))))
+                .orElseThrow(() -> new ResourceNotFoundException("User","Id", userId));
     }
 
     @Override
