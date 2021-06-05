@@ -21,5 +21,5 @@ public interface SessionService {
     Page<Session> getAllSessionsByScheduleId(Long scheduleId, Pageable pageable);
     Session assignSessionSchedule(Long scheduleId,  Long sessionId);
     Session getSessionByIdAndScheduleId(Long scheduleId, Long sessionId);
-   // ResponseEntity<?> deleteSession(int scheduleId, Long sessionId);
+    ResponseEntity<?> deleteSession(int scheduleId, Long sessionId);
 }
