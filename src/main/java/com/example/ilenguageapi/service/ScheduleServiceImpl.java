@@ -28,20 +28,20 @@ public class ScheduleServiceImpl implements ScheduleService {
     public Schedule createSchedule(Schedule schedule) {
         return scheduleRepository.save(schedule);
     }
+
     @Override
-    public Schedule updateSchedule(int scheduleId, Schedule schedules) {
+    public Schedule updateSchedule(Long scheduleId, Schedule schedules) {
         Schedule schedule= scheduleRepository.findById(scheduleId)
                 .orElseThrow(()->new ResourceNotFoundException("Schedule", "Id", scheduleId));
         schedule.setDay(schedules.getDay());
-        schedule.setName(schedules.getName());
-        schedule.setHoursDuration(schedules.getHoursDuration());
+
         return scheduleRepository.save(schedule);
 
 
     }
 
     @Override
-    public ResponseEntity<?> deleteSchedule(int scheduleId) {
+    public ResponseEntity<?> deleteSchedule(Long scheduleId) {
         Schedule schedule = scheduleRepository.findById(scheduleId)
                 .orElseThrow(()-> new ResourceNotFoundException("Schedule", "Id", scheduleId));
         scheduleRepository.delete(schedule);
@@ -51,25 +51,17 @@ public class ScheduleServiceImpl implements ScheduleService {
     }
 
     @Override
-    public Schedule getByScheduleId(int scheduleId) {
+    public Schedule getByScheduleId(Long scheduleId) {
         return scheduleRepository.findById(scheduleId)
                 .orElseThrow(()->new ResourceNotFoundException("Schedule", "Id", scheduleId));
     }
-    @Override
-    public Schedule getByName(String name) {
-        return scheduleRepository.findByName(name)
-                .orElseThrow(()-> new ResourceNotFoundException("Schedule", "Name", name));
-    }
+
     @Override
     public Schedule getByDay(String day) {
         return scheduleRepository.findByDay(day)
                 .orElseThrow(()-> new ResourceNotFoundException("Schedule", "Day", day));
     }
-    @Override
-    public Schedule getByDuration(int hoursDuration) {
-        return scheduleRepository.findByHoursDuration(hoursDuration)
-                .orElseThrow(()-> new ResourceNotFoundException("Schedule", "HoursDuration", hoursDuration));
-    }
+
 
 
 

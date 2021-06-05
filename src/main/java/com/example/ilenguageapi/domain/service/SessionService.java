@@ -1,6 +1,7 @@
 package com.example.ilenguageapi.domain.service;
 
 import com.example.ilenguageapi.domain.model.Session;
+import com.example.ilenguageapi.domain.model.UserSubscription;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +18,8 @@ public interface SessionService {
     Session getSessionByEndAt(LocalDate endAt);
     Session getSessionByState(String state);
     Session getSessionByTopic(String topic);
-    Page<Session> getAllSessionsByScheduleId(int scheduleId, Pageable pageable);
-    Session getSessionByIdAndScheduleId(int scheduleId, Long sessionId);
+    Page<Session> getAllSessionsByScheduleId(Long scheduleId, Pageable pageable);
+    Session assignSessionSchedule(Long scheduleId,  Long sessionId);
+    Session getSessionByIdAndScheduleId(Long scheduleId, Long sessionId);
    // ResponseEntity<?> deleteSession(int scheduleId, Long sessionId);
 }

@@ -33,34 +33,34 @@ public class ScheduleServiceImplTest {
     }
 
     @Test
-    @DisplayName("Get schedule by name with valid name course then return true")
-    public void whenGetSubscriptionByNameWithValidNameThenReturnsSubscription(){
+    @DisplayName("Get schedule by Day with valid Day  then return true")
+    public void whenGetScheduleByDayWithValidDayThenReturnsSchedule(){
         //Arrange
-        String name = "Verb to be";
+        String Day = "Monday";
         Schedule schedule = new Schedule();
 
-        schedule.setName(name);
+        schedule.setDay(Day);
 
-        when(_scheduleRepository.findByName(name))
+        when(_scheduleRepository.findByDay(Day))
                 .thenReturn(Optional.of(schedule));
         //Act
-        Schedule foundSchedule = _scheduleService.getByName(name);
+        Schedule foundSchedule = _scheduleService.getByDay(Day);
 
         //Assert
-        assertThat(foundSchedule.getName()).isEqualTo(name);
+        assertThat(foundSchedule.getDay()).isEqualTo(Day);
     }
 
     @Test
-    @DisplayName("Get schedule error message when name course is not valid")
-    public void whenGetScheduleByNameWithInvalidNameReturnsResourceNotFoundException(){
-        String name ="Programming Python";
+    @DisplayName("Get schedule error message when Day course is not valid")
+    public void whenGetScheduleByDayWithInvalidNameReturnsResourceNotFoundException(){
+        String Day ="Manday";
         String template ="Resource %s not found for %s with value %s";
-        when(_scheduleRepository.findByName(name))
+        when(_scheduleRepository.findByDay(Day))
                 .thenReturn(Optional.empty());
-        String expectedMessage = String.format(template, "Schedule", "Name", name);
+        String expectedMessage = String.format(template, "Schedule", "Day", Day);
         //Act
         Throwable exception = catchThrowable(()->{
-            Schedule foundSchedule = _scheduleService.getByName(name);
+            Schedule foundSchedule = _scheduleService.getByDay(Day);
         });
 
         //Assert

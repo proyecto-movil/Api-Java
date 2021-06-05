@@ -1,6 +1,7 @@
 package com.example.ilenguageapi.controller;
 
 import com.example.ilenguageapi.domain.model.Session;
+import com.example.ilenguageapi.domain.model.UserSubscription;
 import com.example.ilenguageapi.domain.service.SessionService;
 import com.example.ilenguageapi.resource.SaveSessionResource;
 import com.example.ilenguageapi.resource.SessionResource;
@@ -82,6 +83,11 @@ public class SessionsController {
     @DeleteMapping("/sessions/{sessionId}")
     public ResponseEntity<?> deleteSession(@PathVariable Long sessionId) {
         return sessionService.deleteSession(sessionId);
+    }
+    @Operation(summary="assing Session to schedule", description="Assing session to  schedule", tags = {"Sessions"})
+    @PostMapping("/schedules/{scheduleId}/sessions/sessionId")
+    public Session assignSessionSchedule(@RequestParam(name = "scheduleId") Long scheduleId, @RequestParam(name = "sessionId") Long sessionId){
+        return sessionService.assignSessionSchedule(scheduleId,sessionId);
     }
     /*
     @Operation(summary = "List Sessions by scheduleId", description = "List Sessions by scheduleId", tags = {"Sessions"})
