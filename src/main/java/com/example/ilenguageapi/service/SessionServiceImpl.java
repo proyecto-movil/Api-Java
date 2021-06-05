@@ -21,8 +21,8 @@ public class SessionServiceImpl implements SessionService {
     @Autowired
     private SessionRepository sessionRepository;
 
-    //@Autowired
-    // private ScheduleRepository scheduleRepository;
+    @Autowired
+     private ScheduleRepository scheduleRepository;
 
     @Override
     public Page<Session> getAllSessions(Pageable pageable) {
@@ -96,7 +96,7 @@ public class SessionServiceImpl implements SessionService {
                         "Session not found with Id" + sessionId +
                                 " and ScheduleId " + scheduleId));
     }
-    /*
+
     @Override
     public Session assignSessionSchedule(Long sessionId, Long scheduleId) {
         Schedule schedule= scheduleRepository.findById(scheduleId)
@@ -105,13 +105,14 @@ public class SessionServiceImpl implements SessionService {
                 session -> sessionRepository.save(session.setSchedule(schedule)))
                 .orElseThrow(() -> new ResourceNotFoundException("Session", "Id", sessionId));
 
-    }*/
+    }
 
 
-    /*
+
     @Override
     public ResponseEntity<?> deleteSession(int scheduleId, Long sessionId) {
-        if(!scheduleRepository.existsById(scheduleId))
+        Optional<Schedule> foundSchedule = scheduleRepository.findById((long) scheduleId);
+        if(foundSchedule.isEmpty())
             throw new ResourceNotFoundException("Schedule", "Id", scheduleId);
 
         return sessionRepository.findById(sessionId).map(session -> {
@@ -119,5 +120,5 @@ public class SessionServiceImpl implements SessionService {
             return ResponseEntity.ok().build();
         }).orElseThrow(() -> new ResourceNotFoundException(
                 "Session", "Id", sessionId));
-    }*/
+    }
 }
