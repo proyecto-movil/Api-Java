@@ -41,17 +41,5 @@ public class UserScheduleController {
     }
 
 
-    @Operation(summary="Get by use id", description="Get the schedule giving the user id related ", tags = {"user scchedules"} )
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description="All schedule returned", content = @Content(mediaType = "application/json")),
-            @ApiResponse(responseCode = "404", description="Schedule Not Found", content = @Content(mediaType = "application/json"))
-    })
-    @RequestMapping(value ="/user/{userId}/schedules", method = RequestMethod.GET)
-    public Page<UserSchedule> getUserScheduleByUserId(@PathVariable(name="userId") Long userId,Pageable pageable){
-        List<UserSchedule> userScheduleResourceList = new ArrayList<>(userScheduleService.getByUSerId(pageable, userId)
-                .getContent());
-        int scheduleCount = userScheduleResourceList.size();
-        return new PageImpl<>(userScheduleResourceList, pageable,scheduleCount);
 
-    }
 }

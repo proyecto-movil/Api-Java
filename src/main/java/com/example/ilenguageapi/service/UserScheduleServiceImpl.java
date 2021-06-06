@@ -45,7 +45,8 @@ public class UserScheduleServiceImpl implements UserScheduleService {
         }
         User chosenUser = userRepository.findById((long) userId)
                 .orElseThrow(()->new ResourceNotFoundException("User not found"));
-        Schedule chosenSchedule = scheduleRepository.findAll().get(Math.toIntExact(scheduleId));
+        Schedule chosenSchedule = scheduleRepository.findById(scheduleId)
+                .orElseThrow(()->new ResourceNotFoundException("Schedule not found"));;
         var userSchedule = new UserSchedule();
 
         userSchedule.setUser(chosenUser);

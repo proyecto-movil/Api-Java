@@ -17,12 +17,12 @@ public class UserSchedule {
 
     @JsonBackReference
     @ManyToOne
-    @JoinColumn(name = "schedule_id", nullable = false, insertable = false, updatable = false)
+    @JoinColumn(name = "schedule_id", nullable = false)
     private Schedule schedule;
 
     @JsonBackReference
     @ManyToOne
-    @JoinColumn(name ="user_id", nullable = false , insertable = false, updatable = false)
+    @JoinColumn(name ="user_id", nullable = false )
     private User user;
 
     public UserSchedule(Long userScheduleId,  Schedule schedule, User user) {
