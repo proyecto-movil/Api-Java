@@ -1,5 +1,7 @@
 package com.example.ilenguageapi.domain.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.List;
@@ -15,10 +17,9 @@ public class Schedule extends AuditModel {
     @NotNull
     private  String day;
 
-
-
-
-
+    @JsonManagedReference
+    @OneToMany(fetch = FetchType.LAZY, mappedBy ="schedule")
+    private List<UserSchedule> users;
 
     public Schedule(){
 
@@ -39,6 +40,14 @@ public class Schedule extends AuditModel {
         this.id = id;
     }
 
+    public List<UserSchedule> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<UserSchedule> users) {
+        this.users = users;
+    }
+
 
     public String getDay() {
         return day;
@@ -47,7 +56,6 @@ public class Schedule extends AuditModel {
     public void setDay(String day) {
         this.day = day;
     }
-
 
 
 
