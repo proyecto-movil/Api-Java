@@ -19,12 +19,12 @@ public class UserSubscription {
 
     @JsonBackReference
     @ManyToOne
-    @JoinColumn(name = "subscription_id", nullable = false, insertable = false, updatable = false)
+    @JoinColumn(name = "subscription_id", nullable = false)
     private Subscription subscription;
 
     @JsonBackReference
     @ManyToOne
-    @JoinColumn(name ="user_id", nullable = false , insertable = false, updatable = false)
+    @JoinColumn(name ="user_id", nullable = false )
     private User user;
 
     public UserSubscription(int userSubscriptionId, LocalDateTime initialDate, LocalDateTime finalDate, Subscription subscription, User user) {

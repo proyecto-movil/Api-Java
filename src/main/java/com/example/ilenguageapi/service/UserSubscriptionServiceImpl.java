@@ -50,7 +50,10 @@ public class UserSubscriptionServiceImpl implements UserSubscriptionService {
 
         User chosenUser = userRepository.findById((long) userId)
                 .orElseThrow(()->new ResourceNotFoundException("User not found"));
-        Subscription chosenSubscription = subscriptionRepository.findAll().get(subscriptionId);
+        //Subscription chosenSubscription = subscriptionRepository.findAll().get(subscriptionId);
+        Subscription chosenSubscription = subscriptionRepository.findById(subscriptionId)
+                .orElseThrow(()->new ResourceNotFoundException("Subscription not found"));;
+
         var userSubscription = new UserSubscription();
         userSubscription.setInitialDate(LocalDateTime.now());
         userSubscription.setFinalDate(LocalDateTime.now().plusMonths(chosenSubscription.getMonthDuration()));
