@@ -1,12 +1,9 @@
 package com.example.ilenguageapi.controller;
 
-import com.example.ilenguageapi.domain.model.Session;
 import com.example.ilenguageapi.domain.model.SessionDetail;
 import com.example.ilenguageapi.domain.service.SessionDetailService;
 import com.example.ilenguageapi.resource.SaveSessionDetailResource;
-import com.example.ilenguageapi.resource.SaveSessionResource;
 import com.example.ilenguageapi.resource.SessionDetailResource;
-import com.example.ilenguageapi.resource.SessionResource;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -28,47 +25,63 @@ import java.util.stream.Collectors;
 public class SessionDetailsController {
     @Autowired
     private SessionDetailService sessionDetailService;
-
     @Autowired
     private ModelMapper mapper;
 
-    @Operation(summary = "Get Session Details", description = "Get All Session Details by Pages", tags = {"sessionDetails"})
+    @Operation(summary = "Get SessionDetails by SessionId", description = "Get All SessionDetails by SessionId by Pages", tags = {"SessionDetails"})
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "All Session Details returned", content = @Content(mediaType = "application/json"))
+            @ApiResponse(responseCode = "200", description = "All SessionDetails returned", content = @Content(mediaType = "application/json"))
     })
-  @GetMapping("/sessions_details")
-    public Page<SessionDetailResource> getAllSessionDetails(Pageable pageable) {
-        Page<SessionDetail> sessionDetailsPage = sessionDetailService.getAllSessionDetails(pageable);
-        List<SessionDetailResource> resources = sessionDetailsPage.getContent()
-                .stream()
-                .map(this::convertToResource)
-                .collect(Collectors.toList());
-
+    @GetMapping("/sessions/{sessionId}/session-details")
+    public Page<SessionDetailResource> getAllSessionDetailsBySessionId(@PathVariable Long sessionId, Pageable pageable) {
+        Page<SessionDetail> sessionDetailPage = sessionDetailService.getAllSessionDetailsBySessionId(sessionId, pageable);
+        List<SessionDetailResource> resources = sessionDetailPage.getContent().stream().map(
+                this::convertToResource).collect(Collectors.toList());
         return new PageImpl<>(resources, pageable, resources.size());
     }
 
-    @GetMapping("/session_details/{id}")
-    public SessionDetailResource getSessionDetailById(@PathVariable(name = "id") Long sessionDetailId) {
-        return convertToResource(sessionDetailService.getSessionDetailById(sessionDetailId));
+    @Operation(summary = "Get SessionDetails by Id and by SessionId", description = "Get All SessionDetails by Id and by SessionId by Pages", tags = {"SessionDetails"})
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "All SessionDetails returned", content = @Content(mediaType = "application/json"))
+    })
+    @GetMapping("/sessions/{sessionId}/session-details/{sessionDetailId}")
+    public SessionDetailResource getSessionDetailByIdAndSessionId(@PathVariable Long sessionId, @PathVariable Long sessionDetailId) {
+        return convertToResource(sessionDetailService.getSessionDetailByIdAndSessionId(sessionId, sessionDetailId));
     }
 
-    @PostMapping("/session_details")
-    public SessionDetailResource createSessionDetail(@Valid @RequestBody SaveSessionDetailResource resource) {
-        SessionDetail sessionDetail = convertToEntity(resource);
-        return convertToResource(sessionDetailService.createSessionDetail(sessionDetail));
+    @Operation(summary = "Add SessionDetail", description = "Create new sessionDetail", tags = {"SessionDetails"})
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Session Detail created", content = @Content(mediaType = "application/json")),
+    })
+    @PostMapping("/sessions/{sessionId}/session-details")
+    public SessionDetailResource createSessionDetail(
+            @PathVariable Long sessionId,
+            @Valid @RequestBody SaveSessionDetailResource resource) {
+        return convertToResource(sessionDetailService.createSessionDetail(sessionId, convertToEntity(resource)));
     }
 
-    @PutMapping("/sessionDetails/{sessionDetailsId}")
-    public SessionDetailResource updateSessionDetail(@PathVariable Long sessionDetailId, @Valid @RequestBody SaveSessionDetailResource resource) {
-        SessionDetail sessionDetail = convertToEntity(resource);
-        return convertToResource(sessionDetailService.updateSessionDetail(sessionDetailId, sessionDetail));
+    @Operation(summary = "Update SessionDetail", description = "Update sessionDetail by sessionDetail", tags = {"SessionDetails"})
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Session Detail Updated", content = @Content(mediaType = "application/json")),
+    })
+    @PutMapping("/sessions/{sessionId}/session-details/{sessionDetailId}")
+    public SessionDetailResource updateSessionDetail(
+            @PathVariable Long sessionId,
+            @PathVariable Long sessionDetailId,
+            @Valid @RequestBody SaveSessionDetailResource resource) {
+        return convertToResource(sessionDetailService.updateSessionDetail(sessionId, sessionDetailId, convertToEntity(resource)));
     }
 
-    @DeleteMapping("/sessionDetails/{sessionDetailsId}")
-    public ResponseEntity<?> deleteSessionDetail(@PathVariable Long sessionDetailId) {
-        return sessionDetailService.deleteSessionDetail(sessionDetailId);
+    @Operation(summary = "Delete SessionDetail", description = "Deleted sessionDetail by sessionDetailId", tags = {"SessionDetails"})
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "User deleted", content = @Content(mediaType = "application/json")),
+    })
+    @DeleteMapping("/sessions/{sessionId}/session-details/{sessionDetailId}")
+    public ResponseEntity<?> deleteSessionDetail(
+            @PathVariable Long sessionId,
+            @PathVariable Long sessionDetailId) {
+        return sessionDetailService.deleteSessionDetail(sessionId, sessionDetailId);
     }
-
 
     private SessionDetail convertToEntity(SaveSessionDetailResource resource) {
         return mapper.map(resource, SessionDetail.class);

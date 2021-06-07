@@ -1,5 +1,6 @@
 package com.example.ilenguageapi.domain.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.validator.constraints.CreditCardNumber;
 
 import javax.persistence.*;
@@ -24,36 +25,34 @@ public class Subscription {
     @NotNull
     public int monthDuration;
 
+    @NotNull
     @NotBlank(message ="Name is mandatory")
     public String name;
 
 
-    @ManyToMany(fetch = FetchType.LAZY,
-            cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinTable(name = "user_subscriptions",
-            joinColumns = {@JoinColumn(name="subscription_id")},
-            inverseJoinColumns = {@JoinColumn(name="user_id")})
-    private List<User> users;
+    @JsonManagedReference
+    @OneToMany(fetch = FetchType.LAZY, mappedBy ="subscription")
+    private List<UserSubscription> users;
 
 
 
     public Subscription() {
     }
 
-    public Subscription(int id, int price, int monthDuration, String name, List<User> users) {
+    public Subscription(int id, int price, int monthDuration, String name, List<UserSubscription> users) {
         this.id = id;
-        price = price;
-        monthDuration = monthDuration;
-        name = name;
+        this.price = price;
+        this.monthDuration = monthDuration;
+        this.name = name;
         this.users = users;
     }
 
 
-    public List<User> getUsers() {
+    public List<UserSubscription> getUsers() {
         return users;
     }
 
-    public void setUsers(List<User> users) {
+    public void setUsers(List<UserSubscription> users) {
         this.users = users;
     }
 
@@ -70,7 +69,7 @@ public class Subscription {
     }
 
     public void setPrice(int price) {
-        price = price;
+        this.price = price;
     }
 
     public int getMonthDuration() {
@@ -78,7 +77,7 @@ public class Subscription {
     }
 
     public void setMonthDuration(int monthDuration) {
-        monthDuration = monthDuration;
+        this.monthDuration = monthDuration;
     }
 
     public String getName() {
@@ -86,7 +85,7 @@ public class Subscription {
     }
 
     public void setName(String name) {
-        name = name;
+        this.name = name;
     }
 
 

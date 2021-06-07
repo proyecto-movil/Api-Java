@@ -2,11 +2,43 @@ package com.example.ilenguageapi.resource;
 
 import com.example.ilenguageapi.domain.model.AuditModel;
 
+import java.time.LocalDate;
+
 public class SessionResource extends AuditModel {
     private long id;
-    private String startAt;
-    private String endAt;
+    private LocalDate startAt;
+    private LocalDate endAt;
     private String link;
+    private String state;
+    private String topic;
+    private String information;
+
+    public String getState() {
+        return state;
+    }
+
+    public SessionResource setState(String state) {
+        this.state = state;
+        return this;
+    }
+
+    public String getTopic() {
+        return topic;
+    }
+
+    public SessionResource setTopic(String topic) {
+        this.topic = topic;
+        return this;
+    }
+
+    public String getInformation() {
+        return information;
+    }
+
+    public SessionResource setInformation(String information) {
+        this.information = information;
+        return this;
+    }
 
     public long getId() {
         return id;
@@ -17,20 +49,20 @@ public class SessionResource extends AuditModel {
         return this;
     }
 
-    public String getStartAt() {
+    public LocalDate getStartAt() {
         return startAt;
     }
 
-    public SessionResource setStartAt(String startAt) {
+    public SessionResource setStartAt(LocalDate startAt) {
         this.startAt = startAt;
         return this;
     }
 
-    public String getEndAt() {
+    public LocalDate getEndAt() {
         return endAt;
     }
 
-    public SessionResource setEndAt(String endAt) {
+    public SessionResource setEndAt(LocalDate endAt) {
         this.endAt = endAt;
         return this;
     }

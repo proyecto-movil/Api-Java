@@ -8,9 +8,9 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface ScheduleRepository extends JpaRepository<Schedule, Integer> {
+public interface ScheduleRepository extends JpaRepository<Schedule, Long> {
 
-    public Optional<Schedule> findByName(String name);
-    public Optional<Schedule> findByHoursDuration(int hoursDuration);
+
+    public Optional<Schedule> findByDay(String day);
 
 }

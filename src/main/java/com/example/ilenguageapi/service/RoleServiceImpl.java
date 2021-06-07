@@ -27,7 +27,6 @@ public class RoleServiceImpl implements RoleService {
         return roleRepository.findById(roleId)
                 .orElseThrow(() -> new ResourceNotFoundException("Role", "Id", roleId));
     }
-
     @Override
     public Role updateRole(Long roleId, Role roleRequest) {
         Role role = roleRepository.findById(roleId)
@@ -35,7 +34,6 @@ public class RoleServiceImpl implements RoleService {
         role.setName(roleRequest.getName());
         return roleRepository.save(role);
     }
-
     @Override
     public ResponseEntity<?> deleteRole(Long roleId) {
         Role role = roleRepository.findById(roleId)
@@ -44,5 +42,14 @@ public class RoleServiceImpl implements RoleService {
         return ResponseEntity.ok().build();
     }
 
+    @Override
+    public Role getRoleByName(String name) {
+        return roleRepository.findByName(name)
+                .orElseThrow(()->new ResourceNotFoundException("Role","name",name));
+    }
 
+    @Override
+    public Role createRole(Role role) {
+        return roleRepository.save(role);
+    }
 }

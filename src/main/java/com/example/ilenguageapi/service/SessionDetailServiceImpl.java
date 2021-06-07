@@ -2,6 +2,7 @@ package com.example.ilenguageapi.service;
 
 import com.example.ilenguageapi.domain.model.SessionDetail;
 import com.example.ilenguageapi.domain.repository.SessionDetailRepository;
+import com.example.ilenguageapi.domain.repository.SessionRepository;
 import com.example.ilenguageapi.domain.service.SessionDetailService;
 import com.example.ilenguageapi.exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,49 +15,55 @@ import org.springframework.stereotype.Service;
 public class SessionDetailServiceImpl implements SessionDetailService {
 
     @Autowired
+    private SessionRepository sessionRepository;
+
+    @Autowired
     private SessionDetailRepository sessionDetailRepository;
-    //@Autowired
-    //private SessionRepository sessionRepository;
 
     @Override
-    public Page<SessionDetail> getAllSessionDetails(Pageable pageable) {
-        return sessionDetailRepository.findAll(pageable);
-    }
-
-    @Override
-    public SessionDetail getSessionDetailById(Long sessionDetailId) {
-        return sessionDetailRepository.findById(sessionDetailId)
-                .orElseThrow(() -> new ResourceNotFoundException("SessionDetail", "Id", sessionDetailId));
-    }
-
-    @Override
-    public SessionDetail createSessionDetail(SessionDetail sessionDetail) {
-        return sessionDetailRepository.save(sessionDetail);
-    }
-
-    @Override
-    public SessionDetail updateSessionDetail(Long sessionDetailId, SessionDetail sessionDetailRequest) {
-        SessionDetail sessionDetail = sessionDetailRepository.findById(sessionDetailId)
-                .orElseThrow(() -> new ResourceNotFoundException("SessionDetail", "Id", sessionDetailId));
-
-        return sessionDetailRepository.save(
-                sessionDetail.setState(sessionDetailRequest.getState()));
-    }
-
-    @Override
-    public ResponseEntity<?> deleteSessionDetail(Long sessionDetailId) {
-        SessionDetail sessionDetail = sessionDetailRepository.findById(sessionDetailId)
-                .orElseThrow(() -> new ResourceNotFoundException("SessionDetail", "Id", sessionDetailId));
-        sessionDetailRepository.delete(sessionDetail);
-        return ResponseEntity.ok().build();
+    public Page<SessionDetail> getAllSessionDetailsBySessionId(Long sessionId, Pageable pageable) {
+        return sessionDetailRepository.findBySessionId(sessionId, pageable);
     }
 
     @Override
     public SessionDetail getSessionDetailByIdAndSessionId(Long sessionId, Long sessionDetailId) {
-        return sessionDetailRepository.findByIdAndSessionId(sessionId, sessionDetailId)
+        return sessionDetailRepository.findByIdAndSessionId(sessionDetailId, sessionId)
                 .orElseThrow(() -> new ResourceNotFoundException(
-                        "Session Detail not found with Id" + sessionDetailId +
+                        "SessionDetail not found with Id" + sessionDetailId +
                                 " and SessionId " + sessionId));
+    }
+
+    @Override
+    public SessionDetail createSessionDetail(Long sessionId, SessionDetail sessionDetail) {
+        return sessionRepository.findById(sessionId).map(session -> {
+            sessionDetail.setSession(session);
+            return sessionDetailRepository.save(sessionDetail);
+        }).orElseThrow(() -> new ResourceNotFoundException(
+                "Session", "Id", sessionId));
+    }
+
+    @Override
+    public SessionDetail updateSessionDetail(Long sessionId, Long sessionDetailId, SessionDetail sessionDetailDetails) {
+        if(!sessionRepository.existsById(sessionId))
+            throw new ResourceNotFoundException("Session", "Id", sessionId);
+
+        return sessionDetailRepository.findById(sessionDetailId).map(sessionDetail -> {
+            sessionDetail.setState(sessionDetailDetails.getState());
+            return sessionDetailRepository.save(sessionDetail);
+        }).orElseThrow(() -> new ResourceNotFoundException(
+                "SessionDetail", "Id", sessionDetailId));
+    }
+
+    @Override
+    public ResponseEntity<?> deleteSessionDetail(Long sessionId, Long sessionDetailId) {
+        if(!sessionRepository.existsById(sessionId))
+            throw new ResourceNotFoundException("Session", "Id", sessionId);
+
+        return sessionDetailRepository.findById(sessionDetailId).map(sessionDetail -> {
+            sessionDetailRepository.delete(sessionDetail);
+            return ResponseEntity.ok().build();
+        }).orElseThrow(() -> new ResourceNotFoundException(
+                "SessionDetail", "Id", sessionDetailId));
     }
 
     @Override

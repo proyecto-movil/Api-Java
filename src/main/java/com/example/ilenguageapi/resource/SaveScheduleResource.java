@@ -8,13 +8,17 @@ import javax.validation.constraints.Size;
 import javax.validation.constraints.Positive;
 public class SaveScheduleResource {
 
+
     @NotBlank
-    @Size(min = 3, max = 20, message="NameCourse must have between 3 and 20 characters")
-    private String nameCourse;
+    @Size(min = 3, max = 20, message="Day must have between 3 and 20 characters")
+    private String day;
 
-    @NotNull
-    @Positive(message ="Hours must have a positive value")
-    private String hoursDuration;
+    public String getDay() {
+        return day;
+    }
 
-
+    public SaveScheduleResource setDay(String day) {
+        this.day = day;
+        return this;
+    }
 }

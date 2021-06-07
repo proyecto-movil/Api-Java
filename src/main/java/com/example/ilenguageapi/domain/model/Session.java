@@ -4,20 +4,59 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDate;
 
 @Entity
 @Table(name="sessions")
 public class Session extends AuditModel {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+
+    @NotNull
+    private LocalDate startAt;
+
+    @NotNull
+    private LocalDate endAt;
+
+    @NotNull
+    private String link;
+
+    @NotNull
+    private String state;
+
+    @NotNull
+    private String topic;
+
+    @NotNull
+    private String information;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = true)
+    @JoinColumn(name = "schedule_id", nullable = true)
+    @JsonIgnore
+    private Schedule schedule;
+
+    public Session(@NotNull LocalDate startAt, @NotNull LocalDate endAt, @NotNull String link, @NotNull String state, @NotNull String topic, @NotNull String information) {
+        this.startAt = startAt;
+        this.endAt = endAt;
+        this.link = link;
+        this.state = state;
+        this.topic = topic;
+        this.information = information;
+    }
+
+    public Session() { }
+
     public long getId() {
         return id;
     }
 
-    public String getStartAt() {
+    public LocalDate getStartAt() {
         return startAt;
     }
 
-    public String getEndAt() {
+    public LocalDate getEndAt() {
         return endAt;
     }
 
@@ -25,47 +64,14 @@ public class Session extends AuditModel {
         return link;
     }
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    public String getState() { return state; }
 
-    @NotNull
-    private String startAt;
+    public String getTopic() { return topic; }
 
-    @NotNull
-    private String endAt;
+    public String getInformation() { return information; }
 
-    @NotNull
-    private String link;
-
-
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "user_id", nullable = false)
-    @JsonIgnore
-    private User user;
-
-
-    public SessionDetail getSessionDetail() {
-        return sessionDetail;
-    }
-
-    public void setSessionDetail(SessionDetail sessionDetail) {
-        this.sessionDetail = sessionDetail;
-    }
-
-    @OneToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "session_Detail_id", nullable = false)
-    @JsonIgnore
-    private SessionDetail sessionDetail;
-
-    public Session(@NotNull String startAt, @NotNull String endAt, @NotNull String link) {
-        this.startAt = startAt;
-        this.endAt = endAt;
-        this.link = link;
-    }
-
-    public Session() {
-
+    public Schedule getSchedule() {
+        return schedule;
     }
 
     public Session setId(long id) {
@@ -73,18 +79,38 @@ public class Session extends AuditModel {
         return this;
     }
 
-    public Session setStartAt(String startAt) {
+    public Session setStartAt(LocalDate startAt) {
         this.startAt = startAt;
         return this;
     }
 
-    public Session setEndAt(String endAt) {
+    public Session setEndAt(LocalDate endAt) {
         this.endAt = endAt;
         return this;
     }
 
     public Session setLink(String link) {
         this.link = link;
+        return this;
+    }
+
+    public Session setState(String state) {
+        this.state = state;
+        return this;
+    }
+
+    public Session setTopic(String topic) {
+        this.topic = topic;
+        return this;
+    }
+
+    public Session setInformation(String information) {
+        this.information = information;
+        return this;
+    }
+
+    public Session setSchedule(Schedule schedule) {
+        this.schedule = schedule;
         return this;
     }
 }

@@ -1,6 +1,12 @@
-package com.example.ilenguageapi;
+package com.example.ilenguageapi.unittest;
 
+import com.example.ilenguageapi.domain.model.LanguageOfInterest;
+import com.example.ilenguageapi.domain.model.Role;
+import com.example.ilenguageapi.domain.model.TopicOfInterest;
 import com.example.ilenguageapi.domain.model.User;
+import com.example.ilenguageapi.domain.repository.LanguageOfInterestRespository;
+import com.example.ilenguageapi.domain.repository.RoleRepository;
+import com.example.ilenguageapi.domain.repository.TopicOfInterestRepository;
 import com.example.ilenguageapi.domain.repository.UserRepository;
 import com.example.ilenguageapi.domain.service.UserService;
 import com.example.ilenguageapi.exception.ResourceNotFoundException;
@@ -13,12 +19,16 @@ import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.web.bind.annotation.DeleteMapping;
 
 import javax.swing.text.html.Option;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -30,6 +40,15 @@ public class UserServiceImplTest {
 
     @MockBean
     private UserRepository userRepository;
+
+    @MockBean
+    private RoleRepository roleRepository;
+
+
+    @MockBean
+    private TopicOfInterestRepository topicOfInterestRepository;
+    @MockBean
+    private LanguageOfInterestRespository languageOfInterestRespository;
 
     @Autowired
     private UserService userService;
@@ -56,7 +75,49 @@ public class UserServiceImplTest {
         //Assert
         assertThat(foundUser.getId()).isEqualTo(userId);
     }
+    @Test
+    @DisplayName("When listUsersBy TopicId and languageId then return list of users")
+    public  void whenListUsersByTopicIdAndLanguagIdThenReturnListofUsers(){
+        Pageable paginacion = PageRequest.of(0,2);
+        TopicOfInterest topic1 = new TopicOfInterest().setId(1L);
+        TopicOfInterest topic2 = new TopicOfInterest().setId(2L);
+        LanguageOfInterest language1 = new LanguageOfInterest().setId(1L);
+        LanguageOfInterest language2 = new LanguageOfInterest().setId(2L);
+        List<User>listOfUsers = new ArrayList<User>();
+        listOfUsers.add(new User().setTopicOfInterests(new ArrayList<>()).setLanguageOfInterests(new ArrayList<>()).addTopicOfInterest(topic1).addLanguageOfInterest(language1));
+        listOfUsers.add(new User().setTopicOfInterests(new ArrayList<>()).setLanguageOfInterests(new ArrayList<>()).addTopicOfInterest(topic2).addLanguageOfInterest(language2));
+        listOfUsers.add(new User().setTopicOfInterests(new ArrayList<>()).setLanguageOfInterests(new ArrayList<>()).addLanguageOfInterest(language1).addLanguageOfInterest(language2));
+        listOfUsers.add(new User().setTopicOfInterests(new ArrayList<>()).setLanguageOfInterests(new ArrayList<>()).addTopicOfInterest(topic1).addLanguageOfInterest(language1));
+        when(topicOfInterestRepository.findById(1L)).thenReturn(Optional.of(topic1));
+        when(languageOfInterestRespository.findById(1L)).thenReturn(Optional.of(language1));
+        when(userRepository.findAll(paginacion)).thenReturn(new PageImpl<>(listOfUsers,paginacion,listOfUsers.size()));
+        //Act
+        Page<User> userPage = userService.getAllUsersByTopicIdAndLanguageId(1L,1L,paginacion);
+        //Assert
+        assertThat(userPage.getTotalElements()).isEqualTo(2L);
+    }
 
+    @Test
+    @DisplayName("When List Tuthors By Topicid And LanguageId Then Return List Of Thutors")
+   public void whenListTuthorsByTopicidAndLanguageIdThenReturnListOfThutors(){
+
+        Pageable paginacion = PageRequest.of(0,2);
+        Role role1 = new Role().setId(1L).setName("Tuthor");
+        TopicOfInterest topic1 = new TopicOfInterest().setId(1L);
+        TopicOfInterest topic2 = new TopicOfInterest().setId(2L);
+        LanguageOfInterest language1 = new LanguageOfInterest().setId(1L);
+        LanguageOfInterest language2 = new LanguageOfInterest().setId(2L);
+        List<User>listOfUsers = new ArrayList<User>();
+        listOfUsers.add(new User().setTopicOfInterests(new ArrayList<>()).setLanguageOfInterests(new ArrayList<>()).addTopicOfInterest(topic1).addLanguageOfInterest(language1).setRole(role1));
+        listOfUsers.add(new User().setTopicOfInterests(new ArrayList<>()).setLanguageOfInterests(new ArrayList<>()).addTopicOfInterest(topic2).addLanguageOfInterest(language2).setRole(role1));
+        listOfUsers.add(new User().setTopicOfInterests(new ArrayList<>()).setLanguageOfInterests(new ArrayList<>()).addLanguageOfInterest(language1).addLanguageOfInterest(language2).setRole(role1));
+        when(topicOfInterestRepository.findById(1L)).thenReturn(Optional.of(topic1));
+        when(languageOfInterestRespository.findById(1L)).thenReturn(Optional.of(language1));
+        when(roleRepository.findByName("Tuthor")).thenReturn(Optional.of(role1));
+        when(userRepository.findAllByRole(role1,paginacion)).thenReturn(new PageImpl<>(listOfUsers,paginacion,listOfUsers.size()));
+        Page<User> userPage = userService.getAllTuthorsByTopicIdAndLanguageId(1L,1L,paginacion);
+        assertThat(userPage.getTotalElements()).isEqualTo(1L);
+    }
     @Test
     @DisplayName("When getUserById With Invalid Id Then Returns ResourceNotFoundExceptions")
     public void whenGetUserByIdWithInvalidIdThenReturnsResourceNotFoundExceptions() {

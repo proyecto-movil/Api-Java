@@ -1,6 +1,7 @@
 package com.example.ilenguageapi.domain.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -39,15 +40,7 @@ public class User extends AuditModel {
     @NotNull
     private String profilePhoto;
 
-    @ManyToMany(fetch = FetchType.LAZY,
-            cascade = {CascadeType.PERSIST, CascadeType.MERGE},
-            mappedBy = "users")
-    private List<Subscription> subscriptions;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn( name = "role_id", nullable = false)
-    @JsonIgnore
-    private Role role;
 
     public User() {
     }
@@ -60,27 +53,82 @@ public class User extends AuditModel {
         this.description = description;
         this.profilePhoto = profilePhoto;
     }
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = true)
+    @JoinColumn( name = "role_id",nullable = true)
+    private Role role;
+
     public boolean isUserWithRole(String roleName){
         return getRole().name.equals(roleName);
     }
+
+    @JsonManagedReference
+    @OneToMany(fetch = FetchType.LAZY,mappedBy="user")
+    private List<UserSubscription> subscriptions;
+
     public boolean isSubscribedWith(Subscription subscription){
        return this.getSubscriptions().contains(subscription);
     }
 
-    public User SubscribeWith(Subscription subscription){
+   /* public User SubscribeWith(UserSubscription subscription){
        if(!isSubscribedWith(subscription)){
           this.getSubscriptions().add(subscription);
        }
        return this;
-    }
-    public Subscription getSubcriptionActive(){
+    }*/
+    public UserSubscription getSubcriptionActive(){
        int size = this.getSubscriptions().size();
        return this.getSubscriptions().get(size - 1);
     }
+    @JsonManagedReference
+    @OneToMany(fetch = FetchType.LAZY,mappedBy="user")
+    private List<UserSchedule> schedules;
 
-    //TODO: How to implement list of interest
-    //private List<interest> interests;
-    //private List<languageInterest> languageInterests;
+
+    @ManyToMany(fetch = FetchType.LAZY
+    ,cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(name = "user_topics",
+            joinColumns = {@JoinColumn(name = "user_id")},
+            inverseJoinColumns = {@JoinColumn(name = "topic_id")})
+    List<TopicOfInterest> topicOfInterests;
+
+    public boolean hasTheTopicOf(TopicOfInterest topicOfInterest){
+        return this.getTopicOfInterests().contains(topicOfInterest);
+    }
+    public User addTopicOfInterest(TopicOfInterest topicOfInterest){
+        if(!this.hasTheTopicOf(topicOfInterest)){
+           this.getTopicOfInterests().add(topicOfInterest);
+        }
+        return this;
+    }
+    public User removeTopicOfInterest(TopicOfInterest topicOfInterest){
+       if(this.hasTheTopicOf(topicOfInterest)){
+          this.getTopicOfInterests().remove(topicOfInterest);
+       }
+       return this;
+    }
+    @ManyToMany(fetch = FetchType.LAZY
+            ,cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(name = "user_languages",
+            joinColumns = {@JoinColumn(name = "user_id")},
+            inverseJoinColumns = {@JoinColumn(name = "language_id")})
+    List<LanguageOfInterest> languageOfInterests;
+
+    public boolean hasTheLenguageOf(LanguageOfInterest languageOfInterest){
+        return this.getLanguageOfInterests().contains(languageOfInterest);
+    }
+    public User addLanguageOfInterest(LanguageOfInterest languageOfInterest){
+        if(!this.hasTheLenguageOf(languageOfInterest)){
+            this.getLanguageOfInterests().add(languageOfInterest);
+        }
+        return this;
+    }
+    public User removeLanguageOfInterest(LanguageOfInterest languageOfInterest){
+        if(this.hasTheLenguageOf(languageOfInterest)){
+            this.getLanguageOfInterests().remove(languageOfInterest);
+        }
+        return this;
+    }
 
     public Long getId() {
         return id;
@@ -136,15 +184,22 @@ public class User extends AuditModel {
         return this;
     }
 
-    public List<Subscription> getSubscriptions() {
+    public List<UserSubscription> getSubscriptions() {
         return subscriptions;
     }
 
-    public User setSubscriptions(List<Subscription> subscriptions) {
+    public User setSubscriptions(List<UserSubscription> subscriptions) {
         this.subscriptions = subscriptions;
         return this;
     }
+    public List<UserSchedule> getSchedules() {
+        return schedules;
+    }
 
+    public User setSchedules(List<UserSchedule> schedules) {
+        this.schedules = schedules;
+        return this;
+    }
     public String getProfilePhoto() {
         return profilePhoto;
     }
@@ -155,11 +210,29 @@ public class User extends AuditModel {
     }
 
     public Role getRole() {
-        return role;
+        return this.role;
     }
 
     public User setRole(Role role) {
         this.role = role;
+        return this;
+    }
+
+    public List<TopicOfInterest> getTopicOfInterests() {
+        return topicOfInterests;
+    }
+
+    public User setTopicOfInterests(List<TopicOfInterest> topicOfInterests) {
+        this.topicOfInterests = topicOfInterests;
+        return this;
+    }
+
+    public List<LanguageOfInterest> getLanguageOfInterests() {
+        return languageOfInterests;
+    }
+
+    public User setLanguageOfInterests(List<LanguageOfInterest> languageOfInterests) {
+        this.languageOfInterests = languageOfInterests;
         return this;
     }
 }

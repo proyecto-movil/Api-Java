@@ -1,4 +1,4 @@
-package com.example.ilenguageapi;
+package com.example.ilenguageapi.unittest;
 
 import com.example.ilenguageapi.domain.model.SessionDetail;
 import com.example.ilenguageapi.domain.repository.SessionDetailRepository;
@@ -39,7 +39,7 @@ public class SessionDetailServiceImplTest {
 
     @Test
     @DisplayName("When getSessionDetailByState With Valid state Then Returns SessionDetail")
-    public void whenGetSessionByStateWithValidStateThenReturnsState() {
+    public void whenGetSessionDetailByStateWithValidStateThenReturnsSessionDetail() {
         // Arrange
         String state = "active";
         SessionDetail sessionDetail = new SessionDetail().setId(1).setState(state);

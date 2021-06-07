@@ -3,36 +3,50 @@ package com.example.ilenguageapi.resource;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.time.LocalDate;
 
 public class SaveSessionResource {
 
     @NotNull
+    private LocalDate startAt;
+
+    @NotNull
+    private LocalDate endAt;
+
+    @NotNull
     @NotBlank
-    @Size(max = 50)
-    private String startAt;
+    @Size(max = 250)
+    private String link;
+
     @NotNull
     @NotBlank
     @Size(max = 50)
-    private String endAt;
+    private String state;
+
     @NotNull
     @NotBlank
     @Size(max = 100)
-    private String link;
+    private String topic;
 
-    public String getStartAt() {
+    @NotNull
+    @NotBlank
+    @Size(max = 250)
+    private String information;
+
+    public LocalDate getStartAt() {
         return startAt;
     }
 
-    public SaveSessionResource setStartAt(String startAt) {
+    public SaveSessionResource setStartAt(LocalDate startAt) {
         this.startAt = startAt;
         return this;
     }
 
-    public String getEndAt() {
+    public LocalDate getEndAt() {
         return endAt;
     }
 
-    public SaveSessionResource setEndAt(String endAt) {
+    public SaveSessionResource setEndAt(LocalDate endAt) {
         this.endAt = endAt;
         return this;
     }
@@ -43,6 +57,33 @@ public class SaveSessionResource {
 
     public SaveSessionResource setLink(String link) {
         this.link = link;
+        return this;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public SaveSessionResource setState(String state) {
+        this.state = state;
+        return this;
+    }
+
+    public String getTopic() {
+        return topic;
+    }
+
+    public SaveSessionResource setTopic(String topic) {
+        this.topic = topic;
+        return this;
+    }
+
+    public String getInformation() {
+        return information;
+    }
+
+    public SaveSessionResource setInformation(String information) {
+        this.information = information;
         return this;
     }
 }

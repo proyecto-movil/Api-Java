@@ -1,35 +1,28 @@
 package com.example.ilenguageapi.resource;
 
 public class ScheduleResource {
-    private int id;
-    private String name;
-    private int hoursDuration;
+    private Long id;
 
-    public int getId() {
+    private String day;
+
+    public long getId() {
         return id;
     }
 
-    public String getName() {
-        return name;
-    }
 
-    public int getHoursDuration() {
-        return hoursDuration;
+    public String getDay() {
+        return day;
     }
 
 
-    public ScheduleResource setId(int id) {
+
+    public ScheduleResource setId(Long id) {
         this.id = id;
         return this;
     }
 
-    public ScheduleResource setName(String name) {
-        this.name = name;
-        return this;
-    }
-
-    public ScheduleResource setHoursDuration(int hoursDuration) {
-        this.hoursDuration = hoursDuration;
+    public ScheduleResource setDay(String day) {
+        this.day = day;
         return this;
     }
 }

@@ -13,6 +13,7 @@ public class SaveSubscriptionResource {
     @Positive(message ="Price must have a positive value")
     private int monthDuration;
 
+    @NotNull
     @NotBlank
     @Size(min = 3, max = 20, message="Name must have between 3 and 20 characters")
     private String name;

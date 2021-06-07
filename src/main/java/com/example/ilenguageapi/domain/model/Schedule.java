@@ -1,7 +1,10 @@
 package com.example.ilenguageapi.domain.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @Entity
 @Table(name = "schedules")
@@ -9,69 +12,51 @@ public class Schedule extends AuditModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-    @NotNull
-    private  String name;
-    @NotNull
-    public int hoursDuration;
-    @NotNull
-    private String descriptionSchedule;
+    private Long id;
 
-    private Day day;
+    @NotNull
+    private  String day;
+
+    @JsonManagedReference
+    @OneToMany(fetch = FetchType.LAZY, mappedBy ="schedule")
+    private List<UserSchedule> users;
 
     public Schedule(){
 
     }
-    public Schedule( int id,int hoursDuration,String name, String descriptionSchedule, Day day) {
+    public Schedule( Long id,String day) {
         this.id = id;
-        this.hoursDuration =hoursDuration;
-        this.name = name;
-        this.descriptionSchedule = descriptionSchedule;
         this.day = day;
+
     }
 
 
-
-    public String getDescriptionSchedule() {
-        return descriptionSchedule;
-    }
-
-    public void setDescriptionSchedule(String descriptionSchedule) {
-        this.descriptionSchedule = descriptionSchedule;
-    }
-
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
 
         this.id = id;
     }
 
-    public Day day() {
+    public List<UserSchedule> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<UserSchedule> users) {
+        this.users = users;
+    }
+
+
+    public String getDay() {
         return day;
     }
 
-    public void setDay(Day day) {
+    public void setDay(String day) {
         this.day = day;
     }
 
-    public int getHoursDuration() {
-        return hoursDuration;
-    }
-
-    public void setHoursDuration(int hoursDuration) {
-        this.hoursDuration = hoursDuration;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 
 
 }
