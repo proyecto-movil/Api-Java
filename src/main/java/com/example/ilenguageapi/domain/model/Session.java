@@ -32,10 +32,6 @@ public class Session extends AuditModel {
     @NotNull
     private String information;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = true)
-    @JoinColumn(name = "schedule_id", nullable = true)
-    @JsonIgnore
-    private Schedule schedule;
 
     public Session(@NotNull LocalDate startAt, @NotNull LocalDate endAt, @NotNull String link, @NotNull String state, @NotNull String topic, @NotNull String information) {
         this.startAt = startAt;
@@ -70,9 +66,7 @@ public class Session extends AuditModel {
 
     public String getInformation() { return information; }
 
-    public Schedule getSchedule() {
-        return schedule;
-    }
+
 
     public Session setId(long id) {
         this.id = id;
@@ -109,8 +103,5 @@ public class Session extends AuditModel {
         return this;
     }
 
-    public Session setSchedule(Schedule schedule) {
-        this.schedule = schedule;
-        return this;
-    }
+
 }

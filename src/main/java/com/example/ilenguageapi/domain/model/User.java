@@ -80,10 +80,6 @@ public class User extends AuditModel {
        int size = this.getSubscriptions().size();
        return this.getSubscriptions().get(size - 1);
     }
-    @JsonManagedReference
-    @OneToMany(fetch = FetchType.LAZY,mappedBy="user")
-    private List<UserSchedule> schedules;
-
 
     @ManyToMany(fetch = FetchType.LAZY
     ,cascade = {CascadeType.PERSIST, CascadeType.MERGE})
@@ -192,14 +188,7 @@ public class User extends AuditModel {
         this.subscriptions = subscriptions;
         return this;
     }
-    public List<UserSchedule> getSchedules() {
-        return schedules;
-    }
 
-    public User setSchedules(List<UserSchedule> schedules) {
-        this.schedules = schedules;
-        return this;
-    }
     public String getProfilePhoto() {
         return profilePhoto;
     }

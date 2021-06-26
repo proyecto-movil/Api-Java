@@ -15,7 +15,6 @@ public interface SessionRepository extends JpaRepository<Session, Long> {
     public Optional<Session> findByEndAt(LocalDate endAt);
     public Optional<Session> findByState(String state);
     public Optional<Session> findByTopic(String topic);
-    Page<Session> findByScheduleId(Long scheduleId, Pageable pageable);
-    Optional<Session> findByIdAndScheduleId(Long id, Long scheduleId);
+
 
 }
