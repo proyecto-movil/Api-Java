@@ -25,4 +25,6 @@ public interface UserService {
     User createUser(User user);
     User updateUser(Long userId, User userDetails);
     ResponseEntity<?> deleteUser(Long userId);
+
+    Page<User> getAllUsersBySessionId(Long sessionId, Pageable pageable);
 }

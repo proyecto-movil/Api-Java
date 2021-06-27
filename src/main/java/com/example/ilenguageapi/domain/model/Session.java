@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name="sessions")
@@ -67,6 +68,34 @@ public class Session extends AuditModel {
     public String getInformation() { return information; }
 
 
+    public List<User> getUsers() {
+        return users;
+    }
+
+    @ManyToMany(fetch = FetchType.LAZY,
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(name ="user_sessions",
+            joinColumns =  {@JoinColumn(name = "session_id")},
+            inverseJoinColumns = {@JoinColumn(name = "user_id")})
+    private List<User> users;
+
+
+    public boolean isRelatedWith(User user ) {
+        return this.getUsers().contains(user);
+    }
+
+    public Session userWith(User user) {
+        if(!isRelatedWith(user)) {
+            this.getUsers().add(user);
+        }
+        return this;
+    }
+
+    public Session unUserWith(User user) {
+        if(this.isRelatedWith(user))
+            this.getUsers().remove(user);
+        return this;
+    }
 
     public Session setId(long id) {
         this.id = id;

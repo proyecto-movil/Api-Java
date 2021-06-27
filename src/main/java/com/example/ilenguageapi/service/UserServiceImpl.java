@@ -4,10 +4,7 @@ import com.example.ilenguageapi.domain.model.LanguageOfInterest;
 import com.example.ilenguageapi.domain.model.Role;
 import com.example.ilenguageapi.domain.model.TopicOfInterest;
 import com.example.ilenguageapi.domain.model.User;
-import com.example.ilenguageapi.domain.repository.LanguageOfInterestRespository;
-import com.example.ilenguageapi.domain.repository.RoleRepository;
-import com.example.ilenguageapi.domain.repository.TopicOfInterestRepository;
-import com.example.ilenguageapi.domain.repository.UserRepository;
+import com.example.ilenguageapi.domain.repository.*;
 import com.example.ilenguageapi.domain.service.UserService;
 import com.example.ilenguageapi.exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +28,8 @@ public class UserServiceImpl implements UserService {
     private TopicOfInterestRepository topicOfInterestRepository;
     @Autowired
     private LanguageOfInterestRespository languageOfInterestRespository;
+    @Autowired
+    private SessionRepository sessionRepository;
 
     @Override
     public Page<User> getAllUsers(Pageable pageable) {
@@ -165,5 +164,14 @@ public class UserServiceImpl implements UserService {
                 .orElseThrow(() -> new ResourceNotFoundException("User", "id", userId));
         userRepository.delete(user);
         return ResponseEntity.ok().build();
+    }
+
+    @Override
+    public Page<User> getAllUsersBySessionId(Long sessionId, Pageable pageable) {
+        return sessionRepository.findById(sessionId).map(session -> {
+            List<User> users = session.getUsers();
+            int usersCount = users.size();
+            return new PageImpl<>(users, pageable, usersCount);
+        }).orElseThrow(() -> new ResourceNotFoundException("Sessions", "Id", sessionId));
     }
 }

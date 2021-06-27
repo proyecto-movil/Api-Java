@@ -2,15 +2,19 @@ package com.example.ilenguageapi.service;
 
 import com.example.ilenguageapi.domain.model.*;
 import com.example.ilenguageapi.domain.repository.SessionRepository;
+import com.example.ilenguageapi.domain.repository.UserRepository;
 import com.example.ilenguageapi.domain.service.SessionService;
 import com.example.ilenguageapi.exception.ResourceNotFoundException;
+import io.cucumber.java.eo.Se;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -19,7 +23,8 @@ public class SessionServiceImpl implements SessionService {
     @Autowired
     private SessionRepository sessionRepository;
 
-
+    @Autowired
+    private UserRepository userRepository;
 
     @Override
     public Page<Session> getAllSessions(Pageable pageable) {
@@ -81,8 +86,32 @@ public class SessionServiceImpl implements SessionService {
                 .orElseThrow(() -> new ResourceNotFoundException("Session", "Topic", topic));
     }
 
+    @Override
+    public Session assignUserSession(Long userId, Long sessionId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("User", "Id", userId));
+        return sessionRepository.findById(sessionId).map(
+                session -> sessionRepository.save(session.userWith(user)))
+                .orElseThrow(() -> new ResourceNotFoundException("Session", "Id", sessionId));
+    }
 
+    @Override
+    public Session unAssignUserSession(Long userId, Long sessionId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("User", "Id", userId));
+        return sessionRepository.findById(sessionId).map(
+                session -> sessionRepository.save(session.unUserWith(user)))
+                .orElseThrow(() -> new ResourceNotFoundException("Session", "Id", sessionId));
+    }
 
+    @Override
+    public Page<Session> getAllSessionsByUserId(Long userId, Pageable pageable) {
+        return userRepository.findById(userId).map(user -> {
+            List<Session> sessions = user.getSessions();
+            int sessionsCount = sessions.size();
+            return new PageImpl<>(sessions, pageable, sessionsCount); })
+                .orElseThrow(() -> new ResourceNotFoundException("User", "Id", userId));
+    }
 
 
 }
