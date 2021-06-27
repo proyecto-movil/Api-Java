@@ -128,4 +128,17 @@ public class UserController {
                 .collect(Collectors.toList());
         return new PageImpl<>(resources, pageable, resources.size());
     }
+
+    @Operation(summary = "List users", description = "List users by session id", tags = {"Users"})
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Returned all users", content = @Content(mediaType = "application/json")),
+    })
+    @GetMapping("/sessions/{sessionId}/users")
+    public Page<UserResource> getAllUsersBySessionId(@PathVariable Long sessionId, Pageable pageable) {
+        List<UserResource> users = userService.getAllUsersBySessionId(sessionId, pageable)
+                .getContent().stream().map(this::convertToResource)
+                .collect(Collectors.toList());
+        int userCount = users.size();
+        return new PageImpl<>(users, pageable, userCount);
+    }
 }

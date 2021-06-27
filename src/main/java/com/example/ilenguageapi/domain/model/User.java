@@ -40,7 +40,18 @@ public class User extends AuditModel {
     @NotNull
     private String profilePhoto;
 
+    // Session relationship
 
+    public List<Session> getSessions() {
+        return sessions;
+    }
+
+    @ManyToMany(fetch = FetchType.LAZY,
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE},
+            mappedBy = "users")
+    private List<Session> sessions;
+
+    // ! Session relationship
 
     public User() {
     }

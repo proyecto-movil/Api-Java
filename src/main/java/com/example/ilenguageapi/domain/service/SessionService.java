@@ -19,5 +19,7 @@ public interface SessionService {
     Session getSessionByEndAt(LocalDate endAt);
     Session getSessionByState(String state);
     Session getSessionByTopic(String topic);
-
+    Session assignUserSession(Long userId, Long sessionId);
+    Session unAssignUserSession(Long userId, Long sessionId);
+    Page<Session> getAllSessionsByUserId(Long userId, Pageable pageable);
 }
