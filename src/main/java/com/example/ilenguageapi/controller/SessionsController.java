@@ -1,10 +1,13 @@
 package com.example.ilenguageapi.controller;
 
 import com.example.ilenguageapi.domain.model.Session;
+import com.example.ilenguageapi.domain.model.User;
 import com.example.ilenguageapi.domain.model.UserSubscription;
 import com.example.ilenguageapi.domain.service.SessionService;
 import com.example.ilenguageapi.resource.SaveSessionResource;
 import com.example.ilenguageapi.resource.SessionResource;
+import com.example.ilenguageapi.resource.UserResource;
+import io.cucumber.java.eo.Se;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -84,6 +87,20 @@ public class SessionsController {
     @DeleteMapping("/sessions/{sessionId}")
     public ResponseEntity<?> deleteSession(@PathVariable Long sessionId) {
         return sessionService.deleteSession(sessionId);
+    }
+
+    @Operation(summary = "List Sessions", description = "List sessions by user id and tutor id", tags = {"Sessions"})
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Returned all sessions", content = @Content(mediaType = "application/json")),
+    })
+    @GetMapping("/users/{userId}/tutors/{tutorId}/sessions")
+    public Page<SessionResource> getAllSessionsByUserIdAndTutorId(@PathVariable Long userId, @PathVariable Long tutorId, Pageable pageable){
+        Page<Session> sessionPage = sessionService.getSessionsByUserIdAndTutorId(userId, tutorId, pageable);
+        List<SessionResource> resources = sessionPage.getContent()
+                .stream()
+                .map(this::convertToResource)
+                .collect(Collectors.toList());
+        return new PageImpl<>(resources, pageable, resources.size());
     }
 
 

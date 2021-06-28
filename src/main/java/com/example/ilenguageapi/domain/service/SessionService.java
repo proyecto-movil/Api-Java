@@ -2,7 +2,6 @@ package com.example.ilenguageapi.domain.service;
 
 
 import com.example.ilenguageapi.domain.model.Session;
-import com.example.ilenguageapi.domain.model.UserSubscription;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -22,4 +21,5 @@ public interface SessionService {
     Session assignUserSession(Long userId, Long sessionId);
     Session unAssignUserSession(Long userId, Long sessionId);
     Page<Session> getAllSessionsByUserId(Long userId, Pageable pageable);
+    Page<Session> getSessionsByUserIdAndTutorId(Long userId, Long tutorId, Pageable pageable);
 }

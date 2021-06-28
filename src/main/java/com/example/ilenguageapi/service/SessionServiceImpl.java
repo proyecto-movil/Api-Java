@@ -5,7 +5,6 @@ import com.example.ilenguageapi.domain.repository.SessionRepository;
 import com.example.ilenguageapi.domain.repository.UserRepository;
 import com.example.ilenguageapi.domain.service.SessionService;
 import com.example.ilenguageapi.exception.ResourceNotFoundException;
-import io.cucumber.java.eo.Se;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -15,7 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class SessionServiceImpl implements SessionService {
@@ -111,6 +110,22 @@ public class SessionServiceImpl implements SessionService {
             int sessionsCount = sessions.size();
             return new PageImpl<>(sessions, pageable, sessionsCount); })
                 .orElseThrow(() -> new ResourceNotFoundException("User", "Id", userId));
+    }
+
+    @Override
+    public Page<Session> getSessionsByUserIdAndTutorId(Long userId, Long tutorId, Pageable pageable) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("User", "Id", userId));
+
+        User tutor = userRepository.findById(tutorId)
+                .orElseThrow(() -> new ResourceNotFoundException("Tutor", "Id", userId));
+
+        List<Session> sessionsFilter = sessionRepository.findAll(pageable)
+                .stream()
+                .filter(session -> session.isRelatedWith(user) && session.isRelatedWith(tutor))
+                .collect(Collectors.toList());
+        int sessionsCount = sessionsFilter.size();
+        return new PageImpl<>(sessionsFilter,pageable,sessionsCount);
     }
 
 
