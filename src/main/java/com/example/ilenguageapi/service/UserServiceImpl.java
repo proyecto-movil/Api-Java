@@ -1,9 +1,6 @@
 package com.example.ilenguageapi.service;
 
-import com.example.ilenguageapi.domain.model.LanguageOfInterest;
-import com.example.ilenguageapi.domain.model.Role;
-import com.example.ilenguageapi.domain.model.TopicOfInterest;
-import com.example.ilenguageapi.domain.model.User;
+import com.example.ilenguageapi.domain.model.*;
 import com.example.ilenguageapi.domain.repository.*;
 import com.example.ilenguageapi.domain.service.UserService;
 import com.example.ilenguageapi.exception.ResourceNotFoundException;
@@ -30,6 +27,8 @@ public class UserServiceImpl implements UserService {
     private LanguageOfInterestRespository languageOfInterestRespository;
     @Autowired
     private SessionRepository sessionRepository;
+    @Autowired
+    private BadgetRepository badgetRepository;
 
     @Override
     public Page<User> getAllUsers(Pageable pageable) {
@@ -131,7 +130,20 @@ public class UserServiceImpl implements UserService {
                 user -> userRepository.save(user.removeLanguageOfInterest(language)))
                 .orElseThrow(() -> new ResourceNotFoundException("User", "Id", userId));
     }
-
+    public User assignBadgetById(Long userId, Long badgetId){
+        Badget badget = badgetRepository.findById(badgetId)
+                .orElseThrow(() -> new ResourceNotFoundException("Badget","Id",badgetId));
+        return userRepository.findById(userId).map(
+               user -> userRepository.save(user.addBadget(badget)))
+                .orElseThrow(()-> new ResourceNotFoundException("User","Id",userId));
+    }
+    public User unassignBadgetById(Long userId, Long badgetId){
+        Badget badget = badgetRepository.findById(badgetId)
+                .orElseThrow(() -> new ResourceNotFoundException("Badget","Id",badgetId));
+        return userRepository.findById(userId).map(
+                user -> userRepository.save(user.removeBadget(badget)))
+                .orElseThrow(()-> new ResourceNotFoundException("User","Id",userId));
+    }
     @Override
     public User getUserById(Long userId) {
         return userRepository.findById(userId)
