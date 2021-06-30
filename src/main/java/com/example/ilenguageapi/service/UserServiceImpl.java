@@ -163,7 +163,7 @@ public class UserServiceImpl implements UserService {
     public User unassignCommentById(Long tutorId, Long commentId) {
         Comment comment = commentRepository.findById(commentId)
                 .orElseThrow(() -> new ResourceNotFoundException("Comment", "Id", commentId));
-
+        comment.setUser(null);
         return userRepository.findById(tutorId).map(
                 user -> userRepository.save(user.removeComment(comment)))
                 .orElseThrow(() -> new ResourceNotFoundException("User", "Id", tutorId));
