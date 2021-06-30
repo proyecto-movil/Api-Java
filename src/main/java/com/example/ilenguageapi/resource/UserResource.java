@@ -9,7 +9,7 @@ public class UserResource extends AuditModel {
     private String email;
     private String password;
     private String description;
-    private String profilePhoto;
+    private double media;
 
     public Long getId() {
         return id;
@@ -59,11 +59,12 @@ public class UserResource extends AuditModel {
         this.description = description;
     }
 
-    public String getProfilePhoto() {
-        return profilePhoto;
+    public double getMedia() {
+        return media;
     }
 
-    public void setProfilePhoto(String profilePhoto) {
-        this.profilePhoto = profilePhoto;
+    public UserResource setMedia(double media) {
+        this.media = media;
+        return this;
     }
 }

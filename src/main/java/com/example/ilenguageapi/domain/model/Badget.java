@@ -24,6 +24,12 @@ public class Badget extends AuditModel {
     public Badget() {
     }
 
+    public Badget(@NotNull String title,@NotNull String description,@NotNull String imgSrc) {
+        this.title = title;
+        this.description = description;
+        this.imgSrc = imgSrc;
+    }
+
     public Long getId() {
         return id;
     }

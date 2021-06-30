@@ -24,9 +24,13 @@ public interface UserService {
     User assignBadgetById(Long userId, Long badetId);
     User unassignBadgetById(Long userId, Long badgetId);
 
+    User assignCommentById(Long tutorId, Long commentId);
+    User unassignCommentById(Long tutorId, Long commentId);
+
     User getUserById(Long userId);
     User createUser(User user);
     User updateUser(Long userId, User userDetails);
+    User updateMedia(Long userId);
     ResponseEntity<?> deleteUser(Long userId);
 
     Page<User> getAllUsersBySessionId(Long sessionId, Pageable pageable);
