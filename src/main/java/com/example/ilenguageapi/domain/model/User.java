@@ -61,10 +61,11 @@ public class User extends AuditModel {
     }
     public double getRatingMedia() {
         List<Comment> comments = getComments();
+        double newMedia = 0;
         for (int i = 0; i < comments.size(); i++) {
-            this.media += comments.get(i).getRating();
+            newMedia += comments.get(i).getRating();
         }
-        this.media = this.media / comments.size();
+        this.media = newMedia / comments.size();
         return this.media;
     }
     // Session relationship
