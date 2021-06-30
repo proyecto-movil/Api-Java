@@ -45,6 +45,14 @@ public class User extends AuditModel {
             cascade = CascadeType.ALL)
     private List<Comment> comments;
 
+    public double getRatingMedia() {
+        List<Comment> comments = getComments();
+        double media = 0;
+        for (int i = 0; i < comments.size(); i++) {
+            media += comments.get(i).getRating();
+        }
+        return media / comments.size();
+    }
     // Session relationship
 
     public List<Session> getSessions() {
@@ -282,6 +290,15 @@ public class User extends AuditModel {
 
     public User setLanguageOfInterests(List<LanguageOfInterest> languageOfInterests) {
         this.languageOfInterests = languageOfInterests;
+        return this;
+    }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public User setComments(List<Comment> comments) {
+        this.comments = comments;
         return this;
     }
 }

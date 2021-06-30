@@ -1,9 +1,6 @@
 package com.example.ilenguageapi.domain.model;
 
-import com.mysql.cj.conf.PropertyDefinitions;
-
 import javax.persistence.*;
-import java.util.Date;
 
 @Entity
 @Table(name = "comments")
@@ -15,8 +12,8 @@ public class Comment extends AuditModel{
     private int rating;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "book_id", nullable = true)
-    private User user;
+    @JoinColumn(name = "tutor_id", nullable = true)
+    private User tutor;
 
     public Long getId() {
         return id;
@@ -46,11 +43,11 @@ public class Comment extends AuditModel{
     }
 
     public User getUser() {
-        return user;
+        return tutor;
     }
 
-    public Comment setUser(User user) {
-        this.user = user;
+    public Comment setUser(User tutor) {
+        this.tutor = tutor;
         return this;
     }
 }
