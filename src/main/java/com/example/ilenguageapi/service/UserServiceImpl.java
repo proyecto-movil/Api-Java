@@ -29,6 +29,8 @@ public class UserServiceImpl implements UserService {
     private SessionRepository sessionRepository;
     @Autowired
     private BadgetRepository badgetRepository;
+    @Autowired
+    private CommentRepository commentRepository;
 
     @Override
     public Page<User> getAllUsers(Pageable pageable) {
@@ -144,6 +146,27 @@ public class UserServiceImpl implements UserService {
                 user -> userRepository.save(user.removeBadget(badget)))
                 .orElseThrow(()-> new ResourceNotFoundException("User","Id",userId));
     }
+
+    @Override
+    public User assignCommentById(Long tutorId, Long commentId) {
+        Comment comment = commentRepository.findById(commentId)
+                .orElseThrow(() -> new ResourceNotFoundException("Comment", "Id", commentId));
+
+        return userRepository.findById(tutorId).map(
+               user -> userRepository.save(user.addComment(comment)))
+                .orElseThrow(() -> new ResourceNotFoundException("User", "Id", tutorId));
+    }
+
+    @Override
+    public User unassignCommentById(Long tutorId, Long commentId) {
+        Comment comment = commentRepository.findById(commentId)
+                .orElseThrow(() -> new ResourceNotFoundException("Comment", "Id", commentId));
+
+        return userRepository.findById(tutorId).map(
+                user -> userRepository.save(user.removeComment(comment)))
+                .orElseThrow(() -> new ResourceNotFoundException("User", "Id", tutorId));
+    }
+
     @Override
     public User getUserById(Long userId) {
         return userRepository.findById(userId)

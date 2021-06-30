@@ -42,6 +42,23 @@ public class User extends AuditModel {
             cascade = CascadeType.ALL)
     private List<Comment> comments;
 
+    public boolean hasTheCommentOf(Comment comment) {
+        return this.getComments().contains(comment);
+    }
+
+    public User addComment(Comment comment) {
+        if (!this.hasTheCommentOf(comment)) {
+            this.getComments().add(comment);
+        }
+        return this;
+    }
+
+    public User removeComment(Comment comment) {
+        if (this.hasTheCommentOf(comment)) {
+            this.getComments().remove(comment);
+        }
+        return this;
+    }
     public double getRatingMedia() {
         List<Comment> comments = getComments();
         for (int i = 0; i < comments.size(); i++) {
