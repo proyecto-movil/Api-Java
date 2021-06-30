@@ -49,7 +49,7 @@ public class BadgetController {
            @ApiResponse(responseCode = "200", description = "All badgets returned", content = @Content(mediaType = "application/json")),
            @ApiResponse(responseCode = "404", description = "Badgets not found")
     })
-    @GetMapping("/language")
+    @GetMapping("/badgets")
     public Page<BadgetResource> getAllBadgets(Pageable pageable) {
         Page<Badget> badgetPage = badgetService.getAllBadgets(pageable);
         List<BadgetResource> resources = badgetPage.getContent()
