@@ -15,6 +15,15 @@ public class Comment extends AuditModel{
     @JoinColumn(name = "tutor_id", nullable = true)
     private User tutor;
 
+    public Comment(String content, double rating, User tutor) {
+        this.content = content;
+        this.rating = rating;
+        this.tutor = tutor;
+    }
+
+    public Comment() {
+    }
+
     public Long getId() {
         return id;
     }

@@ -63,7 +63,7 @@ public class UserCommentsController {
             @ApiResponse(responseCode = "200", description = "unassigned comment", content = @Content(mediaType = "application/json")),
             @ApiResponse(responseCode = "404", description = "comment not found or User not found")
     })
-    @PostMapping("/users/{tutorId}/comments/{commentId}")
+    @DeleteMapping("/users/{tutorId}/comments/{commentId}")
     public UserResource unassignCommentUser(
             @PathVariable Long tutorId,
             @PathVariable Long commentId){
