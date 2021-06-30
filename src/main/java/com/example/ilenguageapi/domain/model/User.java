@@ -2,6 +2,7 @@ package com.example.ilenguageapi.domain.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import org.hibernate.engine.spi.CascadingAction;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -39,6 +40,10 @@ public class User extends AuditModel {
 
     @NotNull
     private String profilePhoto;
+
+    @OneToMany(mappedBy = "tutor", fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
+    private List<Comment> comments;
 
     // Session relationship
 
@@ -80,94 +85,102 @@ public class User extends AuditModel {
     }
 
     @ManyToMany(fetch = FetchType.LAZY
-            ,cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+            , cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name = "user_badgets",
             joinColumns = {@JoinColumn(name = "user_id")},
             inverseJoinColumns = {@JoinColumn(name = "badget_id")})
     private List<Badget> badgets;
 
-    public boolean hasTheBadgetOf(Badget badget){
+    public boolean hasTheBadgetOf(Badget badget) {
         return this.getBadgets().contains(badget);
     }
-    public User addBadget(Badget badget){
-        if(!this.hasTheBadgetOf(badget)){
+
+    public User addBadget(Badget badget) {
+        if (!this.hasTheBadgetOf(badget)) {
             this.getBadgets().add(badget);
         }
         return this;
     }
-    public User removeBadget(Badget badget){
-        if(this.hasTheBadgetOf(badget)){
+
+    public User removeBadget(Badget badget) {
+        if (this.hasTheBadgetOf(badget)) {
             this.getBadgets().remove(badget);
         }
         return this;
     }
+
     @ManyToOne(fetch = FetchType.LAZY, optional = true)
-    @JoinColumn( name = "role_id",nullable = true)
+    @JoinColumn(name = "role_id", nullable = true)
     private Role role;
 
-    public boolean isUserWithRole(String roleName){
+    public boolean isUserWithRole(String roleName) {
         return getRole().name.equals(roleName);
     }
 
     @JsonManagedReference
-    @OneToMany(fetch = FetchType.LAZY,mappedBy="user")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     private List<UserSubscription> subscriptions;
 
-    public boolean isSubscribedWith(Subscription subscription){
-       return this.getSubscriptions().contains(subscription);
+    public boolean isSubscribedWith(Subscription subscription) {
+        return this.getSubscriptions().contains(subscription);
     }
 
-   /* public User SubscribeWith(UserSubscription subscription){
-       if(!isSubscribedWith(subscription)){
-          this.getSubscriptions().add(subscription);
-       }
-       return this;
-    }*/
-    public UserSubscription getSubcriptionActive(){
-       int size = this.getSubscriptions().size();
-       return this.getSubscriptions().get(size - 1);
+    /* public User SubscribeWith(UserSubscription subscription){
+        if(!isSubscribedWith(subscription)){
+           this.getSubscriptions().add(subscription);
+        }
+        return this;
+     }*/
+    public UserSubscription getSubcriptionActive() {
+        int size = this.getSubscriptions().size();
+        return this.getSubscriptions().get(size - 1);
     }
 
     @ManyToMany(fetch = FetchType.LAZY
-    ,cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+            , cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name = "user_topics",
             joinColumns = {@JoinColumn(name = "user_id")},
             inverseJoinColumns = {@JoinColumn(name = "topic_id")})
     List<TopicOfInterest> topicOfInterests;
 
-    public boolean hasTheTopicOf(TopicOfInterest topicOfInterest){
+    public boolean hasTheTopicOf(TopicOfInterest topicOfInterest) {
         return this.getTopicOfInterests().contains(topicOfInterest);
     }
-    public User addTopicOfInterest(TopicOfInterest topicOfInterest){
-        if(!this.hasTheTopicOf(topicOfInterest)){
-           this.getTopicOfInterests().add(topicOfInterest);
+
+    public User addTopicOfInterest(TopicOfInterest topicOfInterest) {
+        if (!this.hasTheTopicOf(topicOfInterest)) {
+            this.getTopicOfInterests().add(topicOfInterest);
         }
         return this;
     }
-    public User removeTopicOfInterest(TopicOfInterest topicOfInterest){
-       if(this.hasTheTopicOf(topicOfInterest)){
-          this.getTopicOfInterests().remove(topicOfInterest);
-       }
-       return this;
+
+    public User removeTopicOfInterest(TopicOfInterest topicOfInterest) {
+        if (this.hasTheTopicOf(topicOfInterest)) {
+            this.getTopicOfInterests().remove(topicOfInterest);
+        }
+        return this;
     }
+
     @ManyToMany(fetch = FetchType.LAZY
-            ,cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+            , cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name = "user_languages",
             joinColumns = {@JoinColumn(name = "user_id")},
             inverseJoinColumns = {@JoinColumn(name = "language_id")})
     List<LanguageOfInterest> languageOfInterests;
 
-    public boolean hasTheLenguageOf(LanguageOfInterest languageOfInterest){
+    public boolean hasTheLenguageOf(LanguageOfInterest languageOfInterest) {
         return this.getLanguageOfInterests().contains(languageOfInterest);
     }
-    public User addLanguageOfInterest(LanguageOfInterest languageOfInterest){
-        if(!this.hasTheLenguageOf(languageOfInterest)){
+
+    public User addLanguageOfInterest(LanguageOfInterest languageOfInterest) {
+        if (!this.hasTheLenguageOf(languageOfInterest)) {
             this.getLanguageOfInterests().add(languageOfInterest);
         }
         return this;
     }
-    public User removeLanguageOfInterest(LanguageOfInterest languageOfInterest){
-        if(this.hasTheLenguageOf(languageOfInterest)){
+
+    public User removeLanguageOfInterest(LanguageOfInterest languageOfInterest) {
+        if (this.hasTheLenguageOf(languageOfInterest)) {
             this.getLanguageOfInterests().remove(languageOfInterest);
         }
         return this;
