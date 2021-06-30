@@ -65,6 +65,42 @@ public class User extends AuditModel {
         this.profilePhoto = profilePhoto;
     }
 
+    public User setSessions(List<Session> sessions) {
+        this.sessions = sessions;
+        return this;
+    }
+
+    public List<Badget> getBadgets() {
+        return badgets;
+    }
+
+    public User setBadgets(List<Badget> badgets) {
+        this.badgets = badgets;
+        return this;
+    }
+
+    @ManyToMany(fetch = FetchType.LAZY
+            ,cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(name = "user_badgets",
+            joinColumns = {@JoinColumn(name = "user_id")},
+            inverseJoinColumns = {@JoinColumn(name = "badget_id")})
+    private List<Badget> badgets;
+
+    public boolean hasTheBadgetOf(Badget badget){
+        return this.getBadgets().contains(badget);
+    }
+    public User addBadget(Badget badget){
+        if(!this.hasTheBadgetOf(badget)){
+            this.getBadgets().add(badget);
+        }
+        return this;
+    }
+    public User removeBadget(Badget badget){
+        if(this.hasTheBadgetOf(badget)){
+            this.getBadgets().remove(badget);
+        }
+        return this;
+    }
     @ManyToOne(fetch = FetchType.LAZY, optional = true)
     @JoinColumn( name = "role_id",nullable = true)
     private Role role;

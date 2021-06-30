@@ -39,8 +39,8 @@ public class LanguageOfInterestController {
     }
 
     @Operation(summary = "Add language", description = "Create new language", tags = {"languages"})
-    @PostMapping("/language")
-    public LanguageOfInterestResource createTopic(@Valid @RequestBody SaveLanguageOfInterestResource resource){
+    @PostMapping("/languages")
+    public LanguageOfInterestResource createLanguage(@Valid @RequestBody SaveLanguageOfInterestResource resource){
         LanguageOfInterest language = convertToEntity(resource);
         return convertToResource(languageOfInterestService.createLanguage(language));
     }
@@ -50,7 +50,7 @@ public class LanguageOfInterestController {
             @ApiResponse(responseCode = "200", description = "All language returned", content = @Content(mediaType = "application/json")),
             @ApiResponse(responseCode = "404", description = "Languages not found")
     })
-    @GetMapping("/language")
+    @GetMapping("/languages")
     public Page<LanguageOfInterestResource> getAllLanguages(Pageable pageable) {
         Page<LanguageOfInterest> languagePage = languageOfInterestService.getAllTopics(pageable);
         List<LanguageOfInterestResource> resources = languagePage.getContent()
@@ -65,7 +65,7 @@ public class LanguageOfInterestController {
             @ApiResponse(responseCode = "200", description = "Language deleted", content = @Content(mediaType ="application/json"))
     })
     @DeleteMapping("/language/{languageId}")
-    public ResponseEntity<?> deleteTopic(@PathVariable Long languageId) {
+    public ResponseEntity<?> deleteLanguage(@PathVariable Long languageId) {
         return languageOfInterestService.deleteLanguage(languageId);
     }
 }
