@@ -1,13 +1,10 @@
 package com.example.ilenguageapi.domain.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import org.hibernate.engine.spi.CascadingAction;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -39,7 +36,7 @@ public class User extends AuditModel {
     private String description;
 
     @NotNull
-    private String profilePhoto;
+    private double media;
 
     @OneToMany(mappedBy = "tutor", fetch = FetchType.LAZY,
             cascade = CascadeType.ALL)
@@ -47,11 +44,11 @@ public class User extends AuditModel {
 
     public double getRatingMedia() {
         List<Comment> comments = getComments();
-        double media = 0;
         for (int i = 0; i < comments.size(); i++) {
-            media += comments.get(i).getRating();
+            this.media += comments.get(i).getRating();
         }
-        return media / comments.size();
+        this.media = this.media / comments.size();
+        return this.media;
     }
     // Session relationship
 
@@ -69,13 +66,13 @@ public class User extends AuditModel {
     public User() {
     }
 
-    public User(@NotNull String name, @NotNull String lastName, @NotNull String email, @NotNull String password, @NotNull String description, @NotNull String profilePhoto) {
+    public User(@NotNull String name, @NotNull String lastName, @NotNull String email, @NotNull String password, @NotNull String description, @NotNull double media) {
         this.name = name;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
         this.description = description;
-        this.profilePhoto = profilePhoto;
+        this.media = media;
     }
 
     public User setSessions(List<Session> sessions) {
@@ -257,15 +254,6 @@ public class User extends AuditModel {
         return this;
     }
 
-    public String getProfilePhoto() {
-        return profilePhoto;
-    }
-
-    public User setProfilePhoto(String profilePhoto) {
-        this.profilePhoto = profilePhoto;
-        return this;
-    }
-
     public Role getRole() {
         return this.role;
     }
@@ -299,6 +287,15 @@ public class User extends AuditModel {
 
     public User setComments(List<Comment> comments) {
         this.comments = comments;
+        return this;
+    }
+
+    public double getMedia() {
+        return media;
+    }
+
+    public User setMedia(double media) {
+        this.media = media;
         return this;
     }
 }

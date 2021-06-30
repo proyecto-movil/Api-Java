@@ -166,7 +166,16 @@ public class UserServiceImpl implements UserService {
                         .setEmail(userDetails.getEmail())
                         .setPassword(userDetails.getPassword())
                         .setDescription(userDetails.getDescription())
-                        .setProfilePhoto(userDetails.getProfilePhoto())
+                        .setMedia(userDetails.getMedia())
+        );
+    }
+
+    @Override
+    public User updateMedia(Long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("User", "id", userId));
+        return userRepository.save(
+               user.setMedia(user.getRatingMedia())
         );
     }
 

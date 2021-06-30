@@ -27,7 +27,7 @@ public class SaveUserResource {
     private String description;
 
     @NotNull
-    private String profilePhoto;
+    private double media;
 
     public String getName() {
         return name;
@@ -69,11 +69,12 @@ public class SaveUserResource {
         this.description = description;
     }
 
-    public String getProfilePhoto() {
-        return profilePhoto;
+    public double getMedia() {
+        return media;
     }
 
-    public void setProfilePhoto(String profilePhoto) {
-        this.profilePhoto = profilePhoto;
+    public SaveUserResource setMedia(double media) {
+        this.media = media;
+        return this;
     }
 }

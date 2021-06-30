@@ -9,7 +9,7 @@ public class Comment extends AuditModel{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String content;
-    private int rating;
+    private double rating;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "tutor_id", nullable = true)
@@ -33,11 +33,11 @@ public class Comment extends AuditModel{
         return this;
     }
 
-    public int getRating() {
+    public double getRating() {
         return rating;
     }
 
-    public Comment setRating(int rating) {
+    public Comment setRating(double rating) {
         this.rating = rating;
         return this;
     }
