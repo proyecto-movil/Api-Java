@@ -8,6 +8,10 @@ import com.example.ilenguageapi.resource.RoleResource;
 import com.example.ilenguageapi.resource.SaveRoleResource;
 import com.example.ilenguageapi.resource.SaveUserResource;
 import com.example.ilenguageapi.resource.UserResource;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -29,6 +33,11 @@ public class RolesController {
     @Autowired
     private ModelMapper mapper;
 
+    @Operation(summary = "Get Roles", description = "Get All Role by Pages", tags = {"Roles"})
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "All Roles returned", content = @Content(mediaType = "application/json")),
+            @ApiResponse(responseCode = "404", description = "Role not found")
+    })
     @GetMapping("/roles")
     public Page<RoleResource> getAllRoles(Pageable pageable) {
         Page<Role> rolesPage = roleService.getAllRoles(pageable);
@@ -39,26 +48,49 @@ public class RolesController {
         return new PageImpl<>(resources, pageable, resources.size());
     }
 
+    @Operation(summary = "Update Role", description = "Update role by roleId", tags = {"Roles"})
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Role Updated", content = @Content(mediaType = "application/json")),
+    })
     @PutMapping("/roles/{roleId}")
     public RoleResource updateRole(@PathVariable Long roleId, @Valid @RequestBody SaveRoleResource resource) {
         Role role = convertToEntity(resource);
         return convertToResource(roleService.updateRole(roleId, role));
     }
 
+    @Operation(summary = "Delete Role", description = "Deleted role by roleId", tags = {"Roles"})
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Role deleted", content = @Content(mediaType = "application/json")),
+    })
     @DeleteMapping("/roles/{roleId}")
     public ResponseEntity<?> deleteRole(@PathVariable Long roleId) {
         return roleService.deleteRole(roleId);
     }
 
+    @Operation(summary = "Get Role", description = "Get Role by roleId", tags = {"Roles"})
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Role returned", content = @Content(mediaType = "application/json")),
+            @ApiResponse(responseCode = "404", description = "Role not found")
+    })
     @GetMapping("/roles/{roleId}")
     public RoleResource getRoleById(@PathVariable Long roleId){
         return convertToResource(roleService.getRoleById(roleId));
     }
+
+    @Operation(summary = "Get Role", description = "Get User by name", tags = {"Roles"})
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Role returned", content = @Content(mediaType = "application/json")),
+            @ApiResponse(responseCode = "404", description = "Role not found")
+    })
     @GetMapping("/roles/name/{name}")
     public RoleResource getRoleByName(@PathVariable String name){
         return convertToResource(roleService.getRoleByName(name));
     }
 
+    @Operation(summary = "Add Role", description = "Create new role", tags = {"Roles"})
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Role created", content = @Content(mediaType = "application/json")),
+    })
     @PostMapping("/role")
     public RoleResource createRole(@Valid @RequestBody SaveRoleResource resource){
         return convertToResource(roleService.createRole(convertToEntity(resource)));
