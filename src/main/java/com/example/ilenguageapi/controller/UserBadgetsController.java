@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@CrossOrigin(origins = {"http://localhost:4200", "https://ilanguage-api.herokuapp.com"})
 @RestController
 @RequestMapping("/api")
 public class UserBadgetsController {
