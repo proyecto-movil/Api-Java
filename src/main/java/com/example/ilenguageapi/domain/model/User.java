@@ -1,6 +1,7 @@
 package com.example.ilenguageapi.domain.model;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -41,6 +42,8 @@ public class User extends AuditModel {
     @OneToMany(mappedBy = "tutor", fetch = FetchType.LAZY,
             cascade = CascadeType.ALL)
     private List<Comment> comments;
+
+
 
     public boolean hasTheCommentOf(Comment comment) {
         return this.getComments().contains(comment);

@@ -4,6 +4,7 @@ import com.example.ilenguageapi.domain.service.DefaultUserDetailsService;
 import com.example.ilenguageapi.util.JwtCenter;
 import io.jsonwebtoken.ExpiredJwtException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -17,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+@Configuration
 public class DefaultRequestFilter extends OncePerRequestFilter {
     @Autowired
     private DefaultUserDetailsService userDetailsService;

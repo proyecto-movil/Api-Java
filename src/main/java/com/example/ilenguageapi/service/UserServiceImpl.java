@@ -2,6 +2,7 @@ package com.example.ilenguageapi.service;
 
 import com.example.ilenguageapi.domain.model.*;
 import com.example.ilenguageapi.domain.repository.*;
+import com.example.ilenguageapi.domain.service.DefaultUserDetailsService;
 import com.example.ilenguageapi.domain.service.UserService;
 import com.example.ilenguageapi.exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +16,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl implements UserService{
 
     @Autowired
     private UserRepository userRepository;

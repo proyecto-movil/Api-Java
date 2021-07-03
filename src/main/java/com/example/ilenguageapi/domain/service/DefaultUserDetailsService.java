@@ -1,6 +1,6 @@
 package com.example.ilenguageapi.domain.service;
 
-import com.example.ilenguageapi.domain.model.User;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.util.List;

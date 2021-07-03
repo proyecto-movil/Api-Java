@@ -48,17 +48,6 @@ public class UserController {
         return modelMapper.map(entity, UserResource.class);
     }
 
-    @Operation(summary = "Get Users", description = "Get All User ", tags = {"Users"})
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "All Users returned", content = @Content(mediaType = "application/json")),
-            @ApiResponse(responseCode = "404", description = "Users not found")
-    })
-    @GetMapping("/user")
-    public List<UserResource> getAll() {
-        return userDetailsService.getAll().stream()
-                .map(this::convertToResource)
-                .collect(Collectors.toList());
-    }
 
     @Operation(summary = "Get Users", description = "Get All User by Pages", tags = {"Users"})
     @ApiResponses(value = {
