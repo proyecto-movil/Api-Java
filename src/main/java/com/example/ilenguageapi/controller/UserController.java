@@ -1,15 +1,21 @@
 package com.example.ilenguageapi.controller;
 
 import com.example.ilenguageapi.domain.model.User;
+import com.example.ilenguageapi.domain.service.DefaultUserDetailsService;
 import com.example.ilenguageapi.domain.service.UserService;
 import com.example.ilenguageapi.resource.SaveUserResource;
 import com.example.ilenguageapi.resource.UserResource;
 import io.swagger.v3.oas.annotations.Operation;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -21,6 +27,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/api")
 public class UserController {
     @Autowired
@@ -29,6 +36,10 @@ public class UserController {
     @Autowired
     private ModelMapper modelMapper;
 
+    @Qualifier("userDetailsServiceImpl")
+    @Autowired
+    private DefaultUserDetailsService userDetailsService;
+
     private User convertToEntity(SaveUserResource resource) {
         return modelMapper.map(resource, User.class);
     }
@@ -36,6 +47,19 @@ public class UserController {
     private UserResource convertToResource(User entity) {
         return modelMapper.map(entity, UserResource.class);
     }
+
+    @Operation(summary = "Get Users", description = "Get All User ", tags = {"Users"})
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "All Users returned", content = @Content(mediaType = "application/json")),
+            @ApiResponse(responseCode = "404", description = "Users not found")
+    })
+    @GetMapping("/user")
+    public List<UserResource> getAll() {
+        return userDetailsService.getAll().stream()
+                .map(this::convertToResource)
+                .collect(Collectors.toList());
+    }
+
     @Operation(summary = "Get Users", description = "Get All User by Pages", tags = {"Users"})
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "All Users returned", content = @Content(mediaType = "application/json")),

@@ -85,4 +85,8 @@ public class JwtCenter {
         final String username = getUserName();
         return (username.equals(userDetails.getUsername()) && !isExpired());
     }
+
+    public String getUsername() {
+        return getClaim(Claims::getSubject);
+    }
 }
