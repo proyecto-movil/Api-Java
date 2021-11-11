@@ -61,10 +61,10 @@ public class UserServiceImpl implements UserService {
 
         LanguageOfInterest language = languageOfInterestRespository.findById(languageId)
                 .orElseThrow(() -> new ResourceNotFoundException("LanguageOfInterest", "Id", languageId));
-        Role role = roleRepository.findByName("Tuthor").orElseThrow(() -> new ResourceNotFoundException("Role", "Name", "Tuthor"));
+        Role role = roleRepository.findByName("Teacher").orElseThrow(() -> new ResourceNotFoundException("Role", "Name", "Teacher"));
         List<User> usersFilter = userRepository.findAllByRole(role, pageable)
                 .stream()
-                .filter(user -> user.hasTheTopicOf(topic) && user.hasTheLenguageOf(language) && user.isUserWithRole("Tuthor"))
+                .filter(user -> user.hasTheTopicOf(topic) && user.hasTheLenguageOf(language) && user.isUserWithRole("Teacher"))
                 .collect(Collectors.toList());
         return new PageImpl<>(usersFilter, pageable, usersFilter.size());
     }
